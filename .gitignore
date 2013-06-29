@@ -1,0 +1,5 @@
+local
+meteorite
+
+*.swp
+*.DS_Store
