@@ -6,3 +6,5 @@
 autopublish
 insecure
 preserve-inputs
+router
+coffeescript
