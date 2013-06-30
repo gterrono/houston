@@ -1,0 +1,10 @@
+<template name="document_view">
+<h1> Type: {{collection_name}} </h1>
+  <ul>
+    {{# each fields }}
+    <li>
+      {{ field_name }}: {{ field_value }}
+    </li>
+    {{/each}}
+  </ul>
+</template>
