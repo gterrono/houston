@@ -8,3 +8,4 @@ insecure
 preserve-inputs
 router
 coffeescript
+accounts-password

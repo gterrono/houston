@@ -1,0 +1,30 @@
+<template name="adminLogin">
+  <h1>Home Page</h1>
+  {{#if notLoggedIn}}
+    {{#if adminAccountExists}}
+      Log In
+    {{else}}
+      Log in as an account to make it admin
+    {{/if}}
+    <form id="sign-in-form">
+      <div>
+        Email
+        <input name="email" type="text">
+      </div>
+      <div>
+        Password
+        <input name="password" type="password">
+      </div>
+      <div>
+        <input type="submit" value="Sign in">
+        {{#unless adminAccountExists}}
+          <a id="sign-up" href="#">Sign up</a>
+        {{/unless}}
+      </div>
+    </form>
+  {{else}}
+    <div>
+      <a class="logout" href="#">Log out</a>
+    </div>
+  {{/if}}
+</template>
