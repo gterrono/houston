@@ -11,6 +11,14 @@ Meteor.startup ->
     collection_names.forEach (name) ->
       unless name of collections
         collections[name] = new Meteor.Collection(name)
+        collections[name].allow(
+          update: (userId, doc, fields, modifier) ->
+            user = Meteor.users.findOne(userId)
+            user.profile.admin
+          insert: (userId, doc) ->
+            user = Meteor.users.findOne(userId)
+            user.profile.admin
+        )
         publish_to_admin "admin_#{name}", -> collections[name].find()
         Collections.insert {name} unless Collections.findOne {name}
 

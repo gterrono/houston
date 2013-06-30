@@ -17,4 +17,4 @@ Template.document_view.events
             parseFloat(field.value)
           else
             field.value
-    get_collection().update(Session.get('document_id'), update_dict)
+    get_collection().update(Session.get('document_id'), $set: update_dict)
