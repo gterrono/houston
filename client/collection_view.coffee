@@ -60,8 +60,8 @@ Template.collection_view.events
     $this.find('input').select()
     $this.find('input').on 'blur', ->
       updated_val = $this.find('input').val()
-      $this.html updated_val
-      $this.addClass('collection-field')
+      # $this.html updated_val
+      # $this.addClass('collection-field')
       id = $('td:first-child a', $this.parents('tr')).html()
       field_name = $this.data('field')
       update_dict = {}
