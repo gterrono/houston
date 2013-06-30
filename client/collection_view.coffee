@@ -1,11 +1,14 @@
 Template.collection_view.helpers
   headers: -> get_fields get_collection()
+  nonid_headers: -> (get_fields get_collection())[1..]
   document_url: -> "/admin/#{Session.get('collection_name')}/#{@._id}"
   document_id: -> @._id
   rows: ->
     sort_by = {}
     sort_by[Session.get('key')] = Session.get('sort_order')
-    get_collection()?.find({}, {sort: sort_by}).fetch()
+    query = _.extend({}, (Session.get('top_selector')),
+                     (Session.get('field_selectors')))
+    get_collection()?.find(query, {sort: sort_by}).fetch()
   values_in_order: ->
     fields_in_order = _.pluck(get_fields(get_collection()), 'name')
     lookup = (object, path) ->
@@ -41,3 +44,16 @@ Template.collection_view.events
       else
         Session.set('key', this.name)
         Session.set('sort_order', 1)
+  'keyup #filter_selector': (event) ->
+    return unless event.keyCode is 13  # enter
+    try
+      selector_json = JSON.parse($('#filter_selector').val())
+      Session.set('top_selector', selector_json)
+    catch error
+      Session.set('top_selector', {})
+  'change .column_filter': (event...) ->
+    field_selectors = {}
+    $('.column_filter').each (idx, item) ->
+      if item.value
+        field_selectors[item.name] = item.value
+    Session.set 'field_selectors', field_selectors
