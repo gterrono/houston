@@ -1,5 +1,6 @@
 <template name="document_view">
   <h1> Collection: <a href="/admin/{{collection_name}}">{{collection_name}}</a> </h1>
+  <div id="doc-saved" class="alert alert-success hide">Your document was saved!</div>
   <table class='table'>
     <tbody>
       {{# each fields }}
