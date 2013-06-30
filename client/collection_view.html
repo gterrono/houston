@@ -25,7 +25,7 @@
         <tr>
           <td><a href="{{document_url}}">{{document_id}}</a></td>
         {{#each values_in_order}}
-          <td>{{ . }}</td>
+          <td data-field='{{ name }}' class='collection-field'>{{ value }}</td>
         {{/each}}
         </tr>
       {{/each}}
