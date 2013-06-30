@@ -4,7 +4,11 @@
     {{# each fields }}
     <li>
     {{ field_name }}:
-    <input type="text" class="field" name="{{ field_name }}" value="{{ field_value }}">
+    {{#if field_is_id}}
+      <span>{{ field_value }}</span>
+    {{else}}
+      <input type="text" class="field" name="{{ field_name }}" value="{{ field_value }}">
+    {{/if}}
     </li>
     {{/each}}
   </ul>

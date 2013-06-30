@@ -3,6 +3,7 @@ Template.document_view.helpers
   fields: ->
     document = get_collection().findOne _id: Session.get('document_id')
     (field_name: key, field_value: value for key, value of document)
+  field_is_id: -> @field_name is '_id'
 
 get_collection = -> window["inspector_#{Session.get('collection_name')}"]
 
