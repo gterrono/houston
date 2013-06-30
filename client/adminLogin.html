@@ -4,7 +4,7 @@
     {{#if adminAccountExists}}
       Log In
     {{else}}
-      Log in as an account to make it admin
+      Make an admin account
     {{/if}}
     <form id="sign-in-form">
       <div>
@@ -16,10 +16,7 @@
         <input name="password" type="password">
       </div>
       <div>
-        <input type="submit" value="Sign in">
-        {{#unless adminAccountExists}}
-          <a id="sign-up" href="#">Sign up</a>
-        {{/unless}}
+        <input type="submit" value="Sign {{#if adminAccountExists}}in{{else}}up{{/if}}">
       </div>
     </form>
   {{else}}

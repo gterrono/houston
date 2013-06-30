@@ -6,17 +6,18 @@ Template.adminLogin.helpers(
 Template.adminLogin.events(
   'submit #sign-in-form': (e) ->
     e.preventDefault()
-    Meteor.loginWithPassword($('input[name="email"]').val(), $('input[name="password"]').val())
+    email = $('input[name="email"]').val()
+    password = $('input[name="password"]').val()
+    if Meteor.users.findOne('profile.admin': true)
+      Meteor.loginWithPassword(email, password)
+    else
+      Accounts.createUser
+        email: $('input[name="email"]').val()
+        password: $('input[name="password"]').val()
+        profile:
+          admin: true
 
   'click .logout': (e) ->
     e.preventDefault()
     Meteor.logout()
-
-  'click #sign-up': (e) ->
-    e.preventDefault()
-    Accounts.createUser
-      email: $('input[name="email"]').val()
-      password: $('input[name="password"]').val()
-      profile:
-        admin: true
 )
