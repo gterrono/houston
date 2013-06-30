@@ -13,5 +13,5 @@ mrt install z-mongo-admin
 
 Demo
 ------------
-[Dinners](http://interndinners.meteor.com/dinners)
-[Dinners Admin](http://interndinners.meteor.com/admin)
+* [Dinners](http://interndinners.meteor.com/dinners)
+* [Dinners Admin](http://interndinners.meteor.com/admin)
