@@ -1,4 +1,9 @@
 <template name="collection_view">
+  <div>
+    <p>Filter by (mongo query):
+      <textarea placeholder="IE name: 'Joe'"id="filter_selector" />
+    </p>
+  </div>
   <table class="table table-bordered">
     <tr>
     {{# each headers }}

@@ -5,7 +5,8 @@ Template.collection_view.helpers
   rows: ->
     sort_by = {}
     sort_by[Session.get('key')] = Session.get('sort_order')
-    get_collection()?.find({}, {sort: sort_by}).fetch()
+    query = Session.get('selector') or {}
+    get_collection()?.find(query, {sort: sort_by}).fetch()
   values_in_order: ->
     fields_in_order = _.pluck(get_fields(get_collection()), 'name')
     lookup = (object, path) ->
@@ -15,6 +16,15 @@ Template.collection_view.helpers
         return '' unless result?  # quit if you can't find anything here
       if typeof result isnt 'object' then result else ''
     (lookup(@, field_name) for field_name in fields_in_order[1..])  # skip _id
+
+Template.collection_view.events
+  'keyup #filter_selector': (event) ->
+    return unless event.keyCode is 13  # enter
+    try
+      selector_json = JSON.parse($('#filter_selector').val())
+      Session.set('selector', selector_json)
+    catch error
+      Session.set('selector', {})
 
 get_collection = -> window["inspector_#{Session.get('collection_name')}"]
 
