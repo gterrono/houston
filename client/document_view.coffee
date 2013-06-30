@@ -14,7 +14,7 @@ Template.document_view.helpers
 get_collection = -> window["inspector_#{Session.get('collection_name')}"]
 
 Template.document_view.events
-  'click .save': (e) ->
+  'click .admin-save': (e) ->
     e.preventDefault()
     old_object = get_collection().findOne _id: Session.get('document_id')
     unless old_object
@@ -36,3 +36,9 @@ Template.document_view.events
     setTimeout (->
       Session.set('admin_should_show', false)
     ), 1500
+
+  'click .admin-delete': (e) ->
+    e.preventDefault()
+    Meteor.call "admin_#{Session.get('collection_name')}_delete",
+      Session.get('document_id')
+    Meteor.Router.to "/admin/#{Session.get('collection_name')}"
