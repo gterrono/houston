@@ -2,13 +2,13 @@
   <table class="table table-bordered">
     <tr>
     {{# each headers }}
-    <th><a href="#" class="sort">{{name}} ({{type}}></a></th>
+    <th><a href="#" class="sort">{{name}} ({{type}})</a></th>
     {{/each}}
     </tr>
     {{#each rows }}
       <tr>
         <td><a href="{{document_url}}">{{document_id}}</a></td>
-      {{#each values}}
+      {{#each values_in_order}}
         <td>{{ . }}</td>
       {{/each}}
       </tr>
