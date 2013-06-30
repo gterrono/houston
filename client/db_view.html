@@ -1,13 +1,17 @@
 <template name='db_view'>
-<table class='table table-bordered table-striped'>
-  <thead>
-    <tr>
-      <th>Collection Name</th>
-    </tr>
-  </thead>
-  <tbody>
-    {{#each collections}}
-    <tr><td><a href='/admin/{{ name }}'>{{name}}</a></td></tr>
-    {{/each}}
-  </tbody>
+  {{> admin_navbar}}
+  <div class="container content">
+    <table class='table table-bordered table-striped'>
+      <thead>
+        <tr>
+          <th>Collection Name</th>
+        </tr>
+      </thead>
+      <tbody>
+        {{#each collections}}
+        <tr><td><a href='/admin/{{ name }}'>{{name}}</a></td></tr>
+        {{/each}}
+      </tbody>
+    </table>
+  </div>
 </template>
