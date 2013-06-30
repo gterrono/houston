@@ -76,3 +76,9 @@ Template.collection_view.events
       if item.value
         field_selectors[item.name] = item.value
     Session.set 'field_selectors', field_selectors
+
+  'click .admin-delete-doc': (e) ->
+    e.preventDefault()
+    id = $(e.currentTarget).data('id')
+    console.log id
+    Meteor.call "admin_#{Session.get('collection_name')}_delete", id

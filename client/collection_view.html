@@ -16,6 +16,7 @@
               {{# each headers }}
               <th><a href="#" class="sort">{{name}} ({{type}})</a></th>
               {{/each}}
+              <th>Action</th>
             </tr>
             <tr>
               <th>Filter:</th>
@@ -24,6 +25,7 @@
                 <input name="{{name}}" class="column_filter input-small" type="text" />
               </th>
               {{/each}}
+              <th></th>
             </tr>
           </thead>
           <tbody>
@@ -33,6 +35,7 @@
             {{#each values_in_order}}
               <td data-field='{{ name }}' class='collection-field'>{{ value }}</td>
             {{/each}}
+            <td><div data-id="{{document_id}}" class="btn admin-delete-doc">Delete</div>
             </tr>
             {{/each}}
           </tbody>

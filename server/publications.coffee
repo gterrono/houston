@@ -39,6 +39,16 @@ Meteor.startup ->
             id = collections[name].findOne(new Meteor.Collection.ObjectID(id))
             collections[name].update(id, update_dict)
 
+        methods["admin_#{name}_delete"] = (id, update_dict) ->
+          return unless @userId
+          user = Meteor.users.findOne(@userId)
+          return unless user?.profile.admin
+          if collections[name].findOne(id)
+            collections[name].remove(id)
+          else
+            id = collections[name].findOne(new Meteor.Collection.ObjectID(id))
+            collections[name].remove(id)
+
         Meteor.methods methods
 
         publish_to_admin "admin_#{name}", ->
