@@ -9,83 +9,72 @@
           <li><a href="#" class="home">Home</a> <span class="divider">/</span></li>
           <li class="active">{{collection_name}}</li>
         </ul>
-        <h2>Actions</h2>
-        <div>
-          <p>Filter by (mongo query):
-            <textarea placeholder="IE name: 'Joe'"id="filter_selector" />
-          </p>
-        </div>
-        <table class="table table-bordered table-striped">
-          <thead>
-            <tr>
-              {{# each headers }}
-              <th><a href="#" class="sort">{{name}} ({{type}})</a></th>
-              {{/each}}
-              <th>Action</th>
-            </tr>
-            <tr id="admin-create-row">
-              <th>Create:</th>
+        <div class="row">
+            <div class="span12">
+                <div class="page-header">
+                    <h1>{{collection_name}}</h1>
+                </div>
+            </div>
+            <div class="span10">
+                <table class="table table-bordered table-striped table-hover">
+                  <thead>
+                    <tr>
+                      {{# each headers }}
+                      <th><a href="#" class="sort">{{name}}</a></th>
+                      {{/each}}
+                      <th>Action</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {{#each rows }}
+                    <tr>
+                      <td><a href="{{document_url}}">{{document_id}}</a></td>
+                    {{#each values_in_order}}
+                      <td data-field='{{ name }}' class='collection-field'>{{ value }}</td>
+                    {{/each}}
+                    <td><div data-id="{{document_id}}" class="btn admin-delete-doc">Delete</div></td>
+                    </tr>
+                    {{/each}}
+                  </tbody>
+                </table>
+          </div>
+          <div class="span2">
+            <form>
+                <legend>Filter</legend>
                 {{# each nonid_headers }}
-                <th>
-                  <input name="{{name}}" class="input-small" type="text" />
-                </th>
-                {{/each}}
-                <td><div class="btn admin-create-doc">Create</div></td>
-              </form>
-            </tr>
-        </table>
-        <table class="table table-bordered table-striped">
-          <thead>
-            <tr>
-              {{# each headers }}
-              <th><a href="#" class="sort">{{name}} ({{type}})</a></th>
-              {{/each}}
-              <th>Action</th>
-            </tr>
-            <tr>
-              <th>Filter:</th>
-              {{# each nonid_headers }}
-              <th>
+                <label>{{name}}</label>
                 <input name="{{name}}" class="column_filter input-small" type="text" />
-              </th>
-              {{/each}}
-              <th></th>
-            </tr>
-          </thead>
-        </table>
-        <h1>{{collection_name}}</h1>
-        <table class="table table-bordered table-striped">
-          <thead>
-            <tr>
-              {{# each headers }}
-              <th><a href="#" class="sort">{{name}} ({{type}})</a></th>
-              {{/each}}
-              <th>Action</th>
-            </tr>
-          </thead>
-          <tbody>
-            {{#each rows }}
-            <tr>
-              <td><a href="{{document_url}}">{{document_id}}</a></td>
-            {{#each values_in_order}}
-              <td data-field='{{ name }}' class='collection-field'>{{ value }}</td>
-            {{/each}}
-            <td><div data-id="{{document_id}}" class="btn admin-delete-doc">Delete</div></td>
-            </tr>
-            {{/each}}
-            <tr id="admin-create-row">
-              <th>Create:</th>
-                {{# each nonid_headers }}
-                <th>
-                  <input name="{{name}}" class="input-small" type="text" />
-                </th>
                 {{/each}}
-                <td><div class="btn admin-create-doc">Create</div></td>
-              </form>
-            </tr>
-          </tbody>
-        </table>
+            </form>
+            <form>
+                <label for="filter_selector">Filter by (mongo query):</label>
+                <input placeholder="IE name: 'Joe'" id="filter_selector" class="input-small" type="text" />
+            </form>
+          </div>
       </div>
+        <div class="row">
+            <div class="span12">
+            <h3>Create</h3>
+            <table class="table table-bordered table-striped">
+              <thead>
+                <tr>
+                  {{# each nonid_headers }}
+                  <th><a href="#" class="sort">{{name}} ({{type}})</a></th>
+                  {{/each}}
+                  <th>Action</th>
+                </tr>
+                <tr id="admin-create-row">
+                    {{# each nonid_headers }}
+                    <th>
+                      <input name="{{name}}" class="input-small" type="text" />
+                    </th>
+                    {{/each}}
+                    <td><div class="btn admin-create-doc">Create</div></td>
+                  </form>
+                </tr>
+            </table>
+            </div>
+        </div>
     {{/if}}
   </div>
 </template>
