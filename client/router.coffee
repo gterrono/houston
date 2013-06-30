@@ -39,7 +39,7 @@ Meteor.Router.filters
 
 Meteor.Router.filter 'isAdmin', only: ['db_view', 'collection_view', 'document_view']
 
-window.get_fields = (collection) ->
+window.get_fields = (documents) ->
   key_to_type = {_id: 'ObjectId'}
   find_fields = (document, prefix='') ->
     for key, value of _.omit(document, '_id')
@@ -49,7 +49,7 @@ window.get_fields = (collection) ->
         full_path_key = "#{prefix}#{key}"
         key_to_type[full_path_key] = typeof value
 
-  collection.find({}, {limit: 50}).forEach (document) ->
+  for document in documents
     find_fields document
 
   (name: key, type: value for key, value of key_to_type)

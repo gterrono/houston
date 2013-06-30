@@ -8,7 +8,8 @@ Template.document_view.helpers
         document = get_collection().findOne _id: new Meteor.Collection.ObjectID(Session.get('document_id'))
       catch error
         console.log error
-    (field_name: key, field_value: value for key, value of document)
+    fields = get_fields(document)
+    (field_name: name, field_value: document[name] for name, __ of document)
   field_is_id: -> @field_name is '_id'
 
 get_collection = -> window["inspector_#{Session.get('collection_name')}"]
