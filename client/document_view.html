@@ -5,7 +5,12 @@
     {{else}}
       {{> admin_navbar}}
       <div class="container content">
-        <h1> Collection: <a href="/admin/{{collection_name}}">{{collection_name}}</a> </h1>
+        <ul class="breadcrumb">
+          <li><a href="" class="home">Home</a> <span class="divider">/</span></li>
+          <li><a href="" class="collection">{{collection_name}}</a> <span class="divider">/</span></li>
+          <li class="active">{{document_id}}</li>
+        </ul>
+        <h1>{{document_id}}</h1>
         <div id="doc-saved" class="alert alert-success {{adminHide}}">Your document was saved!</div>
         <table class='table'>
           <tbody>

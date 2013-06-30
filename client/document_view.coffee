@@ -8,8 +8,15 @@ Template.document_view.helpers
         document = get_collection().findOne _id: new Meteor.Collection.ObjectID(Session.get('document_id'))
       catch error
         console.log error
-    (field_name: key, field_value: value for key, value of document)
+    fields = get_fields([document])
+    console.log fields
+    #To make document not go away
+    console.log document
+    l = (field_name: field.name, field_value: lookup(document, field.name) for field in fields)
+    console.log l
+    l
   field_is_id: -> @field_name is '_id'
+  document_id: -> Session.get('document_id')
 
 get_collection = -> window["inspector_#{Session.get('collection_name')}"]
 
@@ -42,3 +49,7 @@ Template.document_view.events
     Meteor.call "admin_#{Session.get('collection_name')}_delete",
       Session.get('document_id')
     Meteor.Router.to "/admin/#{Session.get('collection_name')}"
+  "click a.home": (e) ->
+    Meteor.go("/admin/")
+  "click a.collection": (e) ->
+    Meteor.go("/admin/#{Session.get('collection_name')}")

@@ -1,6 +1,6 @@
 Template.collection_view.helpers
-  headers: -> get_fields get_collection()
-  nonid_headers: -> (get_fields get_collection())[1..]
+  headers: -> get_collection_view_fields()
+  nonid_headers: -> get_collection_view_fields()[1..]
   collection_name: -> "#{Session.get('collection_name')}"
   document_url: -> "/admin/#{Session.get('collection_name')}/#{@_id}"
   document_id: -> @_id + ""
@@ -11,33 +11,13 @@ Template.collection_view.helpers
                      (Session.get('field_selectors')))
     get_collection()?.find(query, {sort: sort_by}).fetch()
   values_in_order: ->
-    fields_in_order = _.pluck(get_fields(get_collection()), 'name')
+    fields_in_order = _.pluck(get_collection_view_fields(), 'name')
     names_in_order = _.clone fields_in_order
-    lookup = (object, path) ->
-      result = object
-      for part in path.split(".")
-        result = result[part]
-        return '' unless result?  # quit if you can't find anything here
-      if typeof result isnt 'object' then result else ''
     values = (lookup(@, field_name) for field_name in fields_in_order[1..])  # skip _id
     ({value, name} for [value, name] in _.zip values, names_in_order[1..])
 
 get_collection = -> window["inspector_#{Session.get('collection_name')}"]
-
-get_fields = (collection) ->
-  key_to_type = {_id: 'ObjectId'}
-  find_fields = (document, prefix='') ->
-    for key, value of _.omit(document, '_id')
-      if typeof value is 'object'
-        find_fields value, "#{prefix}#{key}."
-      else if typeof value isnt 'function'
-        full_path_key = "#{prefix}#{key}"
-        key_to_type[full_path_key] = typeof value
-
-  collection.find({}, {limit: 50}).forEach (document) ->
-    find_fields document
-
-  (name: key, type: value for key, value of key_to_type)
+get_collection_view_fields = -> get_fields(get_collection().find({}, limit: 50).fetch())
 
 Template.collection_view.events
   "click a.home": (e) ->
