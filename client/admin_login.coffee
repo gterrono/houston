@@ -1,6 +1,6 @@
 Template.admin_login.helpers(
   notLoggedIn: -> not Meteor.user()
-  adminAccountNotExists: -> !Meteor.users.findOne 'profile.admin': true
+  adminAccountNotExist: -> !Meteor.users.findOne 'profile.admin': true
 )
 
 Template.admin_login.events(
