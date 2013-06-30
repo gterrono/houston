@@ -1,5 +1,5 @@
-Dummy = new Meteor.Collection("system.dummy")  # hack
-collections = {}
+Dummy = new Meteor.Collection("system.dummy")  # hack.
+collections = {'users': Meteor.users}
 Meteor.startup ->
   Dummy.findOne()  # hack
   save_collections = (meh, collections_db) ->
@@ -7,7 +7,7 @@ Meteor.startup ->
       when (col.collectionName.indexOf "system.") isnt 0 and
            (col.collectionName.indexOf "admin_") isnt 0)
     for name in collection_names
-      if name not in collections
+      unless name of collections
         collections[name] = new Meteor.Collection(name)
         # TODO admin user only
         Meteor.publish "admin_#{name}", -> collections[name].find()
