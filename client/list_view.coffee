@@ -3,7 +3,9 @@ Template.list_view.helpers
   document_url: -> "/admin/#{Session.get('collection_name')}/#{@._id}"
   document_id: -> @._id
   rows: ->
-    get_collection()?.find().fetch()
+    sort_by = {}
+    sort_by[Session.get('key')] = Session.get('sort_order')
+    get_collection()?.find({}, {sort: sort_by}).fetch()
   values: ->
     _.values(_.omit(@, '_id'))  # _id is special-cased in html
 
@@ -17,3 +19,12 @@ get_fields = (collection) ->
       key_to_type[key] = typeof value
 
   (name: key, type: value for key, value of key_to_type)
+
+Template.list_view.events
+  "click a.sort": (e) ->
+      e.preventDefault()
+      if (Session.get('key') == this.name)
+        Session.set('sort_order', Session.get('sort_order') * - 1) 
+      else
+        Session.set('key', this.name)
+        Session.set('sort_order', 1)
