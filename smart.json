@@ -3,7 +3,7 @@
   "description": "Mongo Admin for Meteor",
   "homepage": "https://github.com/gterrono/meteor-admin-ui",
   "author": "Geoff, Alexey, Greg",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "git": "https://github.com/gterrono/meteor-admin-ui.git",
   "packages": {
     "router": {},
