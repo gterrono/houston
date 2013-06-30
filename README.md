@@ -3,6 +3,8 @@ z-mongo-admin
 
 A meteorite package for Mongo Admin for Meteor.
 
+![zma](http://www.goodnnatural.com/pub/products/12151_T1_W275_H.jpeg)
+
 Install
 ----------
 ```
