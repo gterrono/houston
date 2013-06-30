@@ -1,6 +1,6 @@
 ZMA Meteor Admin
 ===============
-ZMA (ZMA Meteor Admin) is a zero-config, Django Admin-like Mongo Admin for Meteor available via [meteorite](https://atmosphere.meteor.com/package/z-mongo-admin)
+ZMA (ZMA Meteor Admin) is a zero-config, [Django Admin-like](https://docs.djangoproject.com/en/dev/ref/contrib/admin/) Mongo Admin for Meteor available via [meteorite](https://atmosphere.meteor.com/package/z-mongo-admin)
 
 ![zma](http://www.goodnnatural.com/pub/products/12151_T1_W275_H.jpeg)
 
