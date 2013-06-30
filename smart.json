@@ -1,8 +1,10 @@
 {
-  "meteor": {
-    "git": "https://github.com/meteor/meteor.git",
-    "branch": "master"
-  },
+  "name": "z-mongo-admin",
+  "description": "Mongo Admin for Meteor",
+  "homepage": "https://github.com/gterrono/meteor-admin-ui",
+  "author": "Geoff, Alexey, Greg",
+  "version": "0.0.2",
+  "git": "https://github.com/gterrono/meteor-admin-ui.git",
   "packages": {
     "router": {},
     "spin": {}
