@@ -1,5 +1,6 @@
 Template.document_view.helpers
   collection_name: -> Session.get('collection_name')
+  adminHide: -> if Session.get('admin_should_show') then '' else 'hide'
   fields: ->
     document = get_collection().findOne _id: Session.get('document_id')
     unless document
@@ -24,5 +25,7 @@ Template.document_view.events
           else
             field.value
     get_collection().update(Session.get('document_id'), $set: update_dict)
-    $('#doc-saved').fadeIn(400)
-    setTimeout (-> $('#doc-saved').fadeOut(400)), 2000
+    Session.set('admin_should_show', true)
+    setTimeout (->
+      Session.set('admin_should_show', false)
+    ), 1500
