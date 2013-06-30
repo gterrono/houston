@@ -1,15 +1,15 @@
-<template name="list_view">
+<template name="collection_view">
   <table class="table table-bordered">
     <tr>
-    {{# each headers }}
+    {{#each headers }}
       <th>{{name}} ({{type}})</th>
     {{/each}}
     </tr>
-    {{# each rows }}
+    {{#each rows }}
       <tr>
         <td><a href="{{document_url}}">{{document_id}}</a></td>
-      {{# each values }}
-        <td>{{this}}</td>
+      {{#each values}}
+        <td>{{ . }}</td>
       {{/each}}
       </tr>
     {{/each}}

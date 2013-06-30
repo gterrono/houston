@@ -6,12 +6,13 @@ setup_collection = (collection_name) ->
 
   unless window[inspector_name]
     window[inspector_name] = new Meteor.Collection(collection_name)
-    Meteor.subscribe subscription_name
+  Meteor.subscribe subscription_name
   Session.set("collection_name", collection_name)
   return window[inspector_name]
 
 Template.admin.helpers
   collections: -> Session.get("collections")
+  rows: -> Session.get("rows")
 
 Meteor.Router.add
   '/': 'homePage'
@@ -23,7 +24,10 @@ Meteor.Router.add
 
   '/admin/:collection': (collection_name) ->
     collection = setup_collection collection_name
-    return 'list_view'
+    rows = collection.find().fetch()
+    console.log rows
+    Session.set("row", rows)
+    return 'collection_view'
 
   '/admin/:collection/:document': (collection_name, document_id) ->
     collection = setup_collection collection_name
@@ -35,4 +39,4 @@ Meteor.Router.add
 Meteor.Router.filters
   'isAdmin': (page) -> if Meteor.user()?.profile.admin then page else 'adminLogin'
 
-Meteor.Router.filter 'isAdmin', only: ['admin', 'list_view', 'document_view']
+Meteor.Router.filter 'isAdmin', only: ['admin', 'collection_view', 'document_view']

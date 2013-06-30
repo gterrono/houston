@@ -1,4 +1,4 @@
-Template.list_view.helpers
+Template.collection_view.helpers
   headers: -> get_fields get_collection()
   document_url: -> "/admin/#{Session.get('collection_name')}/#{@._id}"
   document_id: -> @._id
