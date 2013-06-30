@@ -1,17 +1,18 @@
 <template name="document_view">
-<h1> Collection: <a href="/admin/{{collection_name}}">{{collection_name}}</a> </h1>
-  <ul class="unstyled">
-    {{ fields }}
-    {{# each fields }}
-    <li>
-    {{ field_name }}:
-    {{#if field_is_id}}
-      <span>{{ field_value }}</span>
-    {{else}}
-      <input type="text" class="field" name="{{ field_name }}" value="{{ field_value }}">
-    {{/if}}
-    </li>
-    {{/each}}
-  </ul>
+  <h1> Collection: <a href="/admin/{{collection_name}}">{{collection_name}}</a> </h1>
+  <table class='table'>
+    <tbody>
+      {{# each fields }}
+        <tr>
+          <td>{{ field_name }}:</td>
+          {{#if field_is_id}}
+            <td>{{ field_value }}</td>
+          {{else}}
+          <td><input type="text" class="field" name="{{ field_name }}" value="{{ field_value }}"></td>
+          {{/if}}
+        </tr>
+      {{/each}}
+    </tbody>
+  </table>
   <div class="btn save">Save</div>
 </template>
