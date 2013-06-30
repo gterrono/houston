@@ -10,23 +10,19 @@ setup_collection = (collection_name) ->
   Session.set("collection_name", collection_name)
   return window[inspector_name]
 
-Template.admin.helpers
+Template.db_view.helpers
   collections: -> Session.get("collections")
-  rows: -> Session.get("rows")
 
 Meteor.Router.add
   '/': 'homePage'
   '/admin': ->
     Session.set "collections", Collections.find().fetch()
-    return 'admin'
+    return 'db_view'
 
   '/admin/login': 'adminLogin'
 
   '/admin/:collection': (collection_name) ->
     collection = setup_collection collection_name
-    rows = collection.find().fetch()
-    console.log rows
-    Session.set("row", rows)
     return 'collection_view'
 
   '/admin/:collection/:document': (collection_name, document_id) ->
