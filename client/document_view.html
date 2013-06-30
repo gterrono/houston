@@ -3,8 +3,10 @@
   <ul>
     {{# each fields }}
     <li>
-      {{ field_name }}: {{ field_value }}
+    {{ field_name }}:
+    <input type="text" class="field" name="{{ field_name }}" value="{{ field_value }}">
     </li>
     {{/each}}
   </ul>
+  <div class="btn save">Save</div>
 </template>
