@@ -9,5 +9,4 @@ Meteor.startup ->
       if name not in collections
         collections[name] = new Meteor.Collection(name)
         # TODO admin user only
-        # Meteor.publish "admin_#{name}", -> collections[name].find()
-    Meteor.publish "admin", -> _.invoke collections, 'find'
+        Meteor.publish "admin_#{name}", -> collections[name].find()
