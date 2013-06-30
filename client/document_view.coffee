@@ -10,6 +10,7 @@ Template.document_view.helpers
         console.log error
     (field_name: key, field_value: value for key, value of document)
   field_is_id: -> @field_name is '_id'
+  document_id: -> Session.get('document_id')
 
 get_collection = -> window["inspector_#{Session.get('collection_name')}"]
 
@@ -42,3 +43,7 @@ Template.document_view.events
     Meteor.call "admin_#{Session.get('collection_name')}_delete",
       Session.get('document_id')
     Meteor.Router.to "/admin/#{Session.get('collection_name')}"
+  "click a.home": (e) ->
+    Meteor.go("/admin/")
+  "click a.collection": (e) ->
+    Meteor.go("/admin/#{Session.get('collection_name')}")
