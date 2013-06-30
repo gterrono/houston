@@ -5,11 +5,35 @@
     {{else}}
       {{> admin_navbar}}
       <div class="container content">
+        <ul class="breadcrumb">
+          <li><a href="#" class="home">Home</a> <span class="divider">/</span></li>
+          <li class="active">{{collection_name}}</li>
+        </ul>
+        <h2>Actions</h2>
         <div>
           <p>Filter by (mongo query):
             <textarea placeholder="IE name: 'Joe'"id="filter_selector" />
           </p>
         </div>
+        <table class="table table-bordered table-striped">
+          <thead>
+            <tr>
+              {{# each headers }}
+              <th><a href="#" class="sort">{{name}} ({{type}})</a></th>
+              {{/each}}
+              <th>Action</th>
+            </tr>
+            <tr id="admin-create-row">
+              <th>Create:</th>
+                {{# each nonid_headers }}
+                <th>
+                  <input name="{{name}}" class="input-small" type="text" />
+                </th>
+                {{/each}}
+                <td><div class="btn admin-create-doc">Create</div></td>
+              </form>
+            </tr>
+        </table>
         <table class="table table-bordered table-striped">
           <thead>
             <tr>
@@ -26,6 +50,17 @@
               </th>
               {{/each}}
               <th></th>
+            </tr>
+          </thead>
+        </table>
+        <h1>{{collection_name}}</h1>
+        <table class="table table-bordered table-striped">
+          <thead>
+            <tr>
+              {{# each headers }}
+              <th><a href="#" class="sort">{{name}} ({{type}})</a></th>
+              {{/each}}
+              <th>Action</th>
             </tr>
           </thead>
           <tbody>

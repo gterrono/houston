@@ -1,6 +1,7 @@
 Template.collection_view.helpers
   headers: -> get_fields get_collection()
   nonid_headers: -> (get_fields get_collection())[1..]
+  collection_name: -> "#{Session.get('collection_name')}"
   document_url: -> "/admin/#{Session.get('collection_name')}/#{@_id}"
   document_id: -> @_id + ""
   rows: ->
@@ -39,6 +40,9 @@ get_fields = (collection) ->
   (name: key, type: value for key, value of key_to_type)
 
 Template.collection_view.events
+  "click a.home": (e) ->
+    Meteor.go("/admin/")
+
   "click a.sort": (e) ->
       e.preventDefault()
       if (Session.get('key') == this.name)
