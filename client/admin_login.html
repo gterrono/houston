@@ -1,4 +1,4 @@
-<template name="adminLogin">
+<template name="admin_login">
   <h1>Home Page</h1>
   {{#if notLoggedIn}}
     {{#if adminAccountExists}}
@@ -16,12 +16,12 @@
         <input name="password" type="password">
       </div>
       <div>
-        <input type="submit" value="Sign {{#if adminAccountExists}}in{{else}}up{{/if}}">
+        <input class="btn" type="submit" value="Sign {{#if adminAccountExists}}in{{else}}up{{/if}}">
       </div>
     </form>
   {{else}}
     <div>
-      <a class="logout" href="#">Log out</a>
+      <a class="logout btn" href="#">Log out</a>
     </div>
   {{/if}}
 </template>

@@ -1,9 +1,9 @@
-Template.adminLogin.helpers(
+Template.admin_login.helpers(
   notLoggedIn: -> not Meteor.user()
   adminAccountExists: -> Meteor.users.findOne 'profile.admin': true
 )
 
-Template.adminLogin.events(
+Template.admin_login.events(
   'submit #sign-in-form': (e) ->
     e.preventDefault()
     email = $('input[name="email"]').val()

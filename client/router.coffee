@@ -14,12 +14,10 @@ Template.db_view.helpers
   collections: -> Session.get("collections")
 
 Meteor.Router.add
-  '/': 'homePage'
+  '/admin/login': 'admin_login'
   '/admin': ->
     Session.set "collections", Collections.find().fetch()
     return 'db_view'
-
-  '/admin/login': 'adminLogin'
 
   '/admin/:collection': (collection_name) ->
     collection = setup_collection collection_name
@@ -33,6 +31,6 @@ Meteor.Router.add
   '*': '404'
 
 Meteor.Router.filters
-  'isAdmin': (page) -> if Meteor.user()?.profile.admin then page else 'adminLogin'
+  'isAdmin': (page) -> if Meteor.user()?.profile.admin then page else 'admin_login'
 
-Meteor.Router.filter 'isAdmin', only: ['admin', 'collection_view', 'document_view']
+Meteor.Router.filter 'isAdmin', only: ['db_view', 'collection_view', 'document_view']
