@@ -8,3 +8,5 @@ preserve-inputs
 router
 coffeescript
 accounts-password
+bootstrap
+spin

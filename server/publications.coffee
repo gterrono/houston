@@ -18,8 +18,11 @@ Meteor.startup ->
   Meteor._RemoteCollectionDriver.mongo.db.collections fn
 
 publish_to_admin = (name, publish_func) ->
-  Meteor.publish name, =>
-    publish_func() if Meteor.users.findOne({_id: @userId, 'profile.admin': true})
+  Meteor.publish name, ->
+    console.log "wanna publish", @userId
+    if Meteor.users.findOne({_id: @userId, 'profile.admin': true})
+      console.log "publishd"
+      publish_func()
 
 
 # publish our own internal state

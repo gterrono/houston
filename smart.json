@@ -4,6 +4,7 @@
     "branch": "master"
   },
   "packages": {
-    "router": {}
+    "router": {},
+    "spin": {}
   }
 }
