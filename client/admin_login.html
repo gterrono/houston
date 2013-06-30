@@ -13,14 +13,18 @@
               Log In
             {{/if}}
           </h1>
-          <form id="sign-in-form">
-            <div>
-              Email
-              <input name="email" type="text">
+          <form id="sign-in-form form-horizontal">
+            <div class='control-group'>
+              <label class='control-label' for='email'>Email</label>
+              <div class='controls'>
+                <input name="email" id='email' type="text">
+              </div>
             </div>
-            <div>
-              Password
-              <input name="password" type="password">
+            <div class='control-group'>
+              <label class='control-label' for='password'>Password</label>
+              <div class='controls'>
+                <input name="password" id='password' type="password">
+              </div>
             </div>
             <div>
               <input class="btn" type="submit" value="Sign {{#if adminAccountNotExist}}up{{else}}in{{/if}}">
