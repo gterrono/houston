@@ -1,6 +1,6 @@
 <template name="document_view">
-<h1> Type: {{collection_name}} </h1>
-  <ul>
+<h1> Collection: <a href="/admin/{{collection_name}}">{{collection_name}}</a> </h1>
+  <ul class="unstyled">
     {{# each fields }}
     <li>
     {{ field_name }}:
