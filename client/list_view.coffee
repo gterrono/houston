@@ -1,9 +1,11 @@
 Template.list_view.helpers
   headers: -> get_fields get_collection()
+  document_url: -> "/admin/#{Session.get('collection_name')}/#{@._id}"
+  document_id: -> @._id
   rows: ->
     get_collection()?.find().fetch()
   values: ->
-    _.values(@)
+    _.values(_.omit(@, '_id'))  # _id is special-cased in html
 
 get_collection = -> window["inspector_#{Session.get('collection_name')}"]
 
