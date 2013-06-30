@@ -34,4 +34,4 @@ Meteor.Router.filters
   'isAdmin': (page) ->
     if Meteor.user()?.profile.admin then page else 'adminLogin'
 
-Meteor.Router.filter 'isAdmin', only: ['adminIndex', 'list_view']
+Meteor.Router.filter 'isAdmin', only: ['admin', 'list_view', 'document_view']
