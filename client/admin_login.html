@@ -1,35 +1,37 @@
 <template name="admin_login">
-  {{#if loggingIn}}
-    {{> spinner}}
-  {{else}}
-    {{> admin_navbar}}
-    <div class="container content">
-      {{#if notLoggedIn}}
-        <h1>
-          {{#if adminAccountNotExist}}
-            Make an admin account
-          {{else}}
-            Log In
-          {{/if}}
-        </h1>
-        <form id="sign-in-form">
+  <div class='z-mongo-admin'>
+    {{#if loggingIn}}
+      {{> spinner}}
+    {{else}}
+      {{> admin_navbar}}
+      <div class="container content">
+        {{#if notLoggedIn}}
+          <h1>
+            {{#if adminAccountNotExist}}
+              Make an admin account
+            {{else}}
+              Log In
+            {{/if}}
+          </h1>
+          <form id="sign-in-form">
+            <div>
+              Email
+              <input name="email" type="text">
+            </div>
+            <div>
+              Password
+              <input name="password" type="password">
+            </div>
+            <div>
+              <input class="btn" type="submit" value="Sign {{#if adminAccountNotExist}}up{{else}}in{{/if}}">
+            </div>
+          </form>
+        {{else}}
           <div>
-            Email
-            <input name="email" type="text">
+            <a class="logout btn" href="#">Log out</a>
           </div>
-          <div>
-            Password
-            <input name="password" type="password">
-          </div>
-          <div>
-            <input class="btn" type="submit" value="Sign {{#if adminAccountNotExist}}up{{else}}in{{/if}}">
-          </div>
-        </form>
-      {{else}}
-        <div>
-          <a class="logout btn" href="#">Log out</a>
-        </div>
-      {{/if}}
-    </div>
-  {{/if}}
+        {{/if}}
+      </div>
+    {{/if}}
+  </div>
 </template>

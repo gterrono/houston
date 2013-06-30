@@ -1,21 +1,23 @@
 <template name='db_view'>
-  {{#if loggingIn}}
-    {{> spinner}}
-  {{else}}
-    {{> admin_navbar}}
-    <div class="container content">
-      <table class='table table-bordered table-striped'>
-        <thead>
-          <tr>
-            <th>Collection Name</th>
-          </tr>
-        </thead>
-        <tbody>
-          {{#each collections}}
-          <tr><td><a href='/admin/{{ name }}'>{{name}}</a></td></tr>
-          {{/each}}
-        </tbody>
-      </table>
-    </div>
-  {{/if}}
+  <div class='z-mongo-admin'>
+    {{#if loggingIn}}
+      {{> spinner}}
+    {{else}}
+      {{> admin_navbar}}
+      <div class="container content">
+        <table class='table table-bordered table-striped'>
+          <thead>
+            <tr>
+              <th>Collection Name</th>
+            </tr>
+          </thead>
+          <tbody>
+            {{#each collections}}
+            <tr><td><a href='/admin/{{ name }}'>{{name}}</a></td></tr>
+            {{/each}}
+          </tbody>
+        </table>
+      </div>
+    {{/if}}
+  </div>
 </template>

@@ -1,21 +1,23 @@
 <template name="document_view">
-  {{#if loggingIn}}
-    {{> spinner}}
-  {{else}}
-    {{> admin_navbar}}
-    <div class="container content">
-      <h1> Collection: <a href="/admin/{{collection_name}}">{{collection_name}}</a> </h1>
-      <div id="doc-saved" class="alert alert-success {{adminHide}}">Your document was saved!</div>
-      <table class='table'>
-        <tbody>
-          {{# each fields }}
-            {{> admin_document_field}}
-          {{/each}}
-        </tbody>
-      </table>
-      <div class="btn save">Save</div>
-    </div>
-  {{/if}}
+  <div class='z-mongo-admin'>
+    {{#if loggingIn}}
+      {{> spinner}}
+    {{else}}
+      {{> admin_navbar}}
+      <div class="container content">
+        <h1> Collection: <a href="/admin/{{collection_name}}">{{collection_name}}</a> </h1>
+        <div id="doc-saved" class="alert alert-success {{adminHide}}">Your document was saved!</div>
+        <table class='table'>
+          <tbody>
+            {{# each fields }}
+              {{> admin_document_field}}
+            {{/each}}
+          </tbody>
+        </table>
+        <div class="btn save">Save</div>
+      </div>
+    {{/if}}
+  </div>
 </template>
 
 <template name="admin_document_field">
