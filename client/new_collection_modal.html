@@ -1,0 +1,32 @@
+<template name="admin_new_collection">
+  <div id="adminCollectionModal" class="modal hide fade" tabindex=-1 role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-header">
+      <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+      <h3 id="myModalLabel">Modal header</h3>
+    </div>
+    <div class="modal-body">
+      <form id="admin-new-collection-form" class="form-horizontal">
+        <div class="control-group">
+          <div class="control-group">
+            Enter a collection name, and then fill out the fields for the first
+            document in this collection.
+          </div>
+          <input type="text" placeholder="Collection Name" class="input-xxlarge" id="admin-collection-name">
+        </div>
+        {{> admin_collection_field_group}}
+      </form>
+    </div>
+    <div class="modal-footer">
+      <button class="btn" data-dismiss="modal" aria-hidden="true">Close</button>
+      <button class="btn btn-primary admin-add-collection-button">Save</button>
+    </div>
+  </div>
+  <button class="btn" data-toggle="modal" data-target="#adminCollectionModal">Add a Collection</button>
+</template>
+
+<template name="admin_collection_field_group">
+  <div class="control-group admin-field-group">
+    <input type="text" class="admin-last-field admin-field" placeholder="Field Name">
+    <input type="text" placeholder="Value" class="admin-value">
+  </div>
+</template>

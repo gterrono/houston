@@ -4,6 +4,44 @@ Dummy = new Meteor.Collection("system.dummy")  # hack.
 collections = {'users': Meteor.users}
 
 Meteor.startup ->
+  set_up_collection = (name, collection) ->
+    methods = {}
+    methods["admin_#{name}_insert"] = (doc) ->
+      return unless @userId
+      user = Meteor.users.findOne(@userId)
+      return unless user?.profile.admin
+      collection.insert(doc)
+
+    methods["admin_#{name}_update"] = (id, update_dict) ->
+      return unless @userId
+      user = Meteor.users.findOne(@userId)
+      return unless user?.profile.admin
+      if collection.findOne(id)
+        collection.update(id, update_dict)
+      else
+        id = collection.findOne(new Meteor.Collection.ObjectID(id))
+        collection.update(id, update_dict)
+
+    methods["admin_#{name}_delete"] = (id, update_dict) ->
+      return unless @userId
+      user = Meteor.users.findOne(@userId)
+      return unless user?.profile.admin
+      if collection.findOne(id)
+        collection.remove(id)
+      else
+        id = collection.findOne(new Meteor.Collection.ObjectID(id))
+        collection.remove(id)
+
+    Meteor.methods methods
+
+    publish_to_admin "admin_#{name}", ->
+      try
+        collection.find()
+      catch e
+        console.log e
+    Collections.insert {name} unless Collections.findOne {name}
+
+
   Dummy.findOne()  # hack
   save_collections = (meh, collections_db) ->
     collection_names = (col.collectionName for col in collections_db \
@@ -22,41 +60,23 @@ Meteor.startup ->
               collections[name] = value
           console.log e
 
-        methods = {}
-        methods["admin_#{name}_insert"] = (doc) ->
-          return unless @userId
-          user = Meteor.users.findOne(@userId)
-          return unless user?.profile.admin
-          collections[name].insert(doc)
+        set_up_collection(name, collections[name])
 
-        methods["admin_#{name}_update"] = (id, update_dict) ->
-          return unless @userId
-          user = Meteor.users.findOne(@userId)
-          return unless user?.profile.admin
-          if collections[name].findOne(id)
-            collections[name].update(id, update_dict)
-          else
-            id = collections[name].findOne(new Meteor.Collection.ObjectID(id))
-            collections[name].update(id, update_dict)
+  Meteor.methods
+    setupNewCollection: (name) ->
+      return unless @userId
+      user = Meteor.users.findOne(@userId)
+      return unless user?.profile.admin
+      unless name of collections
+        try
+          collections[name] = new Meteor.Collection(name)
+        catch e
+          for key, value of root
+            if name == value._name
+              collections[name] = value
+          console.log e
 
-        methods["admin_#{name}_delete"] = (id, update_dict) ->
-          return unless @userId
-          user = Meteor.users.findOne(@userId)
-          return unless user?.profile.admin
-          if collections[name].findOne(id)
-            collections[name].remove(id)
-          else
-            id = collections[name].findOne(new Meteor.Collection.ObjectID(id))
-            collections[name].remove(id)
-
-        Meteor.methods methods
-
-        publish_to_admin "admin_#{name}", ->
-          try
-            collections[name].find()
-          catch e
-            console.log e
-        Collections.insert {name} unless Collections.findOne {name}
+        set_up_collection(name, collections[name])
 
   fn = Meteor.bindEnvironment save_collections, (e) ->
     console.log e.stack
