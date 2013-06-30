@@ -7,10 +7,16 @@ Meteor.startup ->
     collection_names = (col.collectionName for col in collections_db \
       when (col.collectionName.indexOf "system.") isnt 0 and
            (col.collectionName.indexOf "admin_") isnt 0)
+
     # fucking closures bro
     collection_names.forEach (name) ->
       unless name of collections
-        collections[name] = new Meteor.Collection(name)
+        try
+          collections[name] = new Meteor.Collection(name)
+        catch e
+          collections[name] = Meteor._LocalCollectionDriver.collections[name]
+          console.log collections[name]
+          console.log e
 
         methods = {}
         methods["admin_#{name}_insert"] = (doc) ->
@@ -20,14 +26,20 @@ Meteor.startup ->
           collections[name].insert(doc)
 
         methods["admin_#{name}_update"] = (id, update_dict) ->
+          console.log 'in method'
           return unless @userId
           user = Meteor.users.findOne(@userId)
           return unless user?.profile.admin
+          console.log 'here'
           collections[name].update({_id: id}, update_dict)
 
         Meteor.methods methods
 
-        publish_to_admin "admin_#{name}", -> collections[name].find()
+        publish_to_admin "admin_#{name}", ->
+          try
+            collections[name].find()
+          catch e
+            console.log e
         Collections.insert {name} unless Collections.findOne {name}
 
   fn = Meteor.bindEnvironment save_collections, (e) ->
