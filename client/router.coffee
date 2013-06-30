@@ -1,5 +1,8 @@
-Meteor.Router.add(
+Meteor.subscribe("admin")
+
+Meteor.Router.add
   '/': 'homePage'
+  '/admin': 'admin'
   '/admin/:collection': (collection_name) ->
     subscription_name = "admin_#{Session.get('collection_name')}"
     inspector_name = "inspector_#{collection_name}"
@@ -12,4 +15,3 @@ Meteor.Router.add(
     'list_view'
 
   '*': '404'
-)
