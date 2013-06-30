@@ -27,6 +27,16 @@
               {{/each}}
               <th></th>
             </tr>
+            <tr id="admin-create-row">
+              <th>Create:</th>
+                {{# each nonid_headers }}
+                <th>
+                  <input name="{{name}}" class="input-small" type="text" />
+                </th>
+                {{/each}}
+                <td><div class="btn admin-create-doc">Create</div></td>
+              </form>
+            </tr>
           </thead>
           <tbody>
             {{#each rows }}
@@ -35,7 +45,7 @@
             {{#each values_in_order}}
               <td data-field='{{ name }}' class='collection-field'>{{ value }}</td>
             {{/each}}
-            <td><div data-id="{{document_id}}" class="btn admin-delete-doc">Delete</div>
+            <td><div data-id="{{document_id}}" class="btn admin-delete-doc">Delete</div></td>
             </tr>
             {{/each}}
           </tbody>

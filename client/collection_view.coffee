@@ -82,3 +82,14 @@ Template.collection_view.events
     id = $(e.currentTarget).data('id')
     console.log id
     Meteor.call "admin_#{Session.get('collection_name')}_delete", id
+
+  'click .admin-create-doc': (e) ->
+    e.preventDefault()
+    $create_row = $('#admin-create-row')
+    console.log $create_row
+    new_doc = {}
+    for field in $create_row.find('input[type="text"]')
+      new_doc[field.name] = field.value
+      field.value = ''
+    console.log new_doc
+    Meteor.call "admin_#{Session.get('collection_name')}_insert", new_doc
