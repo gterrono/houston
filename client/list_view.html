@@ -1,0 +1,16 @@
+<template name="list_view">
+  <table>
+    <tr>
+    {{# each headers }}
+      <th>{{name}} ({{type}})</th>
+    {{/each}}
+    </tr>
+    {{# each rows }}
+      <tr>
+      {{# each values }}
+        <td>{{this}}</td>
+      {{/each}}
+      </tr>
+    {{/each}}
+  </table>
+</template>
