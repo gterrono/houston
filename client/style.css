@@ -8,5 +8,9 @@
 
 .z-mongo-admin > .container {
   margin-top: 0px;
-  padding-top: 40px;
+  padding-top: 50px;
+  overflow-x: auto;
+  border: 1px solid #eee;
+  padding-left: 10px;
+  padding-right: 10px;
 }
