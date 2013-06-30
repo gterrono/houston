@@ -24,7 +24,8 @@ Template.document_view.events
             parseFloat(field.value)
           else
             field.value
-    get_collection().update(Session.get('document_id'), $set: update_dict)
+    Meteor.call("admin_#{Session.get('collection_name')}_update",
+      Session.get('document_id'), $set: update_dict)
     Session.set('admin_should_show', true)
     setTimeout (->
       Session.set('admin_should_show', false)
