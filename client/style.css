@@ -1,5 +1,5 @@
 .spinner {
-  padding-top: 50px;
+  margin-top: 50px;
 }
 
 .z-mongo-admin .navbar > .navbar-inner > .container {
@@ -7,8 +7,8 @@
 }
 
 .z-mongo-admin > .container {
-  margin-top: 0px;
-  padding-top: 50px;
+  margin-top: 50px;
+  padding-top: 10px;
   overflow-x: auto;
   border: 1px solid #eee;
   padding-left: 10px;
