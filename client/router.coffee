@@ -1,4 +1,5 @@
 Meteor.subscribe 'admin'
+Meteor.subscribe 'adminUser'
 
 setup_collection = (collection_name) ->
   subscription_name = "admin_#{collection_name}"
