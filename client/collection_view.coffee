@@ -66,7 +66,6 @@ Template.collection_view.events
       field_name = $this.data('field')
       update_dict = {}
       update_dict[field_name] = updated_val
-      console.log update_dict
       get_collection().update(id, $set: update_dict)
 
   'change .column_filter': (event...) ->
