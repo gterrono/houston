@@ -29,9 +29,9 @@
           {{#each rows }}
           <tr>
             <td><a href="{{document_url}}">{{document_id}}</a></td>
-            {{#each values_in_order}}
-            <td>{{ . }}</td>
-            {{/each}}
+          {{#each values_in_order}}
+            <td data-field='{{ name }}' class='collection-field'>{{ value }}</td>
+          {{/each}}
           </tr>
           {{/each}}
         </tbody>
