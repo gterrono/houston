@@ -2,6 +2,11 @@
   padding-top: 50px;
 }
 
-.content {
-  padding-top: 50px;
+.z-mongo-admin .navbar > .navbar-inner > .container {
+  margin-top: 0px;
+}
+
+.z-mongo-admin > .container {
+  margin-top: 0px;
+  padding-top: 40px;
 }
