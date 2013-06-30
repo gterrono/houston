@@ -10,10 +10,13 @@ setup_collection = (collection_name) ->
   Session.set("collection_name", collection_name)
   return window[inspector_name]
 
+Template.admin.helpers
+  collections: -> Session.get("collections")
+
 Meteor.Router.add
   '/': 'homePage'
   '/admin': ->
-    Template.admin.collections = Collections.find().fetch()
+    Session.set "collections", Collections.find().fetch()
     return 'admin'
 
   '/admin/login': 'adminLogin'
