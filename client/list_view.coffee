@@ -5,7 +5,7 @@ Template.list_view.helpers
   rows: ->
     get_collection()?.find().fetch()
   values: ->
-    _.values(_.omit(@, '_id'))  # _id is special-cased in html
+    _.values(_.omit(@, '_id'))  # _id is special-cased in template
 
 get_collection = -> window["inspector_#{Session.get('collection_name')}"]
 

@@ -22,16 +22,14 @@ Meteor.Router.add
     setup_collection collection_name
     return 'list_view'
 
-  '/admin/:collection/:document': (collection_name, document_id) ->
+  '/admin/:collection/:document': as: 'document_view', to: (collection_name, document_id) ->
     setup_collection collection_name
     Session.set('document_id', document_id)
     return 'document_view'
 
   '*': '404'
 
-
 Meteor.Router.filters
-  'isAdmin': (page) ->
-    if Meteor.user()?.profile.admin then page else 'adminLogin'
+  'isAdmin': (page) -> if Meteor.user()?.profile.admin then page else 'adminLogin'
 
 Meteor.Router.filter 'isAdmin', only: ['admin', 'list_view', 'document_view']
