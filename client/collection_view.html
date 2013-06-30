@@ -1,34 +1,37 @@
 <template name="collection_view">
-  <div>
-    <p>Filter by (mongo query):
-      <textarea placeholder="IE name: 'Joe'"id="filter_selector" />
-    </p>
-  </div>
-  <table class="table table-bordered table-striped">
-    <thead>
-      <tr>
-      {{# each headers }}
-        <th><a href="#" class="sort">{{name}} ({{type}})</a></th>
-      {{/each}}
-      </tr>
-      <tr>
-        <th>Filter:</th>
-        {{# each nonid_headers }}
-        <th>
-          <input name="{{name}}" class="column_filter input-small" type="text" />
-        </th>
-        {{/each}}
-      </tr>
-    </thead>
-    <tbody>
-      {{#each rows }}
+  {{> admin_navbar}}
+  <div class="container content">
+    <div>
+      <p>Filter by (mongo query):
+        <textarea placeholder="IE name: 'Joe'"id="filter_selector" />
+      </p>
+    </div>
+    <table class="table table-bordered table-striped">
+      <thead>
+        <tr>
+          {{# each headers }}
+          <th><a href="#" class="sort">{{name}} ({{type}})</a></th>
+          {{/each}}
+        </tr>
+        <tr>
+          <th>Filter:</th>
+          {{# each nonid_headers }}
+          <th>
+            <input name="{{name}}" class="column_filter input-small" type="text" />
+          </th>
+          {{/each}}
+        </tr>
+      </thead>
+      <tbody>
+        {{#each rows }}
         <tr>
           <td><a href="{{document_url}}">{{document_id}}</a></td>
-        {{#each values_in_order}}
+          {{#each values_in_order}}
           <td>{{ . }}</td>
-        {{/each}}
+          {{/each}}
         </tr>
-      {{/each}}
-    </tbody>
-  </table>
+        {{/each}}
+      </tbody>
+    </table>
+  </div>
 </template>

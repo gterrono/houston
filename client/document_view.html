@@ -1,19 +1,22 @@
 <template name="document_view">
-  <h1> Collection: <a href="/admin/{{collection_name}}">{{collection_name}}</a> </h1>
-  <div id="doc-saved" class="alert alert-success hide">Your document was saved!</div>
-  <table class='table'>
-    <tbody>
-      {{# each fields }}
-        <tr>
-          <td>{{ field_name }}:</td>
-          {{#if field_is_id}}
-            <td>{{ field_value }}</td>
-          {{else}}
-          <td><input type="text" class="field" name="{{ field_name }}" value="{{ field_value }}"></td>
-          {{/if}}
-        </tr>
-      {{/each}}
-    </tbody>
-  </table>
-  <div class="btn save">Save</div>
+  {{> admin_navbar}}
+    <div class="container content">
+    <h1> Collection: <a href="/admin/{{collection_name}}">{{collection_name}}</a> </h1>
+    <div id="doc-saved" class="alert alert-success hide">Your document was saved!</div>
+    <table class='table'>
+      <tbody>
+        {{# each fields }}
+          <tr>
+            <td>{{ field_name }}:</td>
+            {{#if field_is_id}}
+              <td>{{ field_value }}</td>
+            {{else}}
+            <td><input type="text" class="field" name="{{ field_name }}" value="{{ field_value }}"></td>
+            {{/if}}
+          </tr>
+        {{/each}}
+      </tbody>
+    </table>
+    <div class="btn save">Save</div>
+  </div>
 </template>
