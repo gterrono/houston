@@ -13,12 +13,6 @@ Template.collection_view.helpers
   values_in_order: ->
     fields_in_order = _.pluck(get_collection_view_fields(), 'name')
     names_in_order = _.clone fields_in_order
-    lookup = (object, path) ->
-      result = object
-      for part in path.split(".")
-        result = result[part]
-        return '' unless result?  # quit if you can't find anything here
-      if typeof result isnt 'object' then result else ''
     values = (lookup(@, field_name) for field_name in fields_in_order[1..])  # skip _id
     ({value, name} for [value, name] in _.zip values, names_in_order[1..])
 
