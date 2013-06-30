@@ -1,4 +1,4 @@
-Template.list_view.helpers
+Template.collection_view.helpers
   headers: -> get_fields get_collection()
   document_url: -> "/admin/#{Session.get('collection_name')}/#{@._id}"
   document_id: -> @._id
@@ -7,7 +7,7 @@ Template.list_view.helpers
     sort_by[Session.get('key')] = Session.get('sort_order')
     get_collection()?.find({}, {sort: sort_by}).fetch()
   values: ->
-    _.values(_.omit(@, '_id'))  # _id is special-cased in html
+    _.values(_.omit(@, '_id'))  # _id is special-cased in template
 
 get_collection = -> window["inspector_#{Session.get('collection_name')}"]
 
@@ -20,7 +20,7 @@ get_fields = (collection) ->
 
   (name: key, type: value for key, value of key_to_type)
 
-Template.list_view.events
+Template.collection_view.events
   "click a.sort": (e) ->
       e.preventDefault()
       if (Session.get('key') == this.name)
