@@ -7,8 +7,16 @@
   <table class="table table-bordered">
     <tr>
     {{# each headers }}
-    <th><a href="#" class="sort">{{name}} ({{type}})</a></th>
+      <th><a href="#" class="sort">{{name}} ({{type}})</a></th>
     {{/each}}
+    </tr>
+    <tr>
+      <th>Filter:</th>
+      {{# each nonid_headers }}
+      <th>
+        <input name="{{name}}" class="column_filter input-small" type="text" />
+      </th>
+      {{/each}}
     </tr>
     {{#each rows }}
       <tr>
