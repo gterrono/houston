@@ -6,7 +6,11 @@ setup_collection = (collection_name) ->
   inspector_name = "inspector_#{collection_name}"
 
   unless window[inspector_name]
-    window[inspector_name] = new Meteor.Collection(collection_name)
+    # you can only instantiate a collection once
+    try
+      window[inspector_name] = new Meteor.Collection(collection_name)
+    catch e
+      window[inspector_name] = Meteor._LocalCollectionDriver.collections[collection_name]
   Meteor.subscribe subscription_name
   Session.set("collection_name", collection_name)
   return window[inspector_name]
@@ -15,10 +19,11 @@ Template.db_view.helpers
   collections: -> Session.get("collections")
 
 Meteor.Router.add
-  '/admin/login': 'admin_login'
   '/admin': ->
     Session.set "collections", Collections.find().fetch()
     return 'db_view'
+
+  '/admin/login': 'admin_login'
 
   '/admin/:collection': (collection_name) ->
     collection = setup_collection collection_name
@@ -28,8 +33,6 @@ Meteor.Router.add
     collection = setup_collection collection_name
     Session.set('document_id', document_id)
     return 'document_view'
-
-  '*': '404'
 
 Meteor.Router.filters
   'isAdmin': (page) -> if Meteor.user()?.profile.admin then page else 'admin_login'
