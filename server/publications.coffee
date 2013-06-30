@@ -1,3 +1,5 @@
+root = exports ? this
+
 Dummy = new Meteor.Collection("system.dummy")  # hack.
 collections = {'users': Meteor.users}
 
@@ -14,8 +16,10 @@ Meteor.startup ->
         try
           collections[name] = new Meteor.Collection(name)
         catch e
-          collections[name] = Meteor._LocalCollectionDriver.collections[name]
-          console.log collections[name]
+          # fuck bitches, get collections
+          for key, value of root
+            if name == value._name
+              collections[name] = value
           console.log e
 
         methods = {}
@@ -26,12 +30,14 @@ Meteor.startup ->
           collections[name].insert(doc)
 
         methods["admin_#{name}_update"] = (id, update_dict) ->
-          console.log 'in method'
           return unless @userId
           user = Meteor.users.findOne(@userId)
           return unless user?.profile.admin
-          console.log 'here'
-          collections[name].update({_id: id}, update_dict)
+          if collections[name].findOne(id)
+            collections[name].update(id, update_dict)
+          else
+            id = collections[name].findOne(new Meteor.Collection.ObjectID(id))
+            collections[name].update(id, update_dict)
 
         Meteor.methods methods
 

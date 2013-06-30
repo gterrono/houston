@@ -66,7 +66,7 @@ Template.collection_view.events
       field_name = $this.data('field')
       update_dict = {}
       update_dict[field_name] = updated_val
-      console.log update_dict
+      console.log updated_val
       Meteor.call("admin_#{Session.get('collection_name')}_update",
         id, $set: update_dict)
 

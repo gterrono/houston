@@ -17,6 +17,12 @@ Template.document_view.events
   'click .save': (e) ->
     e.preventDefault()
     old_object = get_collection().findOne _id: Session.get('document_id')
+    unless old_object
+      try
+        old_object = get_collection().findOne _id: new Meteor.Collection.ObjectID(Session.get('document_id'))
+      catch error
+        console.log error
+    console.log old_object
     update_dict = {}
     for field in $('.field')
       unless field.name is '_id'
