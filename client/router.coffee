@@ -11,7 +11,6 @@ Meteor.Router.add
   '/admin': 'adminIndex'
   '/admin/login': 'adminLogin'
   '/': 'homePage'
-  '/admin': 'admin'
   '/admin/:collection': (collection_name) ->
     setup_collection collection_name
     return 'list_view'
