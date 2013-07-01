@@ -55,7 +55,6 @@ window.get_fields = (documents) ->
   (name: key, type: value for key, value of key_to_type)
 
 window.lookup = (object, path) ->
-  console.log "looking up #{object} . #{path}"
   return '' unless object?
   return object._id._str if path =='_id'and typeof object._id == 'object'
   result = object

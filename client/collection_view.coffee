@@ -50,7 +50,6 @@ Template.collection_view.events
       field_name = $this.data('field')
       update_dict = {}
       update_dict[field_name] = updated_val
-      console.log updated_val
       Meteor.call("admin_#{Session.get('collection_name')}_update",
         id, $set: update_dict)
 
@@ -64,16 +63,13 @@ Template.collection_view.events
   'click .admin-delete-doc': (e) ->
     e.preventDefault()
     id = $(e.currentTarget).data('id')
-    console.log id
     Meteor.call "admin_#{Session.get('collection_name')}_delete", id
 
   'click .admin-create-doc': (e) ->
     e.preventDefault()
     $create_row = $('#admin-create-row')
-    console.log $create_row
     new_doc = {}
     for field in $create_row.find('input[type="text"]')
       new_doc[field.name] = field.value
       field.value = ''
-    console.log new_doc
     Meteor.call "admin_#{Session.get('collection_name')}_insert", new_doc
