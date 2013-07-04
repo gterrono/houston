@@ -10,6 +10,8 @@ mrt install router
 mrt install z-mongo-admin
 ```
 
+Once installed, navigate to `/admin` to set up your admin account.
+
 Demo
 ------------
 * [Dinners](http://interndinners.meteor.com/dinners)
