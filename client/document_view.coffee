@@ -52,3 +52,6 @@ Template.document_view.events
     Meteor.go("/admin/")
   "click a.collection": (e) ->
     Meteor.go("/admin/#{Session.get('collection_name')}")
+
+Template.document_view.rendered = ->
+  $('textarea.field').autosize()
