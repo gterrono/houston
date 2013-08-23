@@ -32,7 +32,9 @@
     {{#if field_is_id}}
       <td>{{ field_value }}</td>
     {{else}}
-    <td><input type="text" class="field" name="{{ field_name }}" value="{{ field_value }}"></td>
+    <td>
+        <textarea class="field" name="{{ field_name }}">{{ field_value }}</textarea>
+    </td>
     {{/if}}
   </tr>
 </template>

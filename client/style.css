@@ -12,3 +12,10 @@
   overflow-x: auto;
   border: 1px solid #eee;
 }
+
+.z-mongo-admin textarea {
+    width: 100%;
+    -moz-box-sizing: border-box;
+    -webkit-box-sizing: border-box;
+    box-sizing: border-box;
+}
