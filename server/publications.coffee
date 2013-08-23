@@ -80,7 +80,10 @@ Meteor.startup ->
 
   fn = Meteor.bindEnvironment save_collections, (e) ->
     console.log e
-  Meteor._RemoteCollectionDriver.mongo.db.collections fn
+
+  # MongoInternals is the 'right' solution as of 0.6.5
+  mongo_driver = MongoInternals?.defaultRemoteCollectionDriver() or Meteor._RemoteCollectionDriver
+  mongo_driver.mongo.db.collections fn
 
 publish_to_admin = (name, publish_func) ->
   Meteor.publish name, ->
