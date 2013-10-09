@@ -3,3 +3,4 @@ meteorite
 
 *.swp
 *.DS_Store
+.build*

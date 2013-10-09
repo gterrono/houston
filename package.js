@@ -6,7 +6,7 @@ Package.on_use(function(api) {
   api.use("coffeescript", ['client', 'server']);
   api.use('accounts-base', ['client', 'server']);
   api.use('accounts-password', ['client', 'server']);
-  api.use(['templating'], 'client');
+  api.use(['templating', 'router', 'spin'], 'client');
 
   // load html first, https://github.com/meteor/meteor/issues/282
   api.add_files('client/main.html', 'client');
