@@ -15,6 +15,13 @@ Template.collection_view.helpers
     names_in_order = _.clone fields_in_order
     values = (lookup(@, field_name) for field_name in fields_in_order[1..])  # skip _id
     ({value, name} for [value, name] in _.zip values, names_in_order[1..])
+  filter_value: ->
+    if Session.get('top_selector') and Session.get('top_selector')[@name]
+      Session.get('top_selector')[@name]
+    else if Session.get('field_selectors') and Session.get('field_selectors')[@name]
+      Session.get('field_selectors')[@name]
+    else
+      ''
 
 get_collection = -> window["inspector_#{Session.get('collection_name')}"]
 get_collection_view_fields = -> get_fields(get_collection().find({}, limit: 50).fetch())

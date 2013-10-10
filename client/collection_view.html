@@ -45,7 +45,7 @@
                 <legend>Filter</legend>
                 {{# each nonid_headers }}
                 <label>{{name}}</label>
-                <input name="{{name}}" class="column_filter input-small" type="text" />
+                <input name="{{name}}" class="column_filter input-small" type="text" value="{{filter_value}}"/>
                 {{/each}}
             </form>
             <form>
