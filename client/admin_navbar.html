@@ -13,6 +13,13 @@
             <ul class="nav">
             </ul>
           </div>
+          <ul class="nav pull-right">
+            {{#if currentUser}}
+              <li>
+                <a class="logout" href="#">Log out</a>
+              </li>
+            {{/if}}
+          </ul>
         </div>
       </div>
     </div>
