@@ -7,8 +7,14 @@ Template.collection_view.helpers
   rows: ->
     sort_by = {}
     sort_by[Session.get('key')] = Session.get('sort_order')
-    query = _.extend({}, (Session.get('top_selector')),
-                     (Session.get('field_selectors')))
+    query = {}
+    fill_query_with_regex = (session_key) ->
+      return unless Session.get(session_key)?
+      for key, val of Session.get(session_key)
+        # From http://stackoverflow.com/questions/3115150/how-to-escape-regular-expression-special-characters-using-javascript#answer-9310752
+        query[key] = $regex: val.replace(/[-[\]{}()*+?.,\\^$|#\s]/g, "\\$&")
+    fill_query_with_regex('top_selector')
+    fill_query_with_regex('field_selectors')
     get_collection()?.find(query, {sort: sort_by}).fetch()
   values_in_order: ->
     fields_in_order = _.pluck(get_collection_view_fields(), 'name')
@@ -60,7 +66,7 @@ Template.collection_view.events
       Meteor.call("admin_#{Session.get('collection_name')}_update",
         id, $set: update_dict)
 
-  'change .column_filter': (event...) ->
+  'keyup .column_filter': (e) ->
     field_selectors = {}
     $('.column_filter').each (idx, item) ->
       if item.value
