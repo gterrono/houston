@@ -4,6 +4,8 @@ Template.collection_view.helpers
   collection_name: -> "#{Session.get('collection_name')}"
   document_url: -> "/admin/#{Session.get('collection_name')}/#{@_id}"
   document_id: -> @_id + ""
+  num_of_records: -> get_collection().find().count() or "no"
+  pluralize: -> 's' unless get_collection().find().count() == 1
   rows: ->
     sort_by = {}
     sort_by[Session.get('key')] = Session.get('sort_order')
