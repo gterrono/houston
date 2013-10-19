@@ -15,9 +15,6 @@ setup_collection = (collection_name) ->
   Session.set("collection_name", collection_name)
   return window[inspector_name]
 
-Template.db_view.helpers
-  collections: -> Session.get("collections")
-
 Meteor.Router.add
   '/admin': ->
     Session.set "collections", Collections.find().fetch()
