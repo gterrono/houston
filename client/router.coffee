@@ -3,17 +3,10 @@ Meteor.subscribe 'adminUser'
 
 setup_collection = (collection_name) ->
   subscription_name = "admin_#{collection_name}"
-  inspector_name = "inspector_#{collection_name}"
-
-  unless window[inspector_name]
-    # you can only instantiate a collection once
-    try
-      window[inspector_name] = new Meteor.Collection(collection_name)
-    catch e
-      window[inspector_name] = Meteor._LocalCollectionDriver.collections[collection_name]
+  collection = get_collection(collection_name)
   Meteor.subscribe subscription_name
   Session.set("collection_name", collection_name)
-  return window[inspector_name]
+  return collection
 
 Meteor.Router.add
   '/admin': ->

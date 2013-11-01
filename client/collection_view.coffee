@@ -4,8 +4,9 @@ Template.collection_view.helpers
   collection_name: -> "#{Session.get('collection_name')}"
   document_url: -> "/admin/#{Session.get('collection_name')}/#{@_id}"
   document_id: -> @_id + ""
-  num_of_records: -> get_collection().find().count() or "no"
-  pluralize: -> 's' unless get_collection().find().count() == 1
+  num_of_records: ->
+    get_current_collection().find().count() or "no"
+  pluralize: -> 's' unless get_current_collection().find().count() == 1
   rows: ->
     sort_by = {}
     sort_by[Session.get('key')] = Session.get('sort_order')
@@ -17,7 +18,7 @@ Template.collection_view.helpers
         query[key] = $regex: val.replace(/[-[\]{}()*+?.,\\^$|#\s]/g, "\\$&")
     fill_query_with_regex('top_selector')
     fill_query_with_regex('field_selectors')
-    get_collection()?.find(query, {sort: sort_by}).fetch()
+    get_current_collection()?.find(query, {sort: sort_by}).fetch()
   values_in_order: ->
     fields_in_order = _.pluck(get_collection_view_fields(), 'name')
     names_in_order = _.clone fields_in_order
@@ -31,8 +32,8 @@ Template.collection_view.helpers
     else
       ''
 
-get_collection = -> window["inspector_#{Session.get('collection_name')}"]
-get_collection_view_fields = -> get_fields(get_collection().find({}, limit: 50).fetch())
+get_current_collection = -> get_collection(Session.get('collection_name'))
+get_collection_view_fields = -> get_fields(get_current_collection().find({}, limit: 50).fetch())
 
 Template.collection_view.events
   "click a.home": (e) ->
