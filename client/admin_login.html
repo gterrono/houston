@@ -5,36 +5,36 @@
     {{else}}
       {{> admin_navbar}}
       <div class="container content">
-        {{#if notLoggedIn}}
-          <h1>
-            {{#if adminAccountNotExist}}
-              Make an admin account
-            {{else}}
-              Log In
-            {{/if}}
-          </h1>
-          <form id="sign-in-form">
-            <div class='control-group'>
-              <label class='control-label' for='email'>Email</label>
-              <div class='controls'>
-                <input name="email" id='email' type="text">
-              </div>
-            </div>
-            <div class='control-group'>
-              <label class='control-label' for='password'>Password</label>
-              <div class='controls'>
-                <input name="password" id='password' type="password">
-              </div>
-            </div>
-            <div>
-              <input class="btn" type="submit" value="Sign {{#if adminAccountNotExist}}up{{else}}in{{/if}}">
-            </div>
-          </form>
-        {{else}}
-          <h1>Log out</h1>
+        {{#if logged_in }}
+          <h1>Currently logged in</h1>
           <div>
+            {{#unless admin_user_exists}}
+              <a class="become-admin btn" href="#">Claim Admin</a>
+            {{/unless}}
             <a class="logout btn" href="#">Log out</a>
           </div>
+          {{else}}
+            {{! nobody is logged in - sign in or sign up}}
+            <h1>
+              {{#if admin_user_exists}} Log In {{else}} Create an admin account {{/if}}
+            </h1>
+            <form id="sign-in-form">
+              <div class='control-group'>
+                <label class='control-label' for='email'>Email</label>
+                <div class='controls'>
+                  <input name="email" id='email' type="text">
+                </div>
+              </div>
+              <div class='control-group'>
+                <label class='control-label' for='password'>Password</label>
+                <div class='controls'>
+                  <input name="password" id='password' type="password">
+                </div>
+              </div>
+              <div>
+                <input class="btn" type="submit" value="Sign {{#if adminAccountNotExist}}up{{else}}in{{/if}}">
+              </div>
+            </form>
         {{/if}}
       </div>
     {{/if}}
