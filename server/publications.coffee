@@ -61,6 +61,12 @@ Meteor.startup ->
         set_up_collection(name, collections[name])
 
   Meteor.methods
+    make_admin: (userId) ->
+      # limit one admin
+      return if Meteor.users.findOne {'profile.admin': true}
+      Meteor.users.update userId, $set: {'profile.admin': true}
+      return True
+
     setupNewCollection: (name) ->
       return unless @userId
       user = Meteor.users.findOne(@userId)
