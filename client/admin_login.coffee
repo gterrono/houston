@@ -11,6 +11,7 @@ Template.admin_login.events(
     if Meteor.users.findOne('profile.admin': true)
       Meteor.loginWithPassword(email, password)
     else
+      # TODO: unbreak if this fails
       Accounts.createUser
         email: $('input[name="email"]').val()
         password: $('input[name="password"]').val()
