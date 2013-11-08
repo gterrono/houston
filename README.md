@@ -5,8 +5,6 @@ ZMA (ZMA Meteor Admin) is a zero-config, [Django Admin-like](https://docs.django
 Install
 ----------
 ```
-mrt add spin
-mrt add router
 mrt add z-mongo-admin
 ```
 

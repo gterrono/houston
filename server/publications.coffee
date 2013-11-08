@@ -48,13 +48,11 @@ Meteor.startup ->
       when (col.collectionName.indexOf "system.") isnt 0 and
            (col.collectionName.indexOf "admin_") isnt 0)
 
-    # fucking closures bro
     collection_names.forEach (name) ->
       unless name of collections
         try
           collections[name] = new Meteor.Collection(name)
         catch e
-          # fuck bitches, get collections
           for key, value of root
             if name == value._name
               collections[name] = value
@@ -63,6 +61,12 @@ Meteor.startup ->
         set_up_collection(name, collections[name])
 
   Meteor.methods
+    make_admin: (userId) ->
+      # limit one admin
+      return if Meteor.users.findOne {'profile.admin': true}
+      Meteor.users.update userId, $set: {'profile.admin': true}
+      return True
+
     setupNewCollection: (name) ->
       return unless @userId
       user = Meteor.users.findOne(@userId)

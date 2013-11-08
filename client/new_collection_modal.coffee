@@ -4,14 +4,8 @@ Template.admin_new_collection.events
     collection_name = $('#admin-collection-name').val()
     Meteor.call('setupNewCollection', collection_name, (e, r) ->
       Meteor.subscribe "admin_#{collection_name}"
-      inspector_name = "inspector_#{collection_name}"
-
-      unless window[inspector_name]
-        # you can only instantiate a collection once
-        try
-          window[inspector_name] = new Meteor.Collection(collection_name)
-        catch e
-          window[inspector_name] = Meteor._LocalCollectionDriver.collections[collection_name]
+      # TODO - dont stash on global object, FFS.
+      window[inspector_name] = get_collection(collection_name)
       $form = $('#admin-new-collection-form')
       new_doc = {}
       for group in $form.find('.admin-field-group')

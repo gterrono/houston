@@ -1,6 +1,6 @@
 Template.admin_login.helpers(
-  notLoggedIn: -> not Meteor.user()
-  adminAccountNotExist: -> !Meteor.users.findOne 'profile.admin': true
+  logged_in: -> Meteor.user()
+  admin_user_exists: -> Meteor.users.findOne 'profile.admin': true
 )
 
 Template.admin_login.events(
@@ -11,6 +11,7 @@ Template.admin_login.events(
     if Meteor.users.findOne('profile.admin': true)
       Meteor.loginWithPassword(email, password)
     else
+      # TODO: unbreak if this fails
       Accounts.createUser
         email: $('input[name="email"]').val()
         password: $('input[name="password"]').val()
@@ -20,4 +21,7 @@ Template.admin_login.events(
   'click .logout': (e) ->
     e.preventDefault()
     Meteor.logout()
+  'click .become-admin': (e) ->
+    Meteor.call('make_admin', Meteor.userId())
+    e.preventDefault()
 )
