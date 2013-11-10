@@ -39,7 +39,13 @@ Meteor.startup ->
         collection.find()
       catch e
         console.log e
-    Collections.insert {name} unless Collections.findOne {name}
+    collection.find().observe
+      added: (document) -> Collections.update {name}, {$inc: {count: 1}}
+      removed: (document) -> Collections.update {name}, {$inc: {count: -1}}
+    if Collections.findOne {name}
+      Collections.update {name}, {$set: count: collection.find().count()}
+    else
+      Collections.insert {name, count: collection.find().count()}
 
 
   Dummy.findOne()  # hack

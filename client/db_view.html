@@ -12,11 +12,15 @@
           <thead>
             <tr>
               <th>Collection Name</th>
+              <th>Number of Records</th>
             </tr>
           </thead>
           <tbody>
             {{#each collections}}
-            <tr><td><a href='/admin/{{ name }}'>{{name}}</a></td></tr>
+            <tr>
+              <td><a href='/admin/{{ name }}'>{{name}}</a></td>
+              <td>{{ num_of_records }}</td>
+            </tr>
             {{/each}}
           </tbody>
         </table>

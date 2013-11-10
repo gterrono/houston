@@ -23,5 +23,3 @@ window.get_collection = (collection_name) ->
           Meteor._LocalCollectionDriver.collections[collection_name]
 
   return COLLECTION_STORAGE[inspector_name]
-
-
