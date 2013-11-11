@@ -4,7 +4,7 @@ Meteor.subscribe 'adminUser'
 setup_collection = (collection_name) ->
   subscription_name = "admin_#{collection_name}"
   collection = get_collection(collection_name)
-  Meteor.subscribe subscription_name
+  window.inspector_subscription = Meteor.subscribeWithPagination subscription_name, {}, {}, 20
   Session.set("collection_name", collection_name)
   return collection
 

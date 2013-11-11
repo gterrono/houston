@@ -89,3 +89,6 @@ Template.collection_view.events
       new_doc[field.name] = field.value
       field.value = ''
     Meteor.call "admin_#{Session.get('collection_name')}_insert", new_doc
+
+  'click #admin-load-more': (e) ->
+    window.inspector_subscription.loadNextPage()
