@@ -2,9 +2,13 @@ Meteor.subscribe 'admin'
 Meteor.subscribe 'adminUser'
 
 setup_collection = (collection_name) ->
+  COLLECTION_STORAGE = window # TODO find a better global object
+  COLLECTION_STORAGE.admin_page_length = 20
   subscription_name = "admin_#{collection_name}"
   collection = get_collection(collection_name)
-  window.inspector_subscription = Meteor.subscribeWithPagination subscription_name, {}, {}, 20
+  COLLECTION_STORAGE.inspector_subscription =
+    Meteor.subscribeWithPagination subscription_name, {}, {},
+      COLLECTION_STORAGE.admin_page_length
   Session.set("collection_name", collection_name)
   return collection
 
