@@ -23,6 +23,8 @@ resubscribe = ->
       get_sort_by(), get_filter_query(),
       COLLECTION_STORAGE.admin_page_length
 
+collection_count = -> Collections.findOne(name: Session.get('collection_name')).count
+
 Template.collection_view.helpers
   headers: -> get_collection_view_fields()
   nonid_headers: -> get_collection_view_fields()[1..]
@@ -30,7 +32,7 @@ Template.collection_view.helpers
   document_url: -> "/admin/#{Session.get('collection_name')}/#{@_id}"
   document_id: -> @_id + ""
   num_of_records: ->
-    get_current_collection().find().count() or "no"
+    collection_count() or "no"
   pluralize: -> 's' unless get_current_collection().find().count() == 1
   rows: ->
     get_current_collection()?.find(get_filter_query(), {sort: get_sort_by()}).fetch()
@@ -109,3 +111,9 @@ Template.collection_view.events
 
   'click #admin-load-more': (e) ->
     window.inspector_subscription.loadNextPage()
+
+  'mousewheel': (e) ->
+    $win = $(window)
+    if $win.scrollTop() + 300 > $(document).height() - $win.height() and
+      window.inspector_subscription.limit() < collection_count()
+        window.inspector_subscription.loadNextPage()

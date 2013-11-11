@@ -97,11 +97,6 @@ Meteor.startup ->
   mongo_driver = MongoInternals?.defaultRemoteCollectionDriver() or Meteor._RemoteCollectionDriver
   mongo_driver.mongo.db.collections fn
 
-publish_to_admin_with_pagination = (name, publish_func) ->
-  Meteor.publish name, ->
-    if Meteor.users.findOne(_id: @userId, 'profile.admin': true)
-      publish_func()
-
 
 # publish our own internal state
 Meteor.publish "admin", ->
