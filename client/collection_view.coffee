@@ -52,7 +52,7 @@ Template.collection_view.helpers
       ''
 
 get_current_collection = -> get_collection(Session.get('collection_name'))
-get_collection_view_fields = -> collection_info().fields
+get_collection_view_fields = -> collection_info().fields or []
 
 Template.collection_view.events
   "click a.home": (e) ->
