@@ -42,12 +42,16 @@ Meteor.startup ->
           console.log e
 
     collection.find().observe
-      added: (document) -> Collections.update {name}, {$inc: {count: 1}}
+      added: (document) ->
+        Collections.update {name},
+          $inc: {count: 1},
+          $addToSet: fields: get_field_names([document])
       removed: (document) -> Collections.update {name}, {$inc: {count: -1}}
+    fields = get_field_names(collection.find().fetch())
     if Collections.findOne {name}
-      Collections.update {name}, {$set: count: collection.find().count()}
+      Collections.update {name}, {$set: count: collection.find().count(), fields: fields}
     else
-      Collections.insert {name, count: collection.find().count()}
+      Collections.insert {name, count: collection.find().count(), fields: fields}
 
 
   Dummy.findOne()  # hack

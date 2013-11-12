@@ -23,7 +23,9 @@ resubscribe = ->
       get_sort_by(), get_filter_query(),
       COLLECTION_STORAGE.admin_page_length
 
-collection_count = -> Collections.findOne(name: Session.get('collection_name')).count
+collection_info = -> Collections.findOne(name: Session.get('collection_name'))
+
+collection_count = -> collection_info().count
 
 Template.collection_view.helpers
   headers: -> get_collection_view_fields()
@@ -37,7 +39,7 @@ Template.collection_view.helpers
   rows: ->
     get_current_collection()?.find(get_filter_query(), {sort: get_sort_by()}).fetch()
   values_in_order: ->
-    fields_in_order = _.pluck(get_collection_view_fields(), 'name')
+    fields_in_order = get_collection_view_fields()
     names_in_order = _.clone fields_in_order
     values = (lookup(@, field_name) for field_name in fields_in_order[1..])  # skip _id
     ({value, name} for [value, name] in _.zip values, names_in_order[1..])
@@ -50,7 +52,7 @@ Template.collection_view.helpers
       ''
 
 get_current_collection = -> get_collection(Session.get('collection_name'))
-get_collection_view_fields = -> get_fields(get_current_collection().find({}, limit: 50).fetch())
+get_collection_view_fields = -> collection_info().fields
 
 Template.collection_view.events
   "click a.home": (e) ->
@@ -58,12 +60,13 @@ Template.collection_view.events
 
   "click a.sort": (e) ->
       e.preventDefault()
-      if (Session.get('key') == this.name)
+      if (Session.get('key') == this.toString())
         Session.set('sort_order', Session.get('sort_order') * - 1)
       else
-        Session.set('key', this.name)
+        Session.set('key', this.toString())
         Session.set('sort_order', 1)
       resubscribe()
+
   'keyup #filter_selector': (event) ->
     return unless event.keyCode is 13  # enter
     try
@@ -71,6 +74,8 @@ Template.collection_view.events
       Session.set('top_selector', selector_json)
     catch error
       Session.set('top_selector', {})
+    resubscribe()
+
   'dblclick .collection-field': (e) ->
     $this = $(e.currentTarget)
     $this.removeClass('collection-field')
@@ -117,3 +122,6 @@ Template.collection_view.events
     if $win.scrollTop() + 300 > $(document).height() - $win.height() and
       window.inspector_subscription.limit() < collection_count()
         window.inspector_subscription.loadNextPage()
+
+  'submit form': (e) ->
+    e.preventDefault()

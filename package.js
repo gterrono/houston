@@ -29,7 +29,7 @@ Package.on_use(function(api) {
     'client/db_view.coffee'],
   'client');
 
-  api.add_files('lib/collections.coffee', ['client', 'server']);
+  api.add_files(['lib/collections.coffee', 'lib/shared.coffee'], ['client', 'server']);
 
   api.add_files('server/publications.coffee', 'server');
 });
