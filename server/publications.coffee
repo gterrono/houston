@@ -62,7 +62,7 @@ Meteor.startup ->
           for key, value of root
             if name == value._name
               collections[name] = value
-          console.log e
+          console.log e unless collections[name]?
 
         set_up_collection(name, collections[name])
 
