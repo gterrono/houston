@@ -86,6 +86,16 @@ Template.collection_view.events
     $create_row = $('#admin-create-row')
     new_doc = {}
     for field in $create_row.find('input[type="text"]')
-      new_doc[field.name] = field.value
+      # Unflatten the field names (e.g. foods.app -> {foods: {app:}})
+      keys = field.name.split('.')
+      final_key = keys.pop()
+
+      doc_iter = new_doc
+      for key in keys
+        doc_iter[key] = {} unless doc_iter[key]
+        doc_iter = doc_iter[key]
+
+      doc_iter[final_key] = field.value
+
       field.value = ''
     Meteor.call "admin_#{Session.get('collection_name')}_insert", new_doc
