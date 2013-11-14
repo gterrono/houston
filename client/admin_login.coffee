@@ -25,3 +25,6 @@ Template.admin_login.events(
     Meteor.call('make_admin', Meteor.userId())
     e.preventDefault()
 )
+
+Template.admin_login.rendered = ->
+  $(window).unbind('scroll')

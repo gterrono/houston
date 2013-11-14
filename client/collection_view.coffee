@@ -4,6 +4,8 @@ get_sort_by = ->
   return sort_by
 
 get_filter_query = ->
+  # Make find query using the filter stored in the session. The regexes are
+  # escaped, but $regex is used so it can match anywhere in the string.
   query = {}
   fill_query_with_regex = (session_key) ->
     return unless Session.get(session_key)?
@@ -15,6 +17,7 @@ get_filter_query = ->
   return query
 
 resubscribe = ->
+  # Stop the old subscription and resubscribe with the new filter/sort
   COLLECTION_STORAGE = window # TODO find a better global object
   subscription_name = "admin_#{Session.get('collection_name')}"
   COLLECTION_STORAGE.inspector_subscription.stop()
@@ -50,6 +53,13 @@ Template.collection_view.helpers
       Session.get('field_selectors')[@name]
     else
       ''
+
+Template.collection_view.rendered = ->
+  $win = $(window)
+  $win.scroll ->
+    if $win.scrollTop() + 300 > $(document).height() - $win.height() and
+      window.inspector_subscription.limit() < collection_count()
+        window.inspector_subscription.loadNextPage()
 
 get_current_collection = -> get_collection(Session.get('collection_name'))
 get_collection_view_fields = -> collection_info().fields or []
@@ -116,12 +126,6 @@ Template.collection_view.events
 
   'click #admin-load-more': (e) ->
     window.inspector_subscription.loadNextPage()
-
-  'mousewheel': (e) ->
-    $win = $(window)
-    if $win.scrollTop() + 300 > $(document).height() - $win.height() and
-      window.inspector_subscription.limit() < collection_count()
-        window.inspector_subscription.loadNextPage()
 
   'submit form': (e) ->
     e.preventDefault()
