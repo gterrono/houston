@@ -7,7 +7,7 @@ Package.on_use(function(api) {
   api.use('accounts-base', ['client', 'server']);
   api.use('accounts-password', ['client', 'server']);
 
-  api.use(['templating', 'router', 'spin', 'handlebars'], 'client');
+  api.use(['templating', 'router', 'spin', 'handlebars', 'paginated-subscription'], 'client');
 
   // adding our custom version of bootstrap, to ensure no-conflict with
   // whichever CSS framework the client app uses.
@@ -27,7 +27,7 @@ Package.on_use(function(api) {
     'client/admin_navbar.coffee', 'client/db_view.coffee'],
   'client');
 
-  api.add_files('lib/collections.coffee', ['client', 'server']);
+  api.add_files(['lib/collections.coffee', 'lib/shared.coffee'], ['client', 'server']);
 
   api.add_files('server/publications.coffee', 'server');
 });

@@ -34,18 +34,24 @@ Meteor.startup ->
 
     Meteor.methods methods
 
-    publish_to_admin "admin_#{name}", ->
-      try
-        collection.find()
-      catch e
-        console.log e
+    Meteor.publish "admin_#{name}", (sort, filter, limit)->
+      if Meteor.users.findOne(_id: @userId, 'profile.admin': true)
+        try
+          collection.find(filter, sort: sort, limit: limit)
+        catch e
+          console.log e
+
     collection.find().observe
-      added: (document) -> Collections.update {name}, {$inc: {count: 1}}
+      added: (document) ->
+        Collections.update {name},
+          $inc: {count: 1},
+          $addToSet: fields: get_field_names([document])
       removed: (document) -> Collections.update {name}, {$inc: {count: -1}}
+    fields = get_field_names(collection.find().fetch())
     if Collections.findOne {name}
-      Collections.update {name}, {$set: count: collection.find().count()}
+      Collections.update {name}, {$set: count: collection.find().count(), fields: fields}
     else
-      Collections.insert {name, count: collection.find().count()}
+      Collections.insert {name, count: collection.find().count(), fields: fields}
 
 
   Dummy.findOne()  # hack
@@ -95,15 +101,12 @@ Meteor.startup ->
   mongo_driver = MongoInternals?.defaultRemoteCollectionDriver() or Meteor._RemoteCollectionDriver
   mongo_driver.mongo.db.collections fn
 
-publish_to_admin = (name, publish_func) ->
-  Meteor.publish name, ->
-    if Meteor.users.findOne(_id: @userId, 'profile.admin': true)
-      publish_func()
-
 
 # publish our own internal state
+Meteor.publish "admin", ->
+  if Meteor.users.findOne(_id: @userId, 'profile.admin': true)
+    Collections.find()
 
-publish_to_admin "admin", -> Collections.find()
 
 Meteor.publish 'adminUser', ->  # used by login page to see if admin has been created yet
   Meteor.users.find({'profile.admin': true}, fields: 'profile.admin': true)

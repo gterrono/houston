@@ -57,3 +57,4 @@ Template.document_view.events
 
 Template.document_view.rendered = ->
   $('textarea.field').autosize()
+  $(window).unbind('scroll')

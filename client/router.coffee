@@ -2,9 +2,13 @@ Meteor.subscribe 'admin'
 Meteor.subscribe 'adminUser'
 
 setup_collection = (collection_name) ->
+  COLLECTION_STORAGE = window # TODO find a better global object
+  COLLECTION_STORAGE.admin_page_length = 20
   subscription_name = "admin_#{collection_name}"
   collection = get_collection(collection_name)
-  Meteor.subscribe subscription_name
+  COLLECTION_STORAGE.inspector_subscription =
+    Meteor.subscribeWithPagination subscription_name, {}, {},
+      COLLECTION_STORAGE.admin_page_length
   Session.set("collection_name", collection_name)
   return collection
 
@@ -28,21 +32,6 @@ Meteor.Router.filters
   'isAdmin': (page) -> if Meteor.user()?.profile.admin then page else 'admin_login'
 
 Meteor.Router.filter 'isAdmin', only: ['db_view', 'collection_view', 'document_view']
-
-window.get_fields = (documents) ->
-  key_to_type = {_id: 'ObjectId'}
-  find_fields = (document, prefix='') ->
-    for key, value of _.omit(document, '_id')
-      if typeof value is 'object'
-        find_fields value, "#{prefix}#{key}."
-      else if typeof value isnt 'function'
-        full_path_key = "#{prefix}#{key}"
-        key_to_type[full_path_key] = typeof value
-
-  for document in documents
-    find_fields document
-
-  (name: key, type: value for key, value of key_to_type)
 
 window.lookup = (object, path) ->
   return '' unless object?

@@ -17,12 +17,12 @@
             </div>
         </div>
         <div class='row'>
-            <div class="span10" style="overflow-x: scroll">
+            <div class="span10" style="overflow-x: auto">
                 <table class="table table-bordered table-striped table-hover">
                   <thead>
                     <tr>
                       {{# each headers }}
-                      <th><a href="#" class="sort">{{name}}</a></th>
+                      <th><a href="#" class="sort">{{this}}</a></th>
                       {{/each}}
                       <th>Action</th>
                     </tr>
@@ -44,8 +44,8 @@
             <form>
                 <legend>Filter</legend>
                 {{# each nonid_headers }}
-                <label>{{name}}</label>
-                <input name="{{name}}" class="column_filter input-small" type="text" value="{{filter_value}}"/>
+                <label>{{this}}</label>
+                <input name="{{this}}" class="column_filter input-small" type="text" value="{{filter_value}}"/>
                 {{/each}}
             </form>
             <form>
@@ -55,13 +55,13 @@
           </div>
       </div>
         <div class="row">
-            <div class="span12" style="overflow-x: scroll">
+            <div class="span12" style="overflow-x: auto">
             <h3>Create</h3>
             <table class="table table-bordered table-striped">
               <thead>
                 <tr>
                   {{# each nonid_headers }}
-                  <th><a href="#" class="sort">{{name}} ({{type}})</a></th>
+                  <th><a href="#" class="sort">{{this}}</a></th>
                   {{/each}}
                   <th>Action</th>
                 </tr>
