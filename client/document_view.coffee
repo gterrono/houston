@@ -49,9 +49,9 @@ Template.document_view.events
       Session.get('document_id')
     Meteor.Router.to "/admin/#{Session.get('collection_name')}"
   "click a.home": (e) ->
-    Meteor.go("/admin/")
+    Meteor.Router.to("/admin/")
   "click a.collection": (e) ->
-    Meteor.go("/admin/#{Session.get('collection_name')}")
+    Meteor.Router.to("/admin/#{Session.get('collection_name')}")
   'focus textarea.field': (e) ->
     $(e.target).closest('textarea').trigger('autosize.resize');
 

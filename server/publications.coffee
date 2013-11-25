@@ -34,7 +34,7 @@ Meteor.startup ->
 
     Meteor.methods methods
 
-    Meteor.publish "admin_#{name}", (sort, filter, limit)->
+    Meteor.publish "admin_#{name}", (sort, filter, limit) ->
       if Meteor.users.findOne(_id: @userId, 'profile.admin': true)
         try
           collection.find(filter, sort: sort, limit: limit)
@@ -77,7 +77,7 @@ Meteor.startup ->
       # limit one admin
       return if Meteor.users.findOne {'profile.admin': true}
       Meteor.users.update userId, $set: {'profile.admin': true}
-      return True
+      return true
 
     setupNewCollection: (name) ->
       return unless @userId
