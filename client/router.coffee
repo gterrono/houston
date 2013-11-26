@@ -13,18 +13,28 @@ setup_collection = (collection_name, document_id) ->
   Session.set("collection_name", collection_name)
   return [collection, COLLECTION_STORAGE.inspector_subscription]
 
+# wrappers around IronRouter to avoid clobbering route namespaces of host app
+# TODO proper top-level object
+window.houstonize_route = (route_name) -> "houston_#{route_name}"
+window.houston_go = (route_name, options) ->
+  Router.go houstonize_route(route_name), options
+
 Router.map ->
-  @route 'home',
+  houston_route = (route_name, options) =>
+    # to avoid clobbering parent route namespace
+    @route houstonize_route(route_name), options
+
+  houston_route 'home',
     path: '/admin',
     before: ->
       # TODO use wait
       Session.set "collections", Collections.find().fetch()
     template: 'db_view',
-  @route 'login',
+  houston_route 'login',
     path: '/admin/login',
     template: 'admin_login'
 
-  @route 'collection',
+  houston_route 'collection',
     path: '/admin/:collection'
     data: ->
       [collection, @subscription] = setup_collection(@params.collection)
@@ -33,7 +43,7 @@ Router.map ->
 
     template: 'collection_view'
 
-  @route 'document',
+  houston_route 'document',
     path: '/admin/:collection/:document_id'
     data: ->
       Session.set('document_id', @params.document_id)
@@ -46,9 +56,9 @@ mustBeAdmin = ->
   unless Meteor.loggingIn() # don't check for admin user until ready
     unless Meteor.user()?.profile.admin
       @stop()
-      Router.go 'login'
+      houston_go 'login'
 
-Router.before(mustBeAdmin, except: ['login'])
+Router.before(mustBeAdmin, except: [houstonize_route('login')])
 
 window.lookup = (object, path) ->
   return '' unless object?

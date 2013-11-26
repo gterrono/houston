@@ -14,7 +14,7 @@ Template.admin_login.events(
       if error
         alert error
       else
-        Router.go 'home'
+        houston_go 'home'
 
     if Meteor.users.findOne('profile.admin': true)
       Meteor.loginWithPassword email, password, afterLogin
