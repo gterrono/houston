@@ -41,6 +41,7 @@ Router.map ->
 mustBeAdmin = ->
   unless Meteor.loggingIn() # don't check for admin user until ready
     unless Meteor.user()?.profile.admin
+      @stop()
       Router.go 'login'
 
 Router.before(mustBeAdmin, except: ['login'])
