@@ -9,12 +9,8 @@ Template.document_view.helpers
       catch error
         console.log error
     fields = get_fields([document])
-    console.log fields
-    #To make document not go away
-    console.log document
-    l = (field_name: field.name, field_value: lookup(document, field.name) for field in fields)
-    console.log l
-    l
+    return (field_name: field.name, field_value: lookup(document, field.name) for field in fields)
+
   field_is_id: -> @field_name is '_id'
   document_id: -> Session.get('document_id')
 

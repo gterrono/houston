@@ -1,16 +1,17 @@
 Meteor.subscribe 'admin'
 Meteor.subscribe 'adminUser'
 
-setup_collection = (collection_name) ->
+setup_collection = (collection_name, document_id) ->
   COLLECTION_STORAGE = window # TODO find a better global object
   COLLECTION_STORAGE.admin_page_length = 20
   subscription_name = "admin_#{collection_name}"
   collection = get_collection(collection_name)
+  filter = if document_id then {_id: document_id} else {}
   COLLECTION_STORAGE.inspector_subscription =
-    Meteor.subscribeWithPagination subscription_name, {}, {},
+    Meteor.subscribeWithPagination subscription_name, {}, filter,
       COLLECTION_STORAGE.admin_page_length
   Session.set("collection_name", collection_name)
-  return collection
+  return [collection, COLLECTION_STORAGE.inspector_subscription]
 
 Router.map ->
   @route 'home',
@@ -26,15 +27,18 @@ Router.map ->
   @route 'collection',
     path: '/admin/:collection'
     data: ->
-      collection = setup_collection(@params.collection)
+      [collection, @subscription] = setup_collection(@params.collection)
       {collection}
+    waitOn: -> @subscription
+
     template: 'collection_view'
 
   @route 'document',
     path: '/admin/:collection/:document_id'
     data: ->
       Session.set('document_id', @params.document_id)
-      collection = setup_collection(@params.collection)
+      [collection, @subscription] = setup_collection(
+        @params.collection, @params.document_id)
       {collection}
     template: 'document_view'
 
