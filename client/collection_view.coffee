@@ -66,7 +66,7 @@ get_collection_view_fields = -> collection_info().fields or []
 
 Template.collection_view.events
   "click a.home": (e) ->
-    Meteor.Router.to("/admin/")
+    Router.go 'home'
 
   "click a.sort": (e) ->
       e.preventDefault()

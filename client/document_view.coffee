@@ -47,13 +47,13 @@ Template.document_view.events
     e.preventDefault()
     Meteor.call "admin_#{Session.get('collection_name')}_delete",
       Session.get('document_id')
-    Meteor.Router.to "/admin/#{Session.get('collection_name')}"
+    Router.go 'collection', collection: Session.get('collection_name')
   "click a.home": (e) ->
-    Meteor.Router.to("/admin/")
+    Router.go 'home'
   "click a.collection": (e) ->
-    Meteor.Router.to("/admin/#{Session.get('collection_name')}")
+    Router.go 'collection', collection: Session.get('collection_name')
   'focus textarea.field': (e) ->
-    $(e.target).closest('textarea').trigger('autosize.resize');
+    $(e.target).closest('textarea').trigger('autosize.resize')
 
 Template.document_view.rendered = ->
   $('textarea.field').autosize()
