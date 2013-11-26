@@ -58,7 +58,10 @@ mustBeAdmin = ->
       @stop()
       houston_go 'login'
 
-Router.before(mustBeAdmin, except: [houstonize_route('login')])
+# cleaned up routes (hopefully)
+Router.before(mustBeAdmin,
+  only: (houstonize_route(name) for name in ['home', 'collection', 'document'])
+)
 
 window.lookup = (object, path) ->
   return '' unless object?
