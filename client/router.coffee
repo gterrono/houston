@@ -12,26 +12,38 @@ setup_collection = (collection_name) ->
   Session.set("collection_name", collection_name)
   return collection
 
-Meteor.Router.add
-  '/admin': ->
-    Session.set "collections", Collections.find().fetch()
-    return 'db_view'
+Router.map ->
+  @route 'home',
+    path: '/admin',
+    before: ->
+      # TODO use wait
+      Session.set "collections", Collections.find().fetch()
+    template: 'db_view',
+  @route 'login',
+    path: '/admin/login',
+    template: 'admin_login'
 
-  '/admin/login': 'admin_login'
+  @route 'collection',
+    path: '/admin/:collection'
+    data: ->
+      collection = setup_collection(@params.collection)
+      {collection}
+    template: 'collection_view'
 
-  '/admin/:collection': (collection_name) ->
-    collection = setup_collection collection_name
-    return 'collection_view'
+  @route 'document',
+    path: '/admin/:collection/:document_id'
+    data: ->
+      Session.set('document_id', @params.document_id)
+      collection = setup_collection(@params.collection)
+      {collection}
+    template: 'document_view'
 
-  '/admin/:collection/:document': (collection_name, document_id) ->
-    collection = setup_collection collection_name
-    Session.set('document_id', document_id)
-    return 'document_view'
+mustBeAdmin = ->
+  unless Meteor.loggingIn() # don't check for admin user until ready
+    unless Meteor.user()?.profile.admin
+      Router.go 'login'
 
-Meteor.Router.filters
-  'isAdmin': (page) -> if Meteor.user()?.profile.admin then page else 'admin_login'
-
-Meteor.Router.filter 'isAdmin', only: ['db_view', 'collection_view', 'document_view']
+Router.before(mustBeAdmin, except: ['login'])
 
 window.lookup = (object, path) ->
   return '' unless object?
