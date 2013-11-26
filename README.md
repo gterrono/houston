@@ -57,3 +57,7 @@ Feature Wishlist
 - Allow package user to add custom CSS or functionality buttons per collection / per view
 - full support for Arrays / all sorts of complicated nested documents
 - Log of all actions done on Houston and (though this is tough) ability to roll back actions.
+
+History
+-------
+Houston was originally created during the [Summer 2013 Meteor Hackathon](http://www.meteor.com/blog/2013/07/09/congratulations-to-the-meteor-summer-hackathon-2013-teams) by @gterrono, @alexeymk, @yefim and @ceasar.
