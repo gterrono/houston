@@ -6,8 +6,8 @@
       {{> _houston_navbar}}
       <div class="container content">
         <ul class="breadcrumb">
-          <li><a href="/houston" class="home">Home</a> <span class="divider">/</span></li>
-          <li><a href="/houston/{{collection_name}}" class="collection">{{collection_name}}</a> <span class="divider">/</span></li>
+          <li><a href="/houston" class="houston-home">Home</a> <span class="divider">/</span></li>
+          <li><a href="/houston/{{collection_name}}" class="houston-collection">{{collection_name}}</a> <span class="divider">/</span></li>
           <li class="active">{{document_id}}</li>
         </ul>
         <h1>{{document_id}}</h1>
@@ -19,8 +19,8 @@
             {{/each}}
           </tbody>
         </table>
-        <span class="btn admin-save">Save</span>
-        <span class="btn admin-delete">Delete</span>
+        <span class="btn houston-save">Save</span>
+        <span class="btn houston-delete">Delete</span>
       </div>
     {{/if}}
   </div>

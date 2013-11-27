@@ -21,7 +21,7 @@ Template._houston_document_view.helpers
 get_collection = -> Houston._get_collection(Session.get('_houston_collection_name'))
 
 Template._houston_document_view.events
-  'click .admin-save': (e) ->
+  'click .houston-save': (e) ->
     e.preventDefault()
     old_object = get_collection().findOne _id: Session.get('_houston_document_id')
     unless old_object
@@ -43,15 +43,11 @@ Template._houston_document_view.events
       Session.set('_houston_should_show', false)
     ), 1500
 
-  'click .admin-delete': (e) ->
+  'click .houston-delete': (e) ->
     e.preventDefault()
     Meteor.call "_houston_#{Session.get('_houston_collection_name')}_delete",
       Session.get('_houston_document_id')
     Meteor.Router.to "/houston/#{Session.get('_houston_collection_name')}"
-  "click a.home": (e) ->
-    Meteor.go("/houston/")
-  "click a.collection": (e) ->
-    Meteor.go("/houston/#{Session.get('_houston_collection_name')}")
   'focus textarea.field': (e) ->
     $(e.target).closest('textarea').trigger('autosize.resize');
 

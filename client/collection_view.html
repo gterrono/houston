@@ -6,7 +6,7 @@
       {{> _houston_navbar}}
       <div class="container content">
         <ul class="breadcrumb">
-          <li><a href="/houston/" class="home">Home</a> <span class="divider">/</span></li>
+          <li><a href="/houston/" class="houston-home">Home</a> <span class="divider">/</span></li>
           <li class="active">{{collection_name}}</li>
         </ul>
         <div class="row">
@@ -22,7 +22,7 @@
                   <thead>
                     <tr>
                       {{# each headers }}
-                      <th><a href="#" class="sort">{{this}}</a></th>
+                      <th><a href="#" class="houston-sort">{{this}}</a></th>
                       {{/each}}
                       <th>Action</th>
                     </tr>
@@ -32,9 +32,9 @@
                     <tr>
                       <td><a href="{{document_url}}">{{document_id}}</a></td>
                     {{#each values_in_order}}
-                      <td data-field='{{ name }}' class='collection-field'>{{ value }}</td>
+                      <td data-field='{{ name }}' class='houston-collection-field'>{{ value }}</td>
                     {{/each}}
-                    <td><div data-id="{{document_id}}" class="btn admin-delete-doc">Delete</div></td>
+                    <td><div data-id="{{document_id}}" class="btn houston-delete-doc">Delete</div></td>
                     </tr>
                     {{/each}}
                   </tbody>
@@ -45,12 +45,12 @@
                 <legend>Filter</legend>
                 {{# each nonid_headers }}
                 <label>{{this}}</label>
-                <input name="{{this}}" class="column_filter input-small" type="text" value="{{filter_value}}"/>
+                <input name="{{this}}" class="houston-column-filter input-small" type="text" value="{{filter_value}}"/>
                 {{/each}}
             </form>
-            <form>
-                <label for="filter_selector">Filter by (mongo query):</label>
-                <input placeholder="IE name: 'Joe'" id="filter_selector" class="input-small" type="text" />
+            <form class="houston-filter-form">
+                <label for="houston-filter-selector">Filter by (mongo query):</label>
+                <input placeholder="IE name: 'Joe'" id="houston-filter-selector" class="input-small" type="text" />
             </form>
           </div>
       </div>
@@ -61,17 +61,17 @@
               <thead>
                 <tr>
                   {{# each nonid_headers }}
-                  <th><a href="#" class="sort">{{this}}</a></th>
+                  <th><a href="#" class="houston-sort">{{this}}</a></th>
                   {{/each}}
                   <th>Action</th>
                 </tr>
-                <tr id="admin-create-row">
+                <tr id="houston-create-row">
                     {{# each nonid_headers }}
                     <th>
                       <input name="{{name}}" class="input-small" type="text" />
                     </th>
                     {{/each}}
-                    <td><div class="btn admin-create-doc">Create</div></td>
+                    <td><div class="btn houston-create-doc">Create</div></td>
                   </form>
                 </tr>
             </table>

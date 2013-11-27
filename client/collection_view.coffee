@@ -64,10 +64,10 @@ get_current_collection = -> Houston._get_collection(Session.get('_houston_collec
 get_collection_view_fields = -> collection_info().fields or []
 
 Template._houston_collection_view.events
-  "click a.home": (e) ->
+  "click a.houston-home": (e) ->
     Meteor.go("/houston/")
 
-  "click a.sort": (e) ->
+  "click a.houston-sort": (e) ->
       e.preventDefault()
       if (Session.get('_houston_sort_key') == this.toString())
         Session.set('_houston_sort_order', Session.get('_houston_sort_order') * - 1)
@@ -76,24 +76,24 @@ Template._houston_collection_view.events
         Session.set('_houston_sort_order', 1)
       resubscribe()
 
-  'keyup #filter_selector': (event) ->
+  'keyup #houston-filter-selector': (event) ->
     return unless event.keyCode is 13  # enter
     try
-      selector_json = JSON.parse($('#filter_selector').val())
+      selector_json = JSON.parse($('#houston-filter-selector').val())
       Session.set('_houston_top_selector', selector_json)
     catch error
       Session.set('_houston_top_selector', {})
     resubscribe()
 
-  'dblclick .collection-field': (e) ->
+  'dblclick .houston-collection-field': (e) ->
     $this = $(e.currentTarget)
-    $this.removeClass('collection-field')
+    $this.removeClass('houston-collection-field')
     $this.html "<input type='text' value='#{$this.text()}'>"
     $this.find('input').select()
     $this.find('input').on 'blur', ->
       updated_val = $this.find('input').val()
       $this.html updated_val
-      $this.addClass('collection-field')
+      $this.addClass('houston-collection-field')
       id = $('td:first-child a', $this.parents('tr')).html()
       field_name = $this.data('field')
       update_dict = {}
@@ -101,20 +101,20 @@ Template._houston_collection_view.events
       Meteor.call("_houston_#{Session.get('_houston_collection_name')}_update",
         id, $set: update_dict)
 
-  'keyup .column_filter': (e) ->
+  'keyup .houston-column-filter': (e) ->
     field_selectors = {}
-    $('.column_filter').each (idx, item) ->
+    $('.houston-column-filter').each (idx, item) ->
       if item.value
         field_selectors[item.name] = item.value
     Session.set '_houston_field_selectors', field_selectors
     resubscribe()
 
-  'click .admin-delete-doc': (e) ->
+  'click .houston-delete-doc': (e) ->
     e.preventDefault()
     id = $(e.currentTarget).data('id')
     Meteor.call "_houston_#{Session.get('_houston_collection_name')}_delete", id
 
-  'click .admin-create-doc': (e) ->
+  'click .houston-create-doc': (e) ->
     e.preventDefault()
     $create_row = $('#admin-create-row')
     new_doc = {}
@@ -133,8 +133,5 @@ Template._houston_collection_view.events
       field.value = ''
     Meteor.call "_houston_#{Session.get('_houston_collection_name')}_insert", new_doc
 
-  'click #admin-load-more': (e) ->
-    Houston._paginated_subscription.loadNextPage()
-
-  'submit form': (e) ->
+  'submit form.houston-filter-form': (e) ->
     e.preventDefault()
