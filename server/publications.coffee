@@ -47,14 +47,16 @@ Meteor.startup ->
           $inc: {count: 1},
           $addToSet: fields: get_field_names([document])
       removed: (document) -> Collections.update {name}, {$inc: {count: -1}}
+
     fields = get_field_names(collection.find().fetch())
-    if Collections.findOne {name}
-      Collections.update {name}, {$set: count: collection.find().count(), fields: fields}
+    c = Collections.findOne {name}
+    if c
+      Collections.update c._id, {$set: count: collection.find().count(), fields: fields}
     else
       Collections.insert {name, count: collection.find().count(), fields: fields}
 
-
   Dummy.findOne()  # hack
+
   save_collections = (meh, collections_db) ->
     collection_names = (col.collectionName for col in collections_db \
       when (col.collectionName.indexOf "system.") isnt 0 and
