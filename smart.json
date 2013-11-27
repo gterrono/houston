@@ -7,7 +7,7 @@
   "git": "https://github.com/gterrono/meteor-admin-ui.git",
   "packages": {
     "paginated-subscription": {},
-    "router": {},
-    "spin": {}
+    "spin": {},
+    "iron-router": {}
   }
 }
