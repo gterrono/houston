@@ -15,5 +15,4 @@ root.get_fields = (documents) ->
 
   (name: key, type: value for key, value of key_to_type)
 
-root.get_field_names = (documents) ->
-  _.pluck(get_fields(documents), 'name')
+root.get_field_names = (documents) -> _.pluck get_fields(documents), 'name'

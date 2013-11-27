@@ -1,11 +1,9 @@
 <body>
   {{#if isAdminPage}}
-    {{renderPage}}
-    <div class='row'>
-      <div class='small-12 columns' id='footer'>
-        <ul>
-        </ul>
-      </div>
-    </div>
+    {{> admin_main }}
   {{/if}}
 </body>
+
+<template name="admin_main">
+{{renderPage}}
+</template>

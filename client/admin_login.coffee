@@ -1,9 +1,8 @@
-Template.admin_login.helpers(
+Template.admin_login.helpers
   logged_in: -> Meteor.user()
   admin_user_exists: -> Meteor.users.findOne 'profile.admin': true
-)
 
-Template.admin_login.events(
+Template.admin_login.events
   'submit #sign-in-form': (e) ->
     e.preventDefault()
     email = $('input[name="email"]').val()
@@ -18,13 +17,9 @@ Template.admin_login.events(
         profile:
           admin: true
 
-  'click .logout': (e) ->
-    e.preventDefault()
-    Meteor.logout()
   'click .become-admin': (e) ->
     Meteor.call('make_admin', Meteor.userId())
     e.preventDefault()
-)
 
 Template.admin_login.rendered = ->
   $(window).unbind('scroll')

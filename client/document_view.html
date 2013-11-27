@@ -3,12 +3,12 @@
     {{#if loggingIn}}
       {{> spinner}}
     {{else}}
-      {{> admin_navbar}}
       <div class="container content">
         <ul class="breadcrumb">
-          <li><a href="/admin" class="home">Home</a> <span class="divider">/</span></li>
-          <li><a href="/admin/{{collection_name}}" class="collection">{{collection_name}}</a> <span class="divider">/</span></li>
+          <li><a href="/admin" class="home">Home</a>
+          <li><a href="/admin/{{collection_name}}" class="collection">{{collection_name}}</a>
           <li class="active">{{document_id}}</li>
+          <li><button class='btn logout'>Log out</button></li>
         </ul>
         <h1>{{document_id}}</h1>
         <div id="doc-saved" class="alert alert-success {{adminHide}}">Your document was saved!</div>
