@@ -40,7 +40,7 @@ Collection view includes support for
 #### /admin/collection/document_id: Edit a particular document
 ![Document View](doc/document.png)
 
-#### /admin/login User-defined Admin based on Meteor Accounts
+#### /admin/login: User-defined Admin based on Meteor Accounts
 ![Login](doc/login.png)
 
 Dependencies
