@@ -1,12 +1,12 @@
-<template name="collection_view">
+<template name="_houston_collection_view">
   <div class='z-mongo-admin'>
     {{#if loggingIn}}
       {{> spinner}}
     {{else}}
-      {{> admin_navbar}}
+      {{> _houston_navbar}}
       <div class="container content">
         <ul class="breadcrumb">
-          <li><a href="/admin/" class="home">Home</a> <span class="divider">/</span></li>
+          <li><a href="/houston/" class="home">Home</a> <span class="divider">/</span></li>
           <li class="active">{{collection_name}}</li>
         </ul>
         <div class="row">

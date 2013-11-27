@@ -1,39 +1,41 @@
-Meteor.subscribe 'admin'
-Meteor.subscribe 'adminUser'
+Meteor.subscribe '_houston'
+Meteor.subscribe '_houston_adminUser'
+
+window.Houston ?= {}
 
 setup_collection = (collection_name) ->
-  COLLECTION_STORAGE = window # TODO find a better global object
-  COLLECTION_STORAGE.admin_page_length = 20
-  subscription_name = "admin_#{collection_name}"
-  collection = get_collection(collection_name)
-  COLLECTION_STORAGE.inspector_subscription =
+  Houston._page_length = 20
+  subscription_name = "_houston_#{collection_name}"
+  collection = Houston._get_collection(collection_name)
+  Houston._paginated_subscription =
     Meteor.subscribeWithPagination subscription_name, {}, {},
-      COLLECTION_STORAGE.admin_page_length
-  Session.set("collection_name", collection_name)
+      Houston._page_length
+  Session.set('_houston_collection_name', collection_name)
   return collection
 
 Meteor.Router.add
-  '/admin': ->
-    Session.set "collections", Collections.find().fetch()
-    return 'db_view'
+  '/houston': ->
+    Session.set '_houston_collections', Houston._collections.find().fetch()
+    return '_houston_db_view'
 
-  '/admin/login': 'admin_login'
+  '/houston/login': '_houston_login'
 
-  '/admin/:collection': (collection_name) ->
+  '/houston/:collection': (collection_name) ->
     collection = setup_collection collection_name
-    return 'collection_view'
+    return '_houston_collection_view'
 
-  '/admin/:collection/:document': (collection_name, document_id) ->
+  '/houston/:collection/:document': (collection_name, document_id) ->
     collection = setup_collection collection_name
-    Session.set('document_id', document_id)
-    return 'document_view'
+    Session.set('_houston_document_id', document_id)
+    return '_houston_document_view'
 
 Meteor.Router.filters
-  'isAdmin': (page) -> if Meteor.user()?.profile.admin then page else 'admin_login'
+  '_isHoustonAdmin': (page) -> if Meteor.user()?.profile.admin then page else '_houston_login'
 
-Meteor.Router.filter 'isAdmin', only: ['db_view', 'collection_view', 'document_view']
+Meteor.Router.filter '_isHoustonAdmin',
+  only: ['_houston_db_view', '_houston_collection_view', '_houston_document_view']
 
-window.lookup = (object, path) ->
+Houston._lookup = (object, path) ->
   return '' unless object?
   return object._id._str if path =='_id'and typeof object._id == 'object'
   result = object

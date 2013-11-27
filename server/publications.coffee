@@ -6,13 +6,13 @@ collections = {'users': Meteor.users}
 Meteor.startup ->
   set_up_collection = (name, collection) ->
     methods = {}
-    methods["admin_#{name}_insert"] = (doc) ->
+    methods["_houston_#{name}_insert"] = (doc) ->
       return unless @userId
       user = Meteor.users.findOne(@userId)
       return unless user?.profile.admin
       collection.insert(doc)
 
-    methods["admin_#{name}_update"] = (id, update_dict) ->
+    methods["_houston_#{name}_update"] = (id, update_dict) ->
       return unless @userId
       user = Meteor.users.findOne(@userId)
       return unless user?.profile.admin
@@ -22,7 +22,7 @@ Meteor.startup ->
         id = collection.findOne(new Meteor.Collection.ObjectID(id))
         collection.update(id, update_dict)
 
-    methods["admin_#{name}_delete"] = (id, update_dict) ->
+    methods["_houston_#{name}_delete"] = (id, update_dict) ->
       return unless @userId
       user = Meteor.users.findOne(@userId)
       return unless user?.profile.admin
@@ -34,7 +34,7 @@ Meteor.startup ->
 
     Meteor.methods methods
 
-    Meteor.publish "admin_#{name}", (sort, filter, limit)->
+    Meteor.publish "_houston_#{name}", (sort, filter, limit)->
       if Meteor.users.findOne(_id: @userId, 'profile.admin': true)
         try
           collection.find(filter, sort: sort, limit: limit)
@@ -43,22 +43,22 @@ Meteor.startup ->
 
     collection.find().observe
       added: (document) ->
-        Collections.update {name},
+        Houston._collections.update {name},
           $inc: {count: 1},
-          $addToSet: fields: get_field_names([document])
-      removed: (document) -> Collections.update {name}, {$inc: {count: -1}}
-    fields = get_field_names(collection.find().fetch())
-    if Collections.findOne {name}
-      Collections.update {name}, {$set: count: collection.find().count(), fields: fields}
+          $addToSet: fields: Houston._get_field_names([document])
+      removed: (document) -> Houston._collections.update {name}, {$inc: {count: -1}}
+    fields = Houston._get_field_names(collection.find().fetch())
+    if Houston._collections.findOne {name}
+      Houston._collections.update {name}, {$set: count: collection.find().count(), fields: fields}
     else
-      Collections.insert {name, count: collection.find().count(), fields: fields}
+      Houston._collections.insert {name, count: collection.find().count(), fields: fields}
 
 
   Dummy.findOne()  # hack
   save_collections = (meh, collections_db) ->
     collection_names = (col.collectionName for col in collections_db \
       when (col.collectionName.indexOf "system.") isnt 0 and
-           (col.collectionName.indexOf "admin_") isnt 0)
+           (col.collectionName.indexOf "houston_") isnt 0)
 
     collection_names.forEach (name) ->
       unless name of collections
@@ -73,13 +73,13 @@ Meteor.startup ->
         set_up_collection(name, collections[name])
 
   Meteor.methods
-    make_admin: (userId) ->
+    _houston_make_admin: (userId) ->
       # limit one admin
       return if Meteor.users.findOne {'profile.admin': true}
       Meteor.users.update userId, $set: {'profile.admin': true}
       return True
 
-    setupNewCollection: (name) ->
+    _houston_setupNewCollection: (name) ->
       return unless @userId
       user = Meteor.users.findOne(@userId)
       return unless user?.profile.admin
@@ -103,10 +103,10 @@ Meteor.startup ->
 
 
 # publish our own internal state
-Meteor.publish "admin", ->
+Meteor.publish '_houston', ->
   if Meteor.users.findOne(_id: @userId, 'profile.admin': true)
-    Collections.find()
+    Houston._collections.find()
 
 
-Meteor.publish 'adminUser', ->  # used by login page to see if admin has been created yet
+Meteor.publish '_houston_adminUser', ->  # used by login page to see if admin has been created yet
   Meteor.users.find({'profile.admin': true}, fields: 'profile.admin': true)

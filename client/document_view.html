@@ -1,13 +1,13 @@
-<template name="document_view">
+<template name="_houston_document_view">
   <div class='z-mongo-admin'>
     {{#if loggingIn}}
       {{> spinner}}
     {{else}}
-      {{> admin_navbar}}
+      {{> _houston_navbar}}
       <div class="container content">
         <ul class="breadcrumb">
-          <li><a href="/admin" class="home">Home</a> <span class="divider">/</span></li>
-          <li><a href="/admin/{{collection_name}}" class="collection">{{collection_name}}</a> <span class="divider">/</span></li>
+          <li><a href="/houston" class="home">Home</a> <span class="divider">/</span></li>
+          <li><a href="/houston/{{collection_name}}" class="collection">{{collection_name}}</a> <span class="divider">/</span></li>
           <li class="active">{{document_id}}</li>
         </ul>
         <h1>{{document_id}}</h1>
@@ -15,7 +15,7 @@
         <table class='table'>
           <tbody>
             {{# each fields }}
-              {{> admin_document_field}}
+              {{> _houston_document_field}}
             {{/each}}
           </tbody>
         </table>
@@ -26,7 +26,7 @@
   </div>
 </template>
 
-<template name="admin_document_field">
+<template name="_houston_document_field">
   <tr>
     <td>{{ field_name }}:</td>
     {{#if field_is_id}}

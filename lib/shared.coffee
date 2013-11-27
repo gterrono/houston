@@ -1,6 +1,8 @@
 root = exports ? this
 
-root.get_fields = (documents) ->
+root.Houston ?= {}
+
+Houston._get_fields = (documents) ->
   key_to_type = {_id: 'ObjectId'}
   find_fields = (document, prefix='') ->
     for key, value of _.omit(document, '_id')
@@ -15,5 +17,5 @@ root.get_fields = (documents) ->
 
   (name: key, type: value for key, value of key_to_type)
 
-root.get_field_names = (documents) ->
-  _.pluck(get_fields(documents), 'name')
+Houston._get_field_names = (documents) ->
+  _.pluck(Houston._get_fields(documents), 'name')

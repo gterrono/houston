@@ -1,3 +1,5 @@
 root = exports ? this
 
-root.Collections = new Meteor.Collection("admin_")
+root.Houston ?= {}
+
+Houston._collections = new Meteor.Collection("houston_")

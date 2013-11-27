@@ -1,9 +1,9 @@
-<template name='db_view'>
+<template name='_houston_db_view'>
   <div class='z-mongo-admin'>
     {{#if loggingIn}}
       {{> spinner}}
     {{else}}
-      {{> admin_navbar}}
+      {{> _houston_navbar}}
       <div class="container content">
         <ul class="breadcrumb">
           <li class="active">Home</li>
@@ -18,7 +18,7 @@
           <tbody>
             {{#each collections}}
             <tr>
-              <td><a href='/admin/{{ name }}'>{{name}}</a></td>
+              <td><a href='/houston/{{ name }}'>{{name}}</a></td>
               <td>{{ num_of_records }}</td>
             </tr>
             {{/each}}
