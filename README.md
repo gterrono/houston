@@ -1,3 +1,5 @@
+**Note** - we're in the middle of a whole bunch of stuff, make sure to use an older (tagged) version if you're just seeing this now.
+
 Houston
 ===============
 Houston (formerly Z-Mongo-Admin) is a zero-config Meteor Admin, modeled after [Django Admin](https://docs.djangoproject.com/en/dev/ref/contrib/admin/). Houston is available through the [Atmosphere](https://atmosphere.meteor.com/package/houston) package manager.
@@ -24,10 +26,10 @@ Features
 ========
 
 #### /admin: Get a list of available collections
-![Home View](doc/home.png)
+![Home View](https://raw.github.com/gterrono/meteor-admin-ui/master/doc/home.png)
 
 #### /admin/collection: View all items in collection
-![Collection View](doc/collection.png)
+![Collection View](https://raw.github.com/gterrono/meteor-admin-ui/master/doc/collection.png)
 
 Collection view includes support for 
 - deleting and creating documents
@@ -38,10 +40,10 @@ Collection view includes support for
 - (limited, mostly read-only) support for arrays
 
 #### /admin/collection/document_id: Edit a particular document
-![Document View](doc/document.png)
+![Document View](https://raw.github.com/gterrono/meteor-admin-ui/master/doc/document.png)
 
 #### /admin/login: User-defined Admin based on Meteor Accounts
-![Login](doc/login.png)
+![Login](https://raw.github.com/gterrono/meteor-admin-ui/master/doc/login.png)
 
 Dependencies
 -----
