@@ -110,6 +110,10 @@ Template.collection_view.events
     Session.set 'field_selectors', field_selectors
     resubscribe()
 
+  'click #create-btn': ->
+    $('#create-document').show()
+    $('#create-btn').hide()
+
   'click .admin-delete-doc': (e) ->
     e.preventDefault()
     id = $(e.currentTarget).data('id')
