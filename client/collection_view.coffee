@@ -132,6 +132,7 @@ Template.collection_view.events
       doc_iter[final_key] = field.value
 
       field.value = ''
+    debugger
     Meteor.call "admin_#{Session.get('collection_name')}_insert", new_doc
 
   'click #admin-load-more': (e) ->

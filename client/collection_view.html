@@ -44,13 +44,9 @@
             <form>
                 <legend>Filter</legend>
                 {{# each nonid_headers }}
-                <label>{{this}}</label>
-                <input name="{{this}}" class="column_filter input-small" type="text" value="{{filter_value}}"/>
+                  <label>{{this}}</label>
+                  <input name="{{this}}" class="column_filter input-small" type="text" value="{{filter_value}}"/>
                 {{/each}}
-            </form>
-            <form>
-                <label for="filter_selector">Filter by (mongo query):</label>
-                <input placeholder="IE name: 'Joe'" id="filter_selector" class="input-small" type="text" />
             </form>
           </div>
       </div>
@@ -65,15 +61,17 @@
                   {{/each}}
                   <th>Action</th>
                 </tr>
+              </thead>
+              <tbody>
                 <tr id="admin-create-row">
-                    {{# each nonid_headers }}
-                    <th>
-                      <input name="{{name}}" class="input-small" type="text" />
-                    </th>
-                    {{/each}}
-                    <td><div class="btn admin-create-doc">Create</div></td>
-                  </form>
+                  {{#each nonid_headers }}
+                  <th>
+                    <input name="{{this}}" class="input-small" type="text" />
+                  </th>
+                  {{/each}}
+                  <td><div class="btn admin-create-doc">Create</div></td>
                 </tr>
+              </tbody>
             </table>
             </div>
         </div>

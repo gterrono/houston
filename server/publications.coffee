@@ -45,7 +45,7 @@ Meteor.startup ->
       added: (document) ->
         Collections.update {name},
           $inc: {count: 1},
-          $addToSet: fields: get_field_names([document])
+          $addToSet: fields: $each: get_field_names([document])
       removed: (document) -> Collections.update {name}, {$inc: {count: -1}}
 
     fields = get_field_names(collection.find().fetch())

@@ -63,6 +63,7 @@ Router.before(mustBeAdmin,
   only: (houstonize_route(name) for name in ['home', 'collection', 'document'])
 )
 
+# TODO move this to some shared utils location
 window.lookup = (object, path) ->
   return '' unless object?
   return object._id._str if path =='_id'and typeof object._id == 'object'
