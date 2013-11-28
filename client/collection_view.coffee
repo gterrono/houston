@@ -12,7 +12,6 @@ get_filter_query = ->
     for key, val of Session.get(session_key)
       # From http://stackoverflow.com/questions/3115150/how-to-escape-regular-expression-special-characters-using-javascript#answer-9310752
       query[key] = $regex: val.replace(/[-[\]{}()*+?.,\\^$|#\s]/g, "\\$&")
-  fill_query_with_regex('top_selector')
   fill_query_with_regex('field_selectors')
   return query
 
@@ -47,9 +46,7 @@ Template.collection_view.helpers
     values = (lookup(@, field_name) for field_name in fields_in_order[1..])  # skip _id
     ({value, name} for [value, name] in _.zip values, names_in_order[1..])
   filter_value: ->
-    if Session.get('top_selector') and Session.get('top_selector')[@name]
-      Session.get('top_selector')[@name]
-    else if Session.get('field_selectors') and Session.get('field_selectors')[@name]
+    if Session.get('field_selectors') and Session.get('field_selectors')[@name]
       Session.get('field_selectors')[@name]
     else
       ''
@@ -76,15 +73,6 @@ Template.collection_view.events
         Session.set('key', this.toString())
         Session.set('sort_order', 1)
       resubscribe()
-
-  'keyup #filter_selector': (event) ->
-    return unless event.keyCode is 13  # enter
-    try
-      selector_json = JSON.parse($('#filter_selector').val())
-      Session.set('top_selector', selector_json)
-    catch error
-      Session.set('top_selector', {})
-    resubscribe()
 
   'dblclick .collection-field': (e) ->
     $this = $(e.currentTarget)
