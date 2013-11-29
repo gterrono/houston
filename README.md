@@ -13,9 +13,7 @@ Once installed, navigate to `/admin` to set up your admin account. You can eithe
 
 ### Demo
 
-TODO update
-* [Dinners](http://interndinners.meteor.com/dinners)
-* [Dinners Admin](http://interndinners.meteor.com/admin)
+TODO sample app/admin
 
 
 ### Why Houston?
@@ -35,7 +33,6 @@ Collection view includes support for
 - deleting and creating documents
 - inline editing (double-click on a cell)
 - filtering and sorting by names
-- arbitrary mongo filters (see the last filter), so long as you're comfortable with Mongo.
 - support for nested objects
 - (limited, mostly read-only) support for arrays
 
@@ -51,7 +48,7 @@ Dependencies
 * **Router**: As of v1.0, Houston is compatible with both IronRouter and Router-less solutions that don't conflict with IronRouter. [Let us know](https://github.com/gterrono/houston/issues/new)
 * **Accounts**: Houston piggybacks on top of Meteor Accounts.  
 * **CSS**: Houston uses Bootstrap, but makes an effort to avoid having its CSS interfere with yours.
-* **Meteor**: TODO figure out minimum version, or set arbitrarily high bar.
+* **Meteor**: Houston 1.0 was tested with Meteor 0.6.6.3, but there's no (strict) reasons that older versions shouldn't work.
 
 Feature Wishlist
 -------
@@ -59,6 +56,7 @@ Feature Wishlist
 - Allow package user to add custom CSS or functionality buttons per collection / per view
 - full support for Arrays / all sorts of complicated nested documents
 - Log of all actions done on Houston and (though this is tough) ability to roll back actions.
+- arbitrary mongo filters should work again
 
 History
 -------
