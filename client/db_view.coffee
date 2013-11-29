@@ -4,6 +4,5 @@ Template.db_view.helpers
 
 
 Template.db_view.rendered = ->
-  Session.set('top_selector', {})
   Session.set('field_selectors', {})
   $(window).unbind('scroll')
