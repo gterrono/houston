@@ -8,15 +8,23 @@ Template._houston_login.events(
     e.preventDefault()
     email = $('input[name="email"]').val()
     password = $('input[name="password"]').val()
+
+    afterLogin = (error) ->
+      # TODO error case that properly displays
+      if error
+        alert error
+      else
+        houston_go 'home'
+
     if Meteor.users.findOne('profile.admin': true)
-      Meteor.loginWithPassword(email, password)
+      Meteor.loginWithPassword email, password, afterLogin
     else
-      # TODO: unbreak if this fails
-      Accounts.createUser
+      Accounts.createUser {
         email: $('input[name="email"]').val()
         password: $('input[name="password"]').val()
         profile:
           admin: true
+      }, afterLogin
 
   'click .houston-logout': (e) ->
     e.preventDefault()

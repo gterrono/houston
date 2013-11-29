@@ -34,7 +34,7 @@ Meteor.startup ->
 
     Meteor.methods methods
 
-    Meteor.publish "_houston_#{name}", (sort, filter, limit)->
+    Meteor.publish "_houston_#{name}", (sort, filter, limit) ->
       if Meteor.users.findOne(_id: @userId, 'profile.admin': true)
         try
           collection.find(filter, sort: sort, limit: limit)
@@ -47,14 +47,16 @@ Meteor.startup ->
           $inc: {count: 1},
           $addToSet: fields: Houston._get_field_names([document])
       removed: (document) -> Houston._collections.update {name}, {$inc: {count: -1}}
+
     fields = Houston._get_field_names(collection.find().fetch())
-    if Houston._collections.findOne {name}
-      Houston._collections.update {name}, {$set: count: collection.find().count(), fields: fields}
+    c = Houston._collections.findOne {name}
+    if c
+      Houston._collections.update c._id, {$set: count: collection.find().count(), fields: fields}
     else
       Houston._collections.insert {name, count: collection.find().count(), fields: fields}
 
-
   Dummy.findOne()  # hack
+
   save_collections = (meh, collections_db) ->
     collection_names = (col.collectionName for col in collections_db \
       when (col.collectionName.indexOf "system.") isnt 0 and
@@ -77,7 +79,7 @@ Meteor.startup ->
       # limit one admin
       return if Meteor.users.findOne {'profile.admin': true}
       Meteor.users.update userId, $set: {'profile.admin': true}
-      return True
+      return true
 
     _houston_setupNewCollection: (name) ->
       return unless @userId

@@ -1,6 +1,6 @@
 if Handlebars?
   Handlebars.registerHelper('onHoustonPage', ->
-    window.location.pathname.indexOf('/houston') == 0)
+    window.location.pathname.indexOf('/admin') == 0)
 
 # regardless of what version of meteor we are using,
 # get the right LocalCollection
@@ -20,3 +20,8 @@ Houston._get_collection = (collection_name) ->
           Meteor._LocalCollectionDriver.collections[collection_name]
 
   return Houston[collection_name]
+
+Houston._session = (key, value) ->
+  key = Houston._houstonize(key)
+  return Session.get(key) unless value?
+  Session.set(key, value)

@@ -6,8 +6,14 @@
       {{> _houston_navbar}}
       <div class="container content">
         <ul class="breadcrumb">
-          <li><a href="/houston" class="houston-home">Home</a> <span class="divider">/</span></li>
-          <li><a href="/houston/{{collection_name}}" class="houston-collection">{{collection_name}}</a> <span class="divider">/</span></li>
+          <li>
+            <a href="{{pathFor 'houston_home'}}" class="houston-home">Home</a>
+            <span class="divider">/</span>
+          </li>
+          <li>
+            <a href="{{pathFor 'houston_collection'}}" class="houston-collection">{{name}}</a>
+            <span class="divider">/</span>
+          </li>
           <li class="active">{{document_id}}</li>
         </ul>
         <h1>{{document_id}}</h1>
@@ -28,13 +34,11 @@
 
 <template name="_houston_document_field">
   <tr>
-    <td>{{ field_name }}:</td>
-    {{#if field_is_id}}
-      <td>{{ field_value }}</td>
+    <td>{{ name }}:</td>
+    {{#if field_is_id }}
+    <td>{{ value }}</td>
     {{else}}
-    <td>
-        <textarea class="field" name="{{ field_name }}">{{ field_value }}</textarea>
-    </td>
+    <td><textarea class="houston-field" name="{{ name }}">{{ value }}</textarea></td>
     {{/if}}
   </tr>
 </template>
