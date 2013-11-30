@@ -9,7 +9,7 @@ Template._houston_document_view.helpers
       catch error
         console.log error
     fields = Houston._get_fields([document])
-    return (name: field.name, value: Houston._lookup(document, field.name) for field in fields)
+    return (name: field.name, value: Houston._nested_field_lookup(document, field.name) for field in fields)
   document_id: -> Houston._session('document_id')
 
 Template._houston_document_field.helpers

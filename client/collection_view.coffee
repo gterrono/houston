@@ -48,7 +48,7 @@ Template._houston_collection_view.helpers
   values_in_order: ->
     fields_in_order = get_collection_view_fields()
     names_in_order = _.clone fields_in_order
-    values = (Houston._lookup(@, field_name) for field_name in fields_in_order[1..])  # skip _id
+    values = (Houston._nested_field_lookup(@, field_name) for field_name in fields_in_order[1..])  # skip _id
     ({field_value, field_name} for [field_value, field_name] in _.zip values, names_in_order[1..])
   filter_value: ->
     if Houston._session('top_selector') and Houston._session('top_selector')[@name]

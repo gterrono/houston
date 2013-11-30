@@ -81,21 +81,6 @@ Meteor.startup ->
       Meteor.users.update userId, $set: {'profile.admin': true}
       return true
 
-    _houston_setupNewCollection: (name) ->
-      return unless @userId
-      user = Meteor.users.findOne(@userId)
-      return unless user?.profile.admin
-      unless name of collections
-        try
-          collections[name] = new Meteor.Collection(name)
-        catch e
-          for key, value of root
-            if name == value._name
-              collections[name] = value
-          console.log e
-
-        set_up_collection(name, collections[name])
-
   fn = Meteor.bindEnvironment save_collections, (e) ->
     console.log e
 

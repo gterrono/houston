@@ -72,7 +72,7 @@ Router.before(mustBeAdmin,
   only: (Houston._houstonize(name) for name in ['home', 'collection', 'document'])
 )
 
-Houston._lookup = (object, path) ->
+Houston._nested_field_lookup = (object, path) ->
   return '' unless object?
   return object._id._str if path =='_id'and typeof object._id == 'object'
   result = object
