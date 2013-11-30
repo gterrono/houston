@@ -22,7 +22,7 @@ resubscribe = ->
   Houston._paginated_subscription =
     Meteor.subscribeWithPagination subscription_name,
       get_sort_by(), get_filter_query(),
-      Houston._admin_page_length
+      Houston._page_length
 
 collection_info = -> Houston._collections.findOne(name: Houston._session('collection_name'))
 
@@ -102,9 +102,10 @@ Template._houston_collection_view.events
     Houston._session 'field_selectors', field_selectors
     resubscribe()
 
-  'click #create-btn': ->
-    $('#create-document').show()
-    $('#create-btn').hide()
+  'click #houston-create-btn': ->
+    $('#houston-create-document').show()
+    $('#houston-create-document').css('visibility', 'visible')
+    $('#houston-create-btn').hide()
 
   'click .houston-delete-doc': (e) ->
     e.preventDefault()
@@ -113,7 +114,8 @@ Template._houston_collection_view.events
 
   'click .houston-create-doc': (e) ->
     e.preventDefault()
-    $create_row = $('#admin-create-row')
+    console.log 'create doc'
+    $create_row = $('#houston-create-row')
     new_doc = {}
     for field in $create_row.find('input[type="text"]')
       # Unflatten the field names (e.g. foods.app -> {foods: {app:}})
