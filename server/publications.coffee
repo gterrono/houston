@@ -43,17 +43,17 @@ Meteor.startup ->
 
     collection.find().observe
       added: (document) ->
-        Houston._collections.update {name},
+        Houston._collections.collections.update {name},
           $inc: {count: 1},
           $addToSet: fields: $each: Houston._get_field_names([document])
-      removed: (document) -> Houston._collections.update {name}, {$inc: {count: -1}}
+      removed: (document) -> Houston._collections.collections.update {name}, {$inc: {count: -1}}
 
     fields = Houston._get_field_names(collection.find().fetch())
-    c = Houston._collections.findOne {name}
+    c = Houston._collections.collections.findOne {name}
     if c
-      Houston._collections.update c._id, {$set: count: collection.find().count(), fields: fields}
+      Houston._collections.collections.update c._id, {$set: count: collection.find().count(), fields: fields}
     else
-      Houston._collections.insert {name, count: collection.find().count(), fields: fields}
+      Houston._collections.collections.insert {name, count: collection.find().count(), fields: fields}
 
   Dummy.findOne()  # hack
 
@@ -92,7 +92,7 @@ Meteor.startup ->
 # publish our own internal state
 Meteor.publish '_houston', ->
   if Meteor.users.findOne(_id: @userId, 'profile.admin': true)
-    Houston._collections.find()
+    Houston._collections.collections.find()
 
 
 Meteor.publish '_houston_adminUser', ->  # used by login page to see if admin has been created yet

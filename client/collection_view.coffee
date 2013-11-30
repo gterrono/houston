@@ -24,7 +24,7 @@ resubscribe = ->
       get_sort_by(), get_filter_query(),
       Houston._page_length
 
-collection_info = -> Houston._collections.findOne(name: Houston._session('collection_name'))
+collection_info = -> Houston._collections.collections.findOne(name: Houston._session('collection_name'))
 
 collection_count = -> collection_info().count
 
@@ -114,7 +114,6 @@ Template._houston_collection_view.events
 
   'click .houston-create-doc': (e) ->
     e.preventDefault()
-    console.log 'create doc'
     $create_row = $('#houston-create-row')
     new_doc = {}
     for field in $create_row.find('input[type="text"]')

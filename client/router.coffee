@@ -37,7 +37,7 @@ Router.map ->
     path: '/admin',
     before: ->
       # TODO use wait
-      Houston._session 'collections', Houston._collections.find().fetch()
+      Houston._session 'collections', Houston._collections.collections.find().fetch()
     template: 'db_view'
 
   houston_route 'login',
@@ -69,7 +69,7 @@ mustBeAdmin = ->
 
 # cleaned up routes (hopefully)
 Router.before(mustBeAdmin,
-  only: (Houston._houstonize(name) for name in ['home', 'collection', 'document'])
+  only: (Houston._houstonize(name)[1..] for name in ['home', 'collection', 'document'])
 )
 
 Houston._nested_field_lookup = (object, path) ->
