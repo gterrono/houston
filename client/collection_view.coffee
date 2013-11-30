@@ -12,7 +12,6 @@ get_filter_query = ->
     for key, val of Houston._session(session_key)
       # From http://stackoverflow.com/questions/3115150/how-to-escape-regular-expression-special-characters-using-javascript#answer-9310752
       query[key] = $regex: val.replace(/[-[\]{}()*+?.,\\^$|#\s]/g, "\\$&")
-  fill_query_with_regex('top_selector')
   fill_query_with_regex('field_selectors')
   return query
 
@@ -51,10 +50,8 @@ Template._houston_collection_view.helpers
     values = (Houston._nested_field_lookup(@, field_name) for field_name in fields_in_order[1..])  # skip _id
     ({field_value, field_name} for [field_value, field_name] in _.zip values, names_in_order[1..])
   filter_value: ->
-    if Houston._session('top_selector') and Houston._session('top_selector')[@name]
-      Houston._session('top_selector')[@name]
-    else if Houston._session('field_selectors') and Houston._session('field_selectors')[@name]
-      Houston._session('field_selectors')[@name]
+    if Session.get('field_selectors') and Session.get('field_selectors')[@name]
+      Session.get('field_selectors')[@name]
     else
       ''
 
@@ -81,15 +78,6 @@ Template._houston_collection_view.events
         Houston._session('sort_order', 1)
       resubscribe()
 
-  'keyup #houston-filter-selector': (event) ->
-    return unless event.keyCode is 13  # enter
-    try
-      selector_json = JSON.parse($('#houston-filter-selector').val())
-      Houston._session('top_selector', selector_json)
-    catch error
-      Houston._session('top_selector', {})
-    resubscribe()
-
   'dblclick .houston-collection-field': (e) ->
     $this = $(e.currentTarget)
     $this.removeClass('houston-collection-field')
@@ -113,6 +101,10 @@ Template._houston_collection_view.events
         field_selectors[item.name] = item.value
     Houston._session 'field_selectors', field_selectors
     resubscribe()
+
+  'click #create-btn': ->
+    $('#create-document').show()
+    $('#create-btn').hide()
 
   'click .houston-delete-doc': (e) ->
     e.preventDefault()
