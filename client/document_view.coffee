@@ -34,7 +34,7 @@ Template._houston_document_view.events
             parseFloat(field.value)
           else
             field.value
-    Meteor.call("_houston_#{Houston._session('collection_name')}_update",
+    Houston._call("#{Houston._session('collection_name')}_update",
       Houston._session('document_id'), $set: update_dict)
     Houston._session('should_show', true)
     setTimeout (->
@@ -43,8 +43,8 @@ Template._houston_document_view.events
 
   'click .houston-delete': (e) ->
     e.preventDefault()
-    Meteor.call "_houston_#{Houston._session('collection_name')}_delete",
-      Houston._session('document_id')
+    Houston._call("#{Houston._session('collection_name')}_delete",
+      Houston._session('document_id'))
     Houston._go 'collection', name: Houston._session('collection_name')
   'focus textarea.houston-field': (e) ->
     $(e.target).closest('textarea').trigger('autosize.resize')

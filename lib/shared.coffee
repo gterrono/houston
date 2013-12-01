@@ -2,6 +2,8 @@ root = exports ? this
 
 root.Houston ?= {}
 
+Houston._houstonize = (name) -> "_houston_#{name}"
+
 Houston._get_fields = (documents) ->
   key_to_type = {_id: 'ObjectId'}
   find_fields = (document, prefix='') ->

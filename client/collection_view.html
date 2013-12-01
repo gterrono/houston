@@ -17,7 +17,7 @@
               <thead>
                 <tr>
                   {{# each nonid_headers }}
-                  <th><a href="#" class="sort">{{this}}</a></th>
+                    <th><a href="#" class="sort">{{this}}</a></th>
                   {{/each}}
                   <th>Action</th>
                 </tr>
@@ -25,9 +25,9 @@
               <tbody>
                 <tr id="houston-create-row">
                   {{# each nonid_headers }}
-                  <th>
-                    <input name="{{this}}" class="input-small" type="text" />
-                  </th>
+                    <th>
+                      <input name="{{this}}" class="input-small" type="text" />
+                    </th>
                   {{/each}}
                   <td><div class="btn btn-success houston-create-doc">Create</div></td>
                 </tr>
@@ -49,21 +49,21 @@
                   <thead>
                     <tr>
                       {{# each headers }}
-                      <th><a href="#" class="houston-sort">{{this}}</a></th>
+                        <th><a href="#" class="houston-sort">{{this}}</a></th>
                       {{/each}}
                       <th>Action</th>
                     </tr>
                   </thead>
                   <tbody>
-                  {{#each rows }}
-                    <tr>
-                      <td><a href="{{pathFor 'houston_document'}}">{{_id}}</a></td>
-                      {{#each values_in_order}}
-                      <td data-field='{{ field_name }}' class='houston-collection-field'>{{ field_value }}</td>
-                      {{/each}}
-                      <td><div data-id="{{_id}}" class="btn houston-delete-doc btn-danger">Delete</div></td>
-                    </tr>
-                  {{/each}}
+                    {{#each rows }}
+                      <tr>
+                        <td><a href="{{pathFor 'houston_document'}}">{{_id}}</a></td>
+                        {{#each values_in_order}}
+                          <td data-field='{{ field_name }}' class='houston-collection-field'>{{ field_value }}</td>
+                        {{/each}}
+                        <td><div data-id="{{_id}}" class="btn houston-delete-doc btn-danger">Delete</div></td>
+                      </tr>
+                    {{/each}}
                   </tbody>
                 </table>
           </div>

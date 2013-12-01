@@ -22,16 +22,19 @@ setup_collection = (collection_name, document_id) ->
   Houston._session('collection_name', collection_name)
   return [collection, Houston._paginated_subscription]
 
-# wrappers around IronRouter to avoid clobbering route namespaces of host app
 Houston._houstonize = (name) -> "_houston_#{name}"
+
+Houston._houstonize_route = (name) -> Houston._houstonize(name)[1..]
+
 Houston._go = (route_name, options) ->
-  Router.go Houston._houstonize(route_name)[1..], options
+  Router.go Houston._houstonize_route(route_name), options
+
 
 Router.map ->
   houston_route = (route_name, options) =>
-    # to avoid clobbering parent route namespace
+    # Append _houston_ to template and route names to avoid clobbering parent route namespace
     options.template = Houston._houstonize(options.template)
-    @route Houston._houstonize(route_name)[1..], options
+    @route Houston._houstonize_route(route_name), options
 
   houston_route 'home',
     path: '/admin',
@@ -69,14 +72,5 @@ mustBeAdmin = ->
 
 # cleaned up routes (hopefully)
 Router.before(mustBeAdmin,
-  only: (Houston._houstonize(name)[1..] for name in ['home', 'collection', 'document'])
+  only: (Houston._houstonize_route(name) for name in ['home', 'collection', 'document'])
 )
-
-Houston._nested_field_lookup = (object, path) ->
-  return '' unless object?
-  return object._id._str if path =='_id'and typeof object._id == 'object'
-  result = object
-  for part in path.split(".")
-    result = result[part]
-    return '' unless result?  # quit if you can't find anything here
-  if typeof result isnt 'object' then result else ''

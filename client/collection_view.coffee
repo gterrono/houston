@@ -31,8 +31,7 @@ collection_count = -> collection_info().count
 Template._houston_collection_view.helpers
   headers: -> get_collection_view_fields()
   nonid_headers: -> get_collection_view_fields()[1..]
-  name: -> "#{Houston._session('collection_name')}"
-  document_url: -> "/houston/#{Houston._session('collection_name')}/#{@_id}"
+  name: -> Houston._session('collection_name')
   document_id: -> @_id + ""
   num_of_records: ->
     collection_count() or "no"
@@ -66,9 +65,6 @@ get_current_collection = -> Houston._get_collection(Houston._session('collection
 get_collection_view_fields = -> collection_info().fields or []
 
 Template._houston_collection_view.events
-  "click a.houston-home": (e) ->
-    Houston._go 'home'
-
   "click a.houston-sort": (e) ->
       e.preventDefault()
       if (Houston._session('sort_key') == this.toString())
@@ -91,7 +87,7 @@ Template._houston_collection_view.events
       field_name = $this.data('field')
       update_dict = {}
       update_dict[field_name] = updated_val
-      Meteor.call("_houston_#{Houston._session('collection_name')}_update",
+      Houston._call("#{Houston._session('collection_name')}_update",
         id, $set: update_dict)
 
   'keyup .houston-column-filter': (e) ->
@@ -110,7 +106,7 @@ Template._houston_collection_view.events
   'click .houston-delete-doc': (e) ->
     e.preventDefault()
     id = $(e.currentTarget).data('id')
-    Meteor.call "_houston_#{Houston._session('collection_name')}_delete", id
+    Houston._call("#{Houston._session('collection_name')}_delete", id)
 
   'click .houston-create-doc': (e) ->
     e.preventDefault()
@@ -129,7 +125,7 @@ Template._houston_collection_view.events
       doc_iter[final_key] = field.value
 
       field.value = ''
-    Meteor.call "_houston_#{Houston._session('collection_name')}_insert", new_doc
+    Houston._call("#{Houston._session('collection_name')}_insert", new_doc)
 
   'submit form.houston-filter-form': (e) ->
     e.preventDefault()

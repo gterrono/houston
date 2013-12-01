@@ -3,16 +3,19 @@ root = exports ? this
 Dummy = new Meteor.Collection("system.dummy")  # hack.
 collections = {'users': Meteor.users}
 
+Houston._publish = (name, func) ->
+  Meteor.publish Houston._houstonize(name), func
+
 Meteor.startup ->
   set_up_collection = (name, collection) ->
     methods = {}
-    methods["_houston_#{name}_insert"] = (doc) ->
+    methods[Houston._houstonize "#{name}_insert"] = ([doc]) ->
       return unless @userId
       user = Meteor.users.findOne(@userId)
       return unless user?.profile.admin
       collection.insert(doc)
 
-    methods["_houston_#{name}_update"] = (id, update_dict) ->
+    methods[Houston._houstonize "#{name}_update"] = ([id, update_dict]) ->
       return unless @userId
       user = Meteor.users.findOne(@userId)
       return unless user?.profile.admin
@@ -22,7 +25,7 @@ Meteor.startup ->
         id = collection.findOne(new Meteor.Collection.ObjectID(id))
         collection.update(id, update_dict)
 
-    methods["_houston_#{name}_delete"] = (id, update_dict) ->
+    methods[Houston._houstonize "#{name}_delete"] = ([id, update_dict]) ->
       return unless @userId
       user = Meteor.users.findOne(@userId)
       return unless user?.profile.admin
@@ -34,7 +37,7 @@ Meteor.startup ->
 
     Meteor.methods methods
 
-    Meteor.publish "_houston_#{name}", (sort, filter, limit) ->
+    Houston._publish name, (sort, filter, limit) ->
       if Meteor.users.findOne(_id: @userId, 'profile.admin': true)
         try
           collection.find(filter, sort: sort, limit: limit)
@@ -75,7 +78,7 @@ Meteor.startup ->
         set_up_collection(name, collections[name])
 
   Meteor.methods
-    _houston_make_admin: (userId) ->
+    _houston_make_admin: ([userId]) ->
       # limit one admin
       return if Meteor.users.findOne {'profile.admin': true}
       Meteor.users.update userId, $set: {'profile.admin': true}
@@ -95,5 +98,5 @@ Meteor.publish '_houston', ->
     Houston._collections.collections.find()
 
 
-Meteor.publish '_houston_adminUser', ->  # used by login page to see if admin has been created yet
+Houston._publish 'adminUser', ->  # used by login page to see if admin has been created yet
   Meteor.users.find({'profile.admin': true}, fields: 'profile.admin': true)
