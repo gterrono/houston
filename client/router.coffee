@@ -1,11 +1,16 @@
-Meteor.subscribe '_houston'
-Meteor.subscribe '_houston_adminUser'
-
 window.Houston ?= {}
+
+Houston._houstonize = (name) -> "_houston_#{name}"
+
+Houston._subscribe = (name) -> Meteor.subscribe Houston._houstonize name
+
+Houston._subscribe 'collections'
+Houston._subscribe 'admin_user'
+
 
 setup_collection = (collection_name, document_id) ->
   Houston._page_length = 20
-  subscription_name = "_houston_#{collection_name}"
+  subscription_name = Houston._houstonize collection_name
   collection = Houston._get_collection(collection_name)
   filter = if document_id
     # Sometimes you can lookup with _id being a string, sometimes not
@@ -21,8 +26,6 @@ setup_collection = (collection_name, document_id) ->
       Houston._page_length
   Houston._session('collection_name', collection_name)
   return [collection, Houston._paginated_subscription]
-
-Houston._houstonize = (name) -> "_houston_#{name}"
 
 Houston._houstonize_route = (name) -> Houston._houstonize(name)[1..]
 
@@ -66,7 +69,7 @@ Router.map ->
 
 mustBeAdmin = ->
   unless Meteor.loggingIn() # don't check for admin user until ready
-    unless Meteor.user()?.profile.admin
+    unless Houston._user_is_admin Meteor.userId()
       @stop()
       Houston._go 'login'
 

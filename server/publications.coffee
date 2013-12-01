@@ -10,15 +10,11 @@ Meteor.startup ->
   set_up_collection = (name, collection) ->
     methods = {}
     methods[Houston._houstonize "#{name}_insert"] = ([doc]) ->
-      return unless @userId
-      user = Meteor.users.findOne(@userId)
-      return unless user?.profile.admin
+      return unless Houston._user_is_admin @userId
       collection.insert(doc)
 
     methods[Houston._houstonize "#{name}_update"] = ([id, update_dict]) ->
-      return unless @userId
-      user = Meteor.users.findOne(@userId)
-      return unless user?.profile.admin
+      return unless Houston._user_is_admin @userId
       if collection.findOne(id)
         collection.update(id, update_dict)
       else
@@ -26,9 +22,7 @@ Meteor.startup ->
         collection.update(id, update_dict)
 
     methods[Houston._houstonize "#{name}_delete"] = ([id, update_dict]) ->
-      return unless @userId
-      user = Meteor.users.findOne(@userId)
-      return unless user?.profile.admin
+      return unless Houston._user_is_admin @userId
       if collection.findOne(id)
         collection.remove(id)
       else
@@ -38,11 +32,11 @@ Meteor.startup ->
     Meteor.methods methods
 
     Houston._publish name, (sort, filter, limit) ->
-      if Meteor.users.findOne(_id: @userId, 'profile.admin': true)
-        try
-          collection.find(filter, sort: sort, limit: limit)
-        catch e
-          console.log e
+      return unless Houston._user_is_admin @userId
+      try
+        collection.find(filter, sort: sort, limit: limit)
+      catch e
+        console.log e
 
     collection.find().observe
       added: (document) ->
@@ -80,8 +74,8 @@ Meteor.startup ->
   Meteor.methods
     _houston_make_admin: ([userId]) ->
       # limit one admin
-      return if Meteor.users.findOne {'profile.admin': true}
-      Meteor.users.update userId, $set: {'profile.admin': true}
+      return if Houston._admins.findOne {'user_id': $exists: true}
+      Houston._admins.insert user_id: userId
       return true
 
   fn = Meteor.bindEnvironment save_collections, (e) ->
@@ -92,11 +86,14 @@ Meteor.startup ->
   mongo_driver.mongo.db.collections fn
 
 
-# publish our own internal state
-Meteor.publish '_houston', ->
-  if Meteor.users.findOne(_id: @userId, 'profile.admin': true)
-    Houston._collections.collections.find()
+# publish our analysis of the app's collections
+Houston._publish 'collections', ->
+  return unless Houston._user_is_admin @userId
+  Houston._collections.collections.find()
 
 
-Houston._publish 'adminUser', ->  # used by login page to see if admin has been created yet
-  Meteor.users.find({'profile.admin': true}, fields: 'profile.admin': true)
+# used by login page to see if admin has been created yet
+Houston._publish 'admin_user', ->
+  if Houston._user_is_admin @userId
+    return Houston._admins.find user_id: @userId
+  Houston._admins.find {user_id: $exists: true}, fields: _id: true
