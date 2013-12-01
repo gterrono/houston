@@ -49,8 +49,8 @@ Template._houston_collection_view.helpers
     values = (Houston._nested_field_lookup(@, field_name) for field_name in fields_in_order[1..])  # skip _id
     ({field_value, field_name} for [field_value, field_name] in _.zip values, names_in_order[1..])
   filter_value: ->
-    if Session.get('field_selectors') and Session.get('field_selectors')[@name]
-      Session.get('field_selectors')[@name]
+    if Houston._session('field_selectors') and Houston._session('field_selectors')[@]
+      Houston._session('field_selectors')[@]
     else
       ''
 
