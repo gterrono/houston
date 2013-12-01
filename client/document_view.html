@@ -1,13 +1,19 @@
-<template name="document_view">
+<template name="_houston_document_view">
   <div class='z-mongo-admin'>
     {{#if loggingIn}}
       {{> spinner}}
     {{else}}
-      {{> admin_navbar}}
+      {{> _houston_navbar}}
       <div class="container content">
         <ul class="breadcrumb">
-          <li><a href="/admin" class="home">Home</a> <span class="divider">/</span></li>
-          <li><a href="/admin/{{collection_name}}" class="collection">{{collection_name}}</a> <span class="divider">/</span></li>
+          <li>
+            <a href="{{pathFor 'houston_home'}}" class="houston-home">Home</a>
+            <span class="divider">/</span>
+          </li>
+          <li>
+            <a href="{{pathFor 'houston_collection'}}" class="houston-collection">{{name}}</a>
+            <span class="divider">/</span>
+          </li>
           <li class="active">{{document_id}}</li>
         </ul>
         <h1>{{document_id}}</h1>
@@ -15,26 +21,24 @@
         <table class='table'>
           <tbody>
             {{# each fields }}
-              {{> admin_document_field}}
+              {{> _houston_document_field}}
             {{/each}}
           </tbody>
         </table>
-        <span class="btn admin-save">Save</span>
-        <span class="btn admin-delete">Delete</span>
+        <span class="btn houston-save">Save</span>
+        <span class="btn houston-delete">Delete</span>
       </div>
     {{/if}}
   </div>
 </template>
 
-<template name="admin_document_field">
+<template name="_houston_document_field">
   <tr>
-    <td>{{ field_name }}:</td>
-    {{#if field_is_id}}
-      <td>{{ field_value }}</td>
+    <td>{{ name }}:</td>
+    {{#if field_is_id }}
+    <td>{{ value }}</td>
     {{else}}
-    <td>
-        <textarea class="field" name="{{ field_name }}">{{ field_value }}</textarea>
-    </td>
+    <td><textarea class="houston-field" name="{{ name }}">{{ value }}</textarea></td>
     {{/if}}
   </tr>
 </template>

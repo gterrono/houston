@@ -1,25 +1,43 @@
 if Handlebars?
-  Handlebars.registerHelper('isAdminPage', ->
+  Handlebars.registerHelper('onHoustonPage', ->
     window.location.pathname.indexOf('/admin') == 0)
+
+Houston._collections ?= {}
 
 # regardless of what version of meteor we are using,
 # get the right LocalCollection
-window.get_collection = (collection_name) ->
-  COLLECTION_STORAGE = window # TODO find a better global object
-  inspector_name = "inspector_#{collection_name}"
-
-  unless COLLECTION_STORAGE[inspector_name]
+Houston._get_collection = (collection_name) ->
+  unless Houston._collections[collection_name]
     try
       # you can only instantiate a collection once
-      COLLECTION_STORAGE[inspector_name] = new Meteor.Collection(collection_name)
+      Houston._collections[collection_name] = new Meteor.Collection(collection_name)
     catch e
       try
         # works for 0.6.6.2+
-        COLLECTION_STORAGE[inspector_name] = \
+        Houston._collections[collection_name] = \
           Meteor.connection._mongo_livedata_collections[collection_name]
       catch e
         # old versions of meteor (older than 0.6.6.2)
-        COLLECTION_STORAGE[inspector_name] =
+        Houston._collections[collection_name] =
           Meteor._LocalCollectionDriver.collections[collection_name]
 
-  return COLLECTION_STORAGE[inspector_name]
+  return Houston._collections[collection_name]
+
+Houston._session = () ->
+  key = Houston._houstonize(arguments[0])
+  if arguments.length == 1
+    return Session.get(key)
+  else if arguments.length == 2
+    Session.set(key, arguments[1])
+
+Houston._call = (name, args...) ->
+  Meteor.call(Houston._houstonize(name), args)
+
+Houston._nested_field_lookup = (object, path) ->
+  return '' unless object?
+  return object._id._str if path =='_id'and typeof object._id == 'object'
+  result = object
+  for part in path.split(".")
+    result = result[part]
+    return '' unless result?  # quit if you can't find anything here
+  if typeof result isnt 'object' then result else ''

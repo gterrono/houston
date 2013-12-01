@@ -1,24 +1,24 @@
-<template name="admin_login">
+<template name="_houston_login">
   <div class='z-mongo-admin'>
     {{#if loggingIn}}
       {{> spinner}}
     {{else}}
-      {{> admin_navbar}}
+      {{> _houston_navbar}}
       <div class="container content">
         {{#if logged_in }}
           <h1>Currently logged in</h1>
           <div>
             {{#unless admin_user_exists}}
-              <a class="become-admin btn" href="#">Claim Admin</a>
+              <a class="become-houston-admin btn" href="#">Claim Admin</a>
             {{/unless}}
-            <a class="logout btn" href="#">Log out</a>
+            <a class="houston-logout btn" href="#">Log out</a>
           </div>
           {{else}}
             {{! nobody is logged in - sign in or sign up}}
             <h1>
               {{#if admin_user_exists}} Log In {{else}} Create an admin account {{/if}}
             </h1>
-            <form id="sign-in-form">
+            <form id="houston-sign-in-form">
               <div class='control-group'>
                 <label class='control-label' for='email'>Email</label>
                 <div class='controls'>
@@ -32,7 +32,7 @@
                 </div>
               </div>
               <div>
-                <input class="btn" type="submit" value="Sign {{#if adminAccountNotExist}}up{{else}}in{{/if}}">
+                <input class="btn" type="submit" value="Sign {{#if admin_user_exists}}in{{else}}up{{/if}}">
               </div>
             </form>
         {{/if}}

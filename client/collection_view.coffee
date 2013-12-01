@@ -1,6 +1,6 @@
 get_sort_by = ->
   sort_by = {}
-  sort_by[Session.get('key')] = Session.get('sort_order')
+  sort_by[Houston._session('sort_key')] = Houston._session('sort_order')
   return sort_by
 
 get_filter_query = ->
@@ -8,8 +8,8 @@ get_filter_query = ->
   # escaped, but $regex is used so it can match anywhere in the string.
   query = {}
   fill_query_with_regex = (session_key) ->
-    return unless Session.get(session_key)?
-    for key, val of Session.get(session_key)
+    return unless Houston._session(session_key)?
+    for key, val of Houston._session(session_key)
       # From http://stackoverflow.com/questions/3115150/how-to-escape-regular-expression-special-characters-using-javascript#answer-9310752
       query[key] = $regex: val.replace(/[-[\]{}()*+?.,\\^$|#\s]/g, "\\$&")
   fill_query_with_regex('field_selectors')
@@ -17,99 +17,100 @@ get_filter_query = ->
 
 resubscribe = ->
   # Stop the old subscription and resubscribe with the new filter/sort
-  COLLECTION_STORAGE = window # TODO find a better global object
-  subscription_name = "admin_#{Session.get('collection_name')}"
-  COLLECTION_STORAGE.inspector_subscription.stop()
-  COLLECTION_STORAGE.inspector_subscription =
+  subscription_name = "_houston_#{Houston._session('collection_name')}"
+  Houston._paginated_subscription.stop()
+  Houston._paginated_subscription =
     Meteor.subscribeWithPagination subscription_name,
       get_sort_by(), get_filter_query(),
-      COLLECTION_STORAGE.admin_page_length
+      Houston._page_length
 
-collection_info = -> Collections.findOne(name: Session.get('collection_name'))
+collection_info = -> Houston._collections.collections.findOne(name: Houston._session('collection_name'))
 
 collection_count = -> collection_info().count
 
-Template.collection_view.helpers
+Template._houston_collection_view.helpers
   headers: -> get_collection_view_fields()
   nonid_headers: -> get_collection_view_fields()[1..]
-  collection_name: -> "#{Session.get('collection_name')}"
-  document_url: -> "/admin/#{Session.get('collection_name')}/#{@_id}"
+  name: -> Houston._session('collection_name')
   document_id: -> @_id + ""
   num_of_records: ->
     collection_count() or "no"
-  pluralize: -> 's' unless get_current_collection().find().count() == 1
+  pluralize: -> 's' unless collection_count() == 1
   rows: ->
-    get_current_collection()?.find(get_filter_query(), {sort: get_sort_by()}).fetch()
+    collection = Houston._session('collection_name')
+    documents = get_current_collection()?.find(get_filter_query(), {sort: get_sort_by()}).fetch()
+    _.map documents, (d) ->
+      d.collection = collection
+      d._id = d._id._str or d._id
+      return d
   values_in_order: ->
     fields_in_order = get_collection_view_fields()
     names_in_order = _.clone fields_in_order
-    values = (lookup(@, field_name) for field_name in fields_in_order[1..])  # skip _id
-    ({value, name} for [value, name] in _.zip values, names_in_order[1..])
+    values = (Houston._nested_field_lookup(@, field_name) for field_name in fields_in_order[1..])  # skip _id
+    ({field_value, field_name} for [field_value, field_name] in _.zip values, names_in_order[1..])
   filter_value: ->
     if Session.get('field_selectors') and Session.get('field_selectors')[@name]
       Session.get('field_selectors')[@name]
     else
       ''
 
-Template.collection_view.rendered = ->
+Template._houston_collection_view.rendered = ->
   $win = $(window)
   $win.scroll ->
     if $win.scrollTop() + 300 > $(document).height() - $win.height() and
-      window.inspector_subscription.limit() < collection_count()
-        window.inspector_subscription.loadNextPage()
+      Houston._paginated_subscription.limit() < collection_count()
+        Houston._paginated_subscription.loadNextPage()
 
-get_current_collection = -> get_collection(Session.get('collection_name'))
+get_current_collection = -> Houston._get_collection(Houston._session('collection_name'))
 get_collection_view_fields = -> collection_info().fields or []
 
-Template.collection_view.events
-  "click a.home": (e) ->
-    houston_go 'home'
-
-  "click a.sort": (e) ->
+Template._houston_collection_view.events
+  "click a.houston-sort": (e) ->
       e.preventDefault()
-      if (Session.get('key') == this.toString())
-        Session.set('sort_order', Session.get('sort_order') * - 1)
+      if (Houston._session('sort_key') == this.toString())
+        Houston._session('sort_order', Houston._session('sort_order') * - 1)
       else
-        Session.set('key', this.toString())
-        Session.set('sort_order', 1)
+        Houston._session('sort_key', this.toString())
+        Houston._session('sort_order', 1)
       resubscribe()
 
-  'dblclick .collection-field': (e) ->
+  'dblclick .houston-collection-field': (e) ->
     $this = $(e.currentTarget)
-    $this.removeClass('collection-field')
+    $this.removeClass('houston-collection-field')
     $this.html "<input type='text' value='#{$this.text()}'>"
     $this.find('input').select()
     $this.find('input').on 'blur', ->
       updated_val = $this.find('input').val()
       $this.html updated_val
-      $this.addClass('collection-field')
+      $this.addClass('houston-collection-field')
       id = $('td:first-child a', $this.parents('tr')).html()
       field_name = $this.data('field')
       update_dict = {}
       update_dict[field_name] = updated_val
-      Meteor.call("admin_#{Session.get('collection_name')}_update",
+      Houston._call("#{Houston._session('collection_name')}_update",
         id, $set: update_dict)
 
-  'keyup .column_filter': (e) ->
+  'keyup .houston-column-filter': (e) ->
     field_selectors = {}
-    $('.column_filter').each (idx, item) ->
+    $('.houston-column-filter').each (idx, item) ->
       if item.value
         field_selectors[item.name] = item.value
-    Session.set 'field_selectors', field_selectors
+    Houston._session 'field_selectors', field_selectors
     resubscribe()
 
-  'click #create-btn': ->
-    $('#create-document').show()
-    $('#create-btn').hide()
+  'click #houston-create-btn': ->
+    $('#houston-create-document').show()
+    $('#houston-create-document').css('visibility', 'visible')
+    $('#houston-create-btn').hide()
 
-  'click .admin-delete-doc': (e) ->
+  'click .houston-delete-doc': (e) ->
     e.preventDefault()
     id = $(e.currentTarget).data('id')
-    Meteor.call "admin_#{Session.get('collection_name')}_delete", id
+    Houston._call("#{Houston._session('collection_name')}_delete", id)
 
-  'click .admin-create-doc': (e) ->
+  'click .houston-create-doc': (e) ->
     e.preventDefault()
-    $create_row = $('#admin-create-row')
+    $create_row = $('#houston-create-row')
     new_doc = {}
     for field in $create_row.find('input[type="text"]')
       # Unflatten the field names (e.g. foods.app -> {foods: {app:}})
@@ -124,10 +125,7 @@ Template.collection_view.events
       doc_iter[final_key] = field.value
 
       field.value = ''
-    Meteor.call "admin_#{Session.get('collection_name')}_insert", new_doc
+    Houston._call("#{Houston._session('collection_name')}_insert", new_doc)
 
-  'click #admin-load-more': (e) ->
-    window.inspector_subscription.loadNextPage()
-
-  'submit form': (e) ->
+  'submit form.houston-filter-form': (e) ->
     e.preventDefault()

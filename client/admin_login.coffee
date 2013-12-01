@@ -1,10 +1,10 @@
-Template.admin_login.helpers(
+Template._houston_login.helpers(
   logged_in: -> Meteor.user()
   admin_user_exists: -> Meteor.users.findOne 'profile.admin': true
 )
 
-Template.admin_login.events(
-  'submit #sign-in-form': (e) ->
+Template._houston_login.events(
+  'submit #houston-sign-in-form': (e) ->
     e.preventDefault()
     email = $('input[name="email"]').val()
     password = $('input[name="password"]').val()
@@ -14,7 +14,7 @@ Template.admin_login.events(
       if error
         alert error
       else
-        houston_go 'home'
+        Houston._go 'home'
 
     if Meteor.users.findOne('profile.admin': true)
       Meteor.loginWithPassword email, password, afterLogin
@@ -26,13 +26,14 @@ Template.admin_login.events(
           admin: true
       }, afterLogin
 
-  'click .logout': (e) ->
+  'click .houston-logout': (e) ->
     e.preventDefault()
     Meteor.logout()
-  'click .become-admin': (e) ->
-    Meteor.call('make_admin', Meteor.userId())
+
+  'click .become-houston-admin': (e) ->
+    Houston._call('make_admin', Meteor.userId())
     e.preventDefault()
 )
 
-Template.admin_login.rendered = ->
+Template._houston_login.rendered = ->
   $(window).unbind('scroll')

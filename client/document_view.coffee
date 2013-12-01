@@ -1,56 +1,54 @@
-Template.document_view.helpers
-  collection_name: -> Session.get('collection_name')
-  adminHide: -> if Session.get('admin_should_show') then '' else 'hide'
+Template._houston_document_view.helpers
+  collection_name: -> Houston._session('collection_name')
+  adminHide: -> if Houston._session('should_show') then '' else 'hide'
   fields: ->
-    document = get_collection().findOne _id: Session.get('document_id')
+    document = get_collection().findOne _id: Houston._session('document_id')
     unless document
       try
-        document = get_collection().findOne _id: new Meteor.Collection.ObjectID(Session.get('document_id'))
+        document = get_collection().findOne _id: new Meteor.Collection.ObjectID(Houston._session('document_id'))
       catch error
         console.log error
-    fields = get_fields([document])
-    return (field_name: field.name, field_value: lookup(document, field.name) for field in fields)
+    fields = Houston._get_fields([document])
+    return (name: field.name, value: Houston._nested_field_lookup(document, field.name) for field in fields)
+  document_id: -> Houston._session('document_id')
 
-  field_is_id: -> @field_name is '_id'
-  document_id: -> Session.get('document_id')
+Template._houston_document_field.helpers
+  field_is_id: -> @name is '_id'
+  document_id: -> Houston._session('document_id')
 
-get_collection = -> window["inspector_#{Session.get('collection_name')}"]
+get_collection = -> Houston._get_collection(Houston._session('collection_name'))
 
-Template.document_view.events
-  'click .admin-save': (e) ->
+Template._houston_document_view.events
+  'click .houston-save': (e) ->
     e.preventDefault()
-    old_object = get_collection().findOne _id: Session.get('document_id')
+    old_object = get_collection().findOne _id: Houston._session('document_id')
     unless old_object
       try
-        old_object = get_collection().findOne _id: new Meteor.Collection.ObjectID(Session.get('document_id'))
+        old_object = get_collection().findOne _id: new Meteor.Collection.ObjectID(Houston._session('document_id'))
       catch error
         console.log error
     update_dict = {}
-    for field in $('.field')
+    for field in $('.houston-field')
       unless field.name is '_id'
         update_dict[field.name] = if typeof(old_object[field.name]) == 'number'
             parseFloat(field.value)
           else
             field.value
-    Meteor.call("admin_#{Session.get('collection_name')}_update",
-      Session.get('document_id'), $set: update_dict)
-    Session.set('admin_should_show', true)
+    Houston._call("#{Houston._session('collection_name')}_update",
+      Houston._session('document_id'), $set: update_dict)
+    Houston._session('should_show', true)
     setTimeout (->
-      Session.set('admin_should_show', false)
+      Houston._session('should_show', false)
     ), 1500
 
-  'click .admin-delete': (e) ->
+  'click .houston-delete': (e) ->
     e.preventDefault()
-    Meteor.call "admin_#{Session.get('collection_name')}_delete",
-      Session.get('document_id')
-    houston_go 'collection', collection: Session.get('collection_name')
-  "click a.home": (e) ->
-    houston_go 'home'
-  "click a.collection": (e) ->
-    houston_go 'collection', collection: Session.get('collection_name')
-  'focus textarea.field': (e) ->
+    Houston._call("#{Houston._session('collection_name')}_delete",
+      Houston._session('document_id'))
+    Houston._go 'collection', name: Houston._session('collection_name')
+  'focus textarea.houston-field': (e) ->
     $(e.target).closest('textarea').trigger('autosize.resize')
 
-Template.document_view.rendered = ->
-  $('textarea.field').autosize()
+Template._houston_document_view.rendered = ->
+  $('textarea.houston-field').autosize()
   $(window).unbind('scroll')
