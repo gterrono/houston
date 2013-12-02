@@ -1,6 +1,8 @@
+admin_user_exists = () -> Houston._admins.find().count() > 0
+
 Template._houston_login.helpers(
   logged_in: -> Meteor.user()
-  admin_user_exists: -> Meteor.users.findOne 'profile.admin': true
+  admin_user_exists: -> admin_user_exists()
 )
 
 Template._houston_login.events(
@@ -16,15 +18,14 @@ Template._houston_login.events(
       else
         Houston._go 'home'
 
-    if Meteor.users.findOne('profile.admin': true)
+    if admin_user_exists()
       Meteor.loginWithPassword email, password, afterLogin
     else
       Accounts.createUser {
         email: $('input[name="email"]').val()
         password: $('input[name="password"]').val()
-        profile:
-          admin: true
       }, afterLogin
+      Houston._call('make_admin', Meteor.userId())
 
   'click .houston-logout': (e) ->
     e.preventDefault()
