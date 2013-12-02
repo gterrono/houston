@@ -9,11 +9,11 @@ Houston._publish = (name, func) ->
 Meteor.startup ->
   set_up_collection = (name, collection) ->
     methods = {}
-    methods[Houston._houstonize "#{name}_insert"] = ([doc]) ->
+    methods[Houston._houstonize "#{name}_insert"] = (doc) ->
       return unless Houston._user_is_admin @userId
       collection.insert(doc)
 
-    methods[Houston._houstonize "#{name}_update"] = ([id, update_dict]) ->
+    methods[Houston._houstonize "#{name}_update"] = (id, update_dict) ->
       return unless Houston._user_is_admin @userId
       if collection.findOne(id)
         collection.update(id, update_dict)
@@ -21,7 +21,7 @@ Meteor.startup ->
         id = collection.findOne(new Meteor.Collection.ObjectID(id))
         collection.update(id, update_dict)
 
-    methods[Houston._houstonize "#{name}_delete"] = ([id, update_dict]) ->
+    methods[Houston._houstonize "#{name}_delete"] = (id, update_dict) ->
       return unless Houston._user_is_admin @userId
       if collection.findOne(id)
         collection.remove(id)
@@ -72,7 +72,7 @@ Meteor.startup ->
         set_up_collection(name, collections[name])
 
   Meteor.methods
-    _houston_make_admin: ([userId]) ->
+    _houston_make_admin: (userId) ->
       # limit one admin
       return if Houston._admins.find().count() > 0
       Houston._admins.insert user_id: userId

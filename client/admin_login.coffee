@@ -33,8 +33,9 @@ Template._houston_login.events(
     Meteor.logout()
 
   'click .become-houston-admin': (e) ->
-    Houston._call('make_admin', Meteor.userId())
     e.preventDefault()
+    Houston._call('make_admin', Meteor.userId())
+    Houston._go 'home'
 )
 
 Template._houston_login.rendered = ->

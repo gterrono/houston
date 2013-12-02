@@ -7,7 +7,6 @@ Houston._subscribe = (name) -> Meteor.subscribe Houston._houstonize name
 Houston._subscribe 'collections'
 Houston._subscribe 'admin_user'
 
-
 setup_collection = (collection_name, document_id) ->
   Houston._page_length = 20
   subscription_name = Houston._houstonize collection_name
@@ -67,16 +66,14 @@ Router.map ->
       {collection, name: @params.collection}
     template: 'document_view'
 
+# ########
+# filters
+# ########
 mustBeAdmin = ->
   unless Meteor.loggingIn() # don't check for admin user until ready
     unless Houston._user_is_admin Meteor.userId()
       @stop()
       Houston._go 'login'
-
-# cleaned up routes (hopefully)
-Router.before(mustBeAdmin,
-  only: (Houston._houstonize_route(name) for name in ['home', 'collection', 'document'])
-)
 
 # If the host app doesn't have a router, their html may show up
 hide_non_admin_stuff = ->
@@ -88,5 +85,7 @@ hide_non_admin_stuff = ->
     $('body>houston').show()
   setTimeout func, 0
 
+Router.before mustBeAdmin,
+  only: (Houston._houstonize_route(name) for name in ['home', 'collection', 'document'])
 Router.after hide_non_admin_stuff,
   only: (Houston._houstonize_route(name) for name in ['home', 'collection', 'document', 'login'])

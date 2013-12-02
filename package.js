@@ -23,7 +23,7 @@ Package.on_use(function(api) {
   api.add_files([
     'client/router.coffee', 'client/admin_login.coffee',
     'client/collection_view.coffee', 'client/document_view.coffee',
-    'client/lib/jquery.autosize.js', 'client/zma_helpers.coffee',
+    'client/zma_helpers.coffee',
     'client/admin_navbar.coffee', 'client/db_view.coffee'],
   'client');
 
