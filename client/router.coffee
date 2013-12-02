@@ -77,3 +77,17 @@ mustBeAdmin = ->
 Router.before(mustBeAdmin,
   only: (Houston._houstonize_route(name) for name in ['home', 'collection', 'document'])
 )
+
+# If the host app doesn't have a router, their html may show up
+hide_non_admin_stuff = ->
+  $('body').hide()
+  func = ->
+    $('body').show()
+    $('body').children().hide()
+    $('body>.z-mongo-admin').show()
+    $('body').css('visibility','hidden')
+    $('body>.z-mongo-admin').css('visibility', 'visible')
+  setTimeout func, 0
+
+Router.after hide_non_admin_stuff,
+  only: (Houston._houstonize_route(name) for name in ['home', 'collection', 'document', 'login'])
