@@ -24,8 +24,9 @@ Template._houston_login.events(
       Accounts.createUser {
         email: $('input[name="email"]').val()
         password: $('input[name="password"]').val()
-      }, afterLogin
-      Houston._call('make_admin', Meteor.userId())
+      }, ->
+        afterLogin
+        Houston._call('make_admin', Meteor.userId())
 
   'click .houston-logout': (e) ->
     e.preventDefault()

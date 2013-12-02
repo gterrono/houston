@@ -84,9 +84,8 @@ hide_non_admin_stuff = ->
   func = ->
     $('body').show()
     $('body').children().hide()
-    $('body>.z-mongo-admin').show()
     $('body').css('visibility','hidden')
-    $('body>.z-mongo-admin').css('visibility', 'visible')
+    $('body>houston').show()
   setTimeout func, 0
 
 Router.after hide_non_admin_stuff,
