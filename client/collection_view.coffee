@@ -26,7 +26,7 @@ resubscribe = ->
 
 collection_info = -> Houston._collections.collections.findOne(name: Houston._session('collection_name'))
 
-collection_count = -> collection_info().count
+collection_count = -> collection_info()?.count
 
 Template._houston_collection_view.helpers
   headers: -> get_collection_view_fields()
@@ -62,7 +62,7 @@ Template._houston_collection_view.rendered = ->
         Houston._paginated_subscription.loadNextPage()
 
 get_current_collection = -> Houston._get_collection(Houston._session('collection_name'))
-get_collection_view_fields = -> collection_info().fields or []
+get_collection_view_fields = -> collection_info()?.fields or []
 
 Template._houston_collection_view.events
   "click a.houston-sort": (e) ->
