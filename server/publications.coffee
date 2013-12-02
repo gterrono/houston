@@ -74,7 +74,7 @@ Meteor.startup ->
   Meteor.methods
     _houston_make_admin: ([userId]) ->
       # limit one admin
-      return if Houston._admins.find().count > 0
+      return if Houston._admins.find().count() > 0
       Houston._admins.insert user_id: userId
       return true
 
