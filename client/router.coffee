@@ -70,9 +70,13 @@ Router.map ->
 mustBeAdmin = ->
   unless Meteor.loggingIn() # don't check for admin user until ready
     unless Houston._user_is_admin Meteor.userId()
-      debugger
       @stop()
       Houston._go 'login'
+
+# cleaned up routes (hopefully)
+Router.before(mustBeAdmin,
+  only: (Houston._houstonize_route(name) for name in ['home', 'collection', 'document'])
+)
 
 # If the host app doesn't have a router, their html may show up
 hide_non_admin_stuff = ->
@@ -87,5 +91,3 @@ hide_non_admin_stuff = ->
 
 Router.after hide_non_admin_stuff,
   only: (Houston._houstonize_route(name) for name in ['home', 'collection', 'document', 'login'])
-Router.before mustBeAdmin,
-  only: (Houston._houstonize_route(name) for name in ['home', 'collection', 'document'])

@@ -31,7 +31,7 @@ Houston._session = () ->
     Session.set(key, arguments[1])
 
 Houston._call = (name, args...) ->
-  Meteor.call(Houston._houstonize(name), args...)
+  Meteor.call(Houston._houstonize(name), args)
 
 Houston._nested_field_lookup = (object, path) ->
   return '' unless object?
