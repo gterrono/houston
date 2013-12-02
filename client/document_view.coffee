@@ -46,9 +46,6 @@ Template._houston_document_view.events
     Houston._call("#{Houston._session('collection_name')}_delete",
       Houston._session('document_id'))
     Houston._go 'collection', name: Houston._session('collection_name')
-  'focus textarea.houston-field': (e) ->
-    $(e.target).closest('textarea').trigger('autosize.resize')
 
 Template._houston_document_view.rendered = ->
-  $('textarea.houston-field').autosize()
   $(window).unbind('scroll')
