@@ -8,6 +8,9 @@
         <ul class="breadcrumb">
           <li class="active">Home</li>
         </ul>
+        {{# unless collections }}
+          <p class="lead">If this is your first time using Houston, you may need to <a id="refresh" class="btn btn-large btn-warning">Refresh this page</a></p>
+        {{/unless}}
         <table class='table table-bordered table-striped'>
           <thead>
             <tr>
