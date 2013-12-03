@@ -77,14 +77,11 @@ sync_collections = ->
   mongo_driver = MongoInternals?.defaultRemoteCollectionDriver() or Meteor._RemoteCollectionDriver
   mongo_driver.mongo.db.collections bound_sync_collections
 
-Meteor.startup ->
-  sync_collections()
-
 Meteor.methods
-  _houston_make_admin: (userId) ->
+  _houston_make_admin: (user_id) ->
     # limit one admin
     return if Houston._admins.findOne {'user_id': $exists: true}
-    Houston._admins.insert user_id: userId
+    Houston._admins.insert {user_id}
     sync_collections() # reloads collections in case of new app
     return true
 
@@ -93,8 +90,9 @@ Houston._publish 'collections', ->
   return unless Houston._user_is_admin @userId
   Houston._collections.collections.find()
 
-# used by login page to see if admin has been created yet
+# TODO address inherent security issue
 Houston._publish 'admin_user', ->
-  if Houston._user_is_admin @userId
-    return Houston._admins.find user_id: @userId
-  Houston._admins.find {user_id: $exists: true}, fields: _id: true
+  Houston._admins.find {}
+
+Meteor.startup ->
+  sync_collections()
