@@ -1,7 +1,6 @@
 root = exports ? this
 
 Dummy = new Meteor.Collection("system.dummy")  # hack.
-collections = {'users': Meteor.users}
 
 Houston._publish = (name, func) ->
   Meteor.publish Houston._houstonize(name), func
@@ -52,42 +51,43 @@ setup_collection = (name, collection) ->
     Houston._collections.collections.insert {name, count: collection.find().count(), fields: fields}
   console.log "synced #{name}"
 
-sync_collections = (meh, collections_db) ->
-  collection_names = (col.collectionName for col in collections_db \
-    when (col.collectionName.indexOf "system.") isnt 0 and
-         (col.collectionName.indexOf "houston_") isnt 0)
-
-  collection_names.forEach (name) ->
-    unless name of collections
-      try
-        collections[name] = new Meteor.Collection(name)
-      catch e
-        for key, value of root
-          if name == value._name
-            collections[name] = value
-        console.log e unless collections[name]?
-
-      setup_collection(name, collections[name])
-  console.log "sync collections done"
-
-Meteor.startup ->
+collections = {'users': Meteor.users}  #TODO verify this is still relevant
+sync_collections = ->
   Dummy.findOne()  # hack. TODO: verify this is still necessary
 
-  # TODO put bindEnvironment as part of syncCollections
-  sync_fn = Meteor.bindEnvironment sync_collections, (e) ->
-    console.log "sync error"
-    console.log e
+  _sync_collections = (meh, collections_db) ->
+    collection_names = (col.collectionName for col in collections_db \
+      when (col.collectionName.indexOf "system.") isnt 0 and
+           (col.collectionName.indexOf "houston_") isnt 0)
+
+    collection_names.forEach (name) ->
+      unless name of collections
+        try
+          collections[name] = new Meteor.Collection(name)
+        catch e
+          for key, value of root
+            if name == value._name
+              collections[name] = value
+          console.log e unless collections[name]?
+        setup_collection(name, collections[name])
+    console.log "sync collections done"
+
+  bound_sync_collections = Meteor.bindEnvironment _sync_collections, (e) ->
+    console.log "Failed while syncing collections for reason: #{e}"
 
   # MongoInternals is the 'right' solution as of 0.6.5
   mongo_driver = MongoInternals?.defaultRemoteCollectionDriver() or Meteor._RemoteCollectionDriver
-  mongo_driver.mongo.db.collections sync_fn
+  mongo_driver.mongo.db.collections bound_sync_collections
+
+Meteor.startup ->
+  sync_collections()
 
 Meteor.methods
   _houston_make_admin: (userId) ->
     # limit one admin
-    console.log "making admin: #{userId}"
     return if Houston._admins.findOne {'user_id': $exists: true}
     Houston._admins.insert user_id: userId
+    sync_collections() # reloads collections in case of new app
     return true
 
 # publish our analysis of the app's collections
