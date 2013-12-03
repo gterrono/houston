@@ -8,8 +8,8 @@ Template._houston_login.helpers(
 Template._houston_login.events(
   'submit #houston-sign-in-form': (e) ->
     e.preventDefault()
-    email = $('input[name="email"]').val()
-    password = $('input[name="password"]').val()
+    email = $('input[name="houston-email"]').val()
+    password = $('input[name="houston-password"]').val()
 
     afterLogin = (error) ->
       # TODO error case that properly displays
@@ -22,8 +22,8 @@ Template._houston_login.events(
       Meteor.loginWithPassword email, password, afterLogin
     else
       Accounts.createUser {
-        email: $('input[name="email"]').val()
-        password: $('input[name="password"]').val()
+        email: email
+        password: password
       }, (error) ->
         return afterLogin(error) if error
         # else - user got created
