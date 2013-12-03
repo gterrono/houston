@@ -81,9 +81,8 @@ hide_non_admin_stuff = ->
   func = ->
     $('body').show()
     $('body').children().hide()
-    $('body>.houston').show()
     $('body').css('visibility','hidden')
-    $('body>.houston').css('visibility', 'visible')
+    $('body>.houston').show()
   setTimeout func, 0
 
 Router.before mustBeAdmin,
