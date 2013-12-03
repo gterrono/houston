@@ -49,7 +49,6 @@ setup_collection = (name, collection) ->
     Houston._collections.collections.update c._id, {$set: count: collection.find().count(), fields: fields}
   else
     Houston._collections.collections.insert {name, count: collection.find().count(), fields: fields}
-  console.log "synced #{name}"
 
 collections = {'users': Meteor.users}  #TODO verify this is still relevant
 sync_collections = ->
@@ -70,7 +69,6 @@ sync_collections = ->
               collections[name] = value
           console.log e unless collections[name]?
         setup_collection(name, collections[name])
-    console.log "sync collections done"
 
   bound_sync_collections = Meteor.bindEnvironment _sync_collections, (e) ->
     console.log "Failed while syncing collections for reason: #{e}"
