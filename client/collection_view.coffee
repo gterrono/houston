@@ -99,8 +99,7 @@ Template._houston_collection_view.events
     resubscribe()
 
   'click #houston-create-btn': ->
-    $('#houston-create-document').show()
-    $('#houston-create-document').css('visibility', 'visible')
+    $('#houston-create-document').removeClass('hide hidden')
     $('#houston-create-btn').hide()
 
   'click .houston-delete-doc': (e) ->
