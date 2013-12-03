@@ -87,17 +87,26 @@ hide_non_admin_stuff = ->
   setTimeout func, 0
 
 remove_host_css = ->
+  is_houston_link = ($link) ->
+    $link.attr('href') in Houston._css_files
   links = $('link[rel="stylesheet"]')
   for link in links
     $link = $(link)
-    unless $link.attr('href').indexOf('/packages/houston') == 0
+    unless is_houston_link($link)
       $link.remove()
+
+  links = $('link[rel="stylesheet"]')
+  if links.length < Houston._css_files.length
+    $head = $('head')
+    for file in Houston._css_files
+      $head.append("<link rel=\"stylesheet\" href=\"#{file}\">")
+
 
 Router.before mustBeAdmin,
   only: (Houston._houstonize_route(name) for name in ['home', 'collection', 'document'])
 Router.after hide_non_admin_stuff,
   only: (Houston._houstonize_route(name) for name in ['home', 'collection', 'document', 'login'])
-Router.after remove_host_css,
+Router.before remove_host_css,
   only: (Houston._houstonize_route(name) for name in ['home', 'collection', 'document', 'login'])
 
 onRouteNotFound = Router.onRouteNotFound
