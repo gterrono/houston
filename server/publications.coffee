@@ -6,7 +6,6 @@ Houston._publish = (name, func) ->
   Meteor.publish Houston._houstonize(name), func
 
 setup_collection = (name, collection) ->
-  console.log name, collection
   methods = {}
   methods[Houston._houstonize "#{name}_insert"] = (doc) ->
     return unless Houston._user_is_admin @userId
