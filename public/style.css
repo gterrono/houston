@@ -18,12 +18,16 @@
 }
 
 .houston textarea {
-    width: 100%;
-    -moz-box-sizing: border-box;
-    -webkit-box-sizing: border-box;
-    box-sizing: border-box;
+  width: 100%;
+  -moz-box-sizing: border-box;
+  -webkit-box-sizing: border-box;
+  box-sizing: border-box;
 }
 
 .houston {
   visibility: visible;
+}
+
+.houston #houston-report-bug {
+  float: left;
 }
