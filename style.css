@@ -1,3 +1,7 @@
+/* If you are editing this file and not seeing changes,
+ * look into Houston._css_files (set in client/zma_helpers.coffee around line 45
+ * as of writing this).
+ */
 .spinner {
   margin-top: 50px;
 }
@@ -14,12 +18,16 @@
 }
 
 .houston textarea {
-    width: 100%;
-    -moz-box-sizing: border-box;
-    -webkit-box-sizing: border-box;
-    box-sizing: border-box;
+  width: 100%;
+  -moz-box-sizing: border-box;
+  -webkit-box-sizing: border-box;
+  box-sizing: border-box;
 }
 
 .houston {
   visibility: visible;
+}
+
+.houston #houston-report-bug {
+  float: left;
 }
