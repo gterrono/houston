@@ -1,11 +1,17 @@
 root = exports ? this
+hidden_collections = {'users': Meteor.users, 'meteor_accounts_loginServiceConfiguration': undefined}
+# TODO: describe what this is, exactly, and how it differs from Houston._collections.
+collections = {}
+
 
 Dummy = new Meteor.Collection("system.dummy")  # hack.
 
 Houston._publish = (name, func) ->
   Meteor.publish Houston._houstonize(name), func
 
-setup_collection = (name, collection) ->
+Houston._setup_collection = (collection) ->
+  return if collection._name in collections
+  name = collection._name
   methods = {}
   methods[Houston._houstonize "#{name}_insert"] = (doc) ->
     return unless Houston._user_is_admin @userId
@@ -50,8 +56,6 @@ setup_collection = (name, collection) ->
   else
     Houston._collections.collections.insert {name, count: collection.find().count(), fields: fields}
 
-hidden_collections = {'users': Meteor.users, 'meteor_accounts_loginServiceConfiguration': undefined}
-collections = {}
 sync_collections = ->
   Dummy.findOne()  # hack. TODO: verify this is still necessary
 
@@ -66,10 +70,17 @@ sync_collections = ->
           collections[name] = new Meteor.Collection(name)
         catch e
           for key, value of root
-            if name == value._name
+            if name == value._name # TODO here - typecheck also?
               collections[name] = value
-          console.log e unless collections[name]?
-        setup_collection(name, collections[name]) if collections[name]?
+              Houston._setup_collection(collections[name])
+
+           unless name of collections
+             console.log """
+Houston: couldn't find access to the #{name} collection.
+If you'd like to access the collection from Houston, either
+(1) make sure it is available as a global (top-level namespace) within the server or
+(2) add the collection manually via Houston.add_collection
+"""
 
   bound_sync_collections = Meteor.bindEnvironment _sync_collections, (e) ->
     console.log "Failed while syncing collections for reason: #{e}"

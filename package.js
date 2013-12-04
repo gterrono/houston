@@ -31,6 +31,5 @@ Package.on_use(function(api) {
   'client');
 
   api.add_files(['lib/collections.coffee', 'lib/shared.coffee'], ['client', 'server']);
-
-  api.add_files('server/publications.coffee', 'server');
+  api.add_files(['server/publications.coffee', 'server/exports.coffee'], 'server');
 });
