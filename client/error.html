@@ -1,0 +1,19 @@
+<template name="_houston_error">
+  <div class="houston">
+    {{#if loggingIn}}
+      {{> spinner}}
+    {{else}}
+      {{> _houston_navbar}}
+      <div class="container content">
+        <img id="houston-error-img" src="http://i.imgur.com/hYgkzvA.gif">
+        <p>
+          This collection doesn't seem to exist. Try going to the
+          <a href="{{pathFor 'houston_home'}}">home page</a>.
+        </p>
+        <p>
+          If you haven't restarted Meteor since creating this collection, try restarting it.
+        </p>
+      </div>
+    {{/if}}
+  </div>
+</template>
