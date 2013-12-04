@@ -51,7 +51,7 @@ Wishlist
 - Allow package user to add custom CSS or functionality buttons per collection / per view
 - Full support for Arrays / all sorts of complicated nested documents
 - Log of all actions done on Houston and (though this is tough) ability to roll back actions.
-- Get arbitrary mongo filters should work again.
+- Get arbitrary mongo filters to work again.
 - Proper Meteor/IronRouter support for mounting Houston to /admin (to replace the current CSS/router hackery).
 
 History
