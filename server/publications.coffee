@@ -50,7 +50,8 @@ setup_collection = (name, collection) ->
   else
     Houston._collections.collections.insert {name, count: collection.find().count(), fields: fields}
 
-collections = {'users': Meteor.users}  #TODO verify this is still relevant
+hidden_collections = {'users': Meteor.users, 'meteor_accounts_loginServiceConfiguration': undefined}
+collections = {}
 sync_collections = ->
   Dummy.findOne()  # hack. TODO: verify this is still necessary
 
@@ -60,7 +61,7 @@ sync_collections = ->
            (col.collectionName.indexOf "houston_") isnt 0)
 
     collection_names.forEach (name) ->
-      unless name of collections
+      unless name of collections or name of hidden_collections
         try
           collections[name] = new Meteor.Collection(name)
         catch e
@@ -68,7 +69,7 @@ sync_collections = ->
             if name == value._name
               collections[name] = value
           console.log e unless collections[name]?
-        setup_collection(name, collections[name])
+        setup_collection(name, collections[name]) if collections[name]?
 
   bound_sync_collections = Meteor.bindEnvironment _sync_collections, (e) ->
     console.log "Failed while syncing collections for reason: #{e}"
