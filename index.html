@@ -28,10 +28,12 @@
         </ul>
       </header>
       <section>
-        <h2>
-<a name="about" class="anchor" href="#about"><span class="octicon octicon-link"></span></a>About</h2>
+        <h1>
+<a name="about" class="anchor" href="#about"><span class="octicon octicon-link"></span></a>About</h1>
 
-<p>Houston (formerly Z-Mongo-Admin) is a zero-config Meteor Admin, modeled after <a href="https://docs.djangoproject.com/en/dev/ref/contrib/admin/">Django Admin</a>. Houston is available through the <a href="https://atmosphere.meteor.com/package/houston">Atmosphere</a> package manager.</p>
+<p>Houston (formerly Z-Mongo-Admin) is a zero-config Meteor Admin, modeled after <a href="https://docs.djangoproject.com/en/dev/ref/contrib/admin/">Django Admin</a>, intended as a simple way for developers to give end-users (or themselves) an easy way to view and manipulate their app's data. </p>
+
+<p>Houston is available through the <a href="https://atmosphere.meteor.com/package/houston">Atmosphere</a> package manager.</p>
 
 <h3>
 <a name="getting-started" class="anchor" href="#getting-started"><span class="octicon octicon-link"></span></a>Getting Started</h3>
@@ -39,33 +41,22 @@
 <pre><code>mrt add houston
 </code></pre>
 
-<p>Once installed, navigate to <code>/admin</code> to set up your admin account. You can either create a new user to act as Houston's Admin, or upgrade an existing user into an admin by going to /admin with a logged in user.  </p>
+<p>Once installed, navigate to <code>/admin</code> to set up your admin account. You can either create a new user to act as Houston's Admin, or upgrade an existing user into an admin.</p>
 
-<h3>
-<a name="demo" class="anchor" href="#demo"><span class="octicon octicon-link"></span></a>Demo</h3>
-
-<p>TODO sample app/admin</p>
-
-<h3>
-<a name="why-houston" class="anchor" href="#why-houston"><span class="octicon octicon-link"></span></a>Why Houston?</h3>
-
-<ul>
-<li>It's nice to give a client (or end-user) an admin UI without too much additional work</li>
-<li>Often, in development it's nice to pop in and explore or update your data without dealing with a mongo shell.</li>
-</ul><h1>
+<h1>
 <a name="features" class="anchor" href="#features"><span class="octicon octicon-link"></span></a>Features</h1>
 
 <h4>
 <a name="admin-get-a-list-of-available-collections" class="anchor" href="#admin-get-a-list-of-available-collections"><span class="octicon octicon-link"></span></a>/admin: Get a list of available collections</h4>
 
-<p><img src="https://raw.github.com/gterrono/meteor-admin-ui/master/doc/home.png" alt="Home View"></p>
+<p><img src="https://raw.github.com/gterrono/houston/master/doc/home.png" alt="Home View"></p>
 
 <h4>
 <a name="admincollection-view-all-items-in-collection" class="anchor" href="#admincollection-view-all-items-in-collection"><span class="octicon octicon-link"></span></a>/admin/collection: View all items in collection</h4>
 
-<p><img src="https://raw.github.com/gterrono/meteor-admin-ui/master/doc/collection.png" alt="Collection View"></p>
+<p><img src="https://raw.github.com/gterrono/houston/master/doc/collection.png" alt="Collection View"></p>
 
-<p>Collection view includes support for </p>
+<p>Collection view includes support for</p>
 
 <ul>
 <li>deleting and creating documents</li>
@@ -76,36 +67,41 @@
 </ul><h4>
 <a name="admincollectiondocument_id-edit-a-particular-document" class="anchor" href="#admincollectiondocument_id-edit-a-particular-document"><span class="octicon octicon-link"></span></a>/admin/collection/document_id: Edit a particular document</h4>
 
-<p><img src="https://raw.github.com/gterrono/meteor-admin-ui/master/doc/document.png" alt="Document View"></p>
+<p><img src="https://raw.github.com/gterrono/houston/master/doc/document.png" alt="Document View"></p>
 
 <h4>
 <a name="adminlogin-user-defined-admin-based-on-meteor-accounts" class="anchor" href="#adminlogin-user-defined-admin-based-on-meteor-accounts"><span class="octicon octicon-link"></span></a>/admin/login: User-defined Admin based on Meteor Accounts</h4>
 
-<p><img src="https://raw.github.com/gterrono/meteor-admin-ui/master/doc/login.png" alt="Login"></p>
+<p><img src="https://raw.github.com/gterrono/houston/master/doc/login.png" alt="Login"></p>
 
 <h2>
 <a name="dependencies" class="anchor" href="#dependencies"><span class="octicon octicon-link"></span></a>Dependencies</h2>
 
 <ul>
 <li>
-<strong>Router</strong>: As of v1.0, Houston is compatible with both IronRouter and Router-less solutions that don't conflict with IronRouter. <a href="https://github.com/gterrono/houston/issues/new">Let us know</a>
-</li>
+<strong>Router</strong>: As of v1.0, Houston is compatible with both IronRouter and Router-less solutions that don't conflict with IronRouter. <a href="https://github.com/gterrono/houston/issues/new">Let us know</a> if that's not true for you.</li>
 <li>
-<strong>Accounts</strong>: Houston piggybacks on top of Meteor Accounts.<br>
-</li>
+<strong>Accounts</strong>: Houston piggybacks on top of Meteor Accounts.</li>
 <li>
 <strong>CSS</strong>: Houston uses Bootstrap, but makes an effort to avoid having its CSS interfere with yours.</li>
 <li>
 <strong>Meteor</strong>: Houston 1.0 was tested with Meteor 0.6.6.3, but there's no (strict) reasons that older versions shouldn't work.</li>
-</ul><h2>
-<a name="feature-wishlist" class="anchor" href="#feature-wishlist"><span class="octicon octicon-link"></span></a>Feature Wishlist</h2>
+</ul><h3>
+<a name="current-state" class="anchor" href="#current-state"><span class="octicon octicon-link"></span></a>Current State</h3>
+
+<p>We've put a fair bit of work into the 1.0 release and will be actively supporting it. Please send in feature requests, bug reports, and contribute.</p>
+
+<h2>
+<a name="wishlist" class="anchor" href="#wishlist"><span class="octicon octicon-link"></span></a>Wishlist</h2>
 
 <ul>
-<li>custom admin roles: let package users write their own allow/deny scripts for admin types</li>
+<li>Test coverage (first priority, probably before adding any additional features)</li>
+<li>Custom admin roles: let package users write their own allow/deny scripts for admin types</li>
 <li>Allow package user to add custom CSS or functionality buttons per collection / per view</li>
-<li>full support for Arrays / all sorts of complicated nested documents</li>
+<li>Full support for Arrays / all sorts of complicated nested documents</li>
 <li>Log of all actions done on Houston and (though this is tough) ability to roll back actions.</li>
-<li>arbitrary mongo filters should work again</li>
+<li>Get arbitrary mongo filters to work again.</li>
+<li>Proper Meteor/IronRouter support for mounting Houston to /admin (to replace the current CSS/router hackery).</li>
 </ul><h2>
 <a name="history" class="anchor" href="#history"><span class="octicon octicon-link"></span></a>History</h2>
 
