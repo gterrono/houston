@@ -1,6 +1,8 @@
 Houston
 ===============
-Houston (formerly Z-Mongo-Admin) is a zero-config Meteor Admin, modeled after [Django Admin](https://docs.djangoproject.com/en/dev/ref/contrib/admin/). Houston is available through the [Atmosphere](https://atmosphere.meteor.com/package/houston) package manager.
+Houston (formerly Z-Mongo-Admin) is a zero-config Meteor Admin, modeled after [Django Admin](https://docs.djangoproject.com/en/dev/ref/contrib/admin/), intended as a simple way for developers to give end-users (or themselves) an easy way to view and manipulate their app's data. 
+
+Houston is available through the [Atmosphere](https://atmosphere.meteor.com/package/houston) package manager.
 
 ### Getting Started
 ```
@@ -8,15 +10,6 @@ mrt add houston
 ```
 
 Once installed, navigate to `/admin` to set up your admin account. You can either create a new user to act as Houston's Admin, or upgrade an existing user into an admin.
-
-### Why Houston?
-* It's nice to give a client (or end-user) an admin UI without too much additional work
-* Often, in development it's nice to pop in and explore or update your data without dealing with a mongo shell.
-
-### Current State
-Reasonably Mature / No longer just a hack / Beta.
-
-We've put a fair amount of work into the Houston 1.0 release. There's are definitely still edge cases and bugs left, but we're comfortable enough to have clients start using Houston for their Meteor Admins and notify us about bugs or feature request.
 
 Features
 ========
@@ -48,6 +41,9 @@ Dependencies
 * **CSS**: Houston uses Bootstrap, but makes an effort to avoid having its CSS interfere with yours.
 * **Meteor**: Houston 1.0 was tested with Meteor 0.6.6.3, but there's no (strict) reasons that older versions shouldn't work.
 
+###Current State
+We've put a fair bit of work into the 1.0 release and will be actively supporting it. Please send in feature requests, bug reports, and contribute.
+
 Wishlist
 -------
 - Test coverage (first priority, probably before adding any additional features)
@@ -56,7 +52,7 @@ Wishlist
 - Full support for Arrays / all sorts of complicated nested documents
 - Log of all actions done on Houston and (though this is tough) ability to roll back actions.
 - Get arbitrary mongo filters should work again.
-- Proper Meteor/IronRouter support for mounting Houston as a side app.
+- Proper Meteor/IronRouter support for mounting Houston to /admin (to replace the current CSS/router hackery).
 
 History
 -------
