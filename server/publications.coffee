@@ -50,7 +50,8 @@ setup_collection = (name, collection) ->
   else
     Houston._collections.collections.insert {name, count: collection.find().count(), fields: fields}
 
-collections = {'users': Meteor.users, 'meteor_accounts_loginServiceConfiguration': undefined}
+hidden_collections = {'users': Meteor.users, 'meteor_accounts_loginServiceConfiguration': undefined}
+collections = {}
 sync_collections = ->
   Dummy.findOne()  # hack. TODO: verify this is still necessary
 
@@ -60,7 +61,7 @@ sync_collections = ->
            (col.collectionName.indexOf "houston_") isnt 0)
 
     collection_names.forEach (name) ->
-      unless name of collections
+      unless name of collections or name of hidden_collections
         try
           collections[name] = new Meteor.Collection(name)
         catch e
