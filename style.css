@@ -1,0 +1,25 @@
+.spinner {
+  margin-top: 50px;
+}
+
+.houston .navbar > .navbar-inner > .container {
+  margin-top: 0px;
+}
+
+.houston > .container {
+  margin-top: 50px;
+  padding: 10px;
+  overflow-x: auto;
+  border: 1px solid #eee;
+}
+
+.houston textarea {
+    width: 100%;
+    -moz-box-sizing: border-box;
+    -webkit-box-sizing: border-box;
+    box-sizing: border-box;
+}
+
+.houston {
+  visibility: visible;
+}
