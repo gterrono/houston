@@ -1,5 +1,5 @@
 Package.describe({
-  summary: "Mongo Admin for Meteor"
+  summary: "A zero-config Meteor Admin"
 });
 
 Package.on_use(function(api) {
