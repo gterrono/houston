@@ -11,6 +11,9 @@ Package.on_use(function(api) {
 
   // adding our custom version of bootstrap, to ensure no-conflict with
   // whichever CSS framework the client app uses.
+  // The css is in public/ so that it doesn't get automatically included
+  // and interfere with the host app.
+  // It also lets us included it on our own in development
    api.add_files(['public/style.css', 'public/bootstrap.css'], 'client')
 
   // load html first, https://github.com/meteor/meteor/issues/282
