@@ -42,4 +42,6 @@ Houston._nested_field_lookup = (object, path) ->
     return '' unless result?  # quit if you can't find anything here
   if typeof result isnt 'object' then result else ''
 
-Houston._css_files = ["/packages/houston/public/style.css", "/packages/houston/public/bootstrap.css"]
+Houston._css_files = ["//terrono.com/houston/style.css", "//terrono.com/houston/bootstrap.css"]
+# For development:
+# Houston._css_files = ["/packages/houston/public/style.css", "/packages/houston/public/bootstrap.css"]]
