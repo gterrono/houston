@@ -53,7 +53,6 @@ Router.map ->
   houston_route 'collection',
     path: '/admin/:name'
     data: ->
-      console.log 'here'
       [collection, @subscription] = setup_collection(@params.name)
       {collection}
     waitOn: -> @subscription
