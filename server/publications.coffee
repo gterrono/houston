@@ -51,7 +51,7 @@ setup_collection = (name, collection) ->
   else
     Houston._collections.collections.insert {name, count: collection.find().count(), fields: fields}
 
-collections = {'users': Meteor.users, 'meteor_accounts_loginServiceConfiguration': undefined}  #TODO verify this is still relevant
+collections = {'users': Meteor.users, 'meteor_accounts_loginServiceConfiguration': undefined}
 sync_collections = ->
   Dummy.findOne()  # hack. TODO: verify this is still necessary
 
