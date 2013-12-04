@@ -64,6 +64,7 @@ sync_collections = ->
         try
           collections[name] = new Meteor.Collection(name)
         catch e
+          console.log e
           for key, value of root
             if name == value._name
               collections[name] = value
