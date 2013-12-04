@@ -6,6 +6,7 @@ Houston._publish = (name, func) ->
   Meteor.publish Houston._houstonize(name), func
 
 setup_collection = (name, collection) ->
+  console.log name, collection
   methods = {}
   methods[Houston._houstonize "#{name}_insert"] = (doc) ->
     return unless Houston._user_is_admin @userId
@@ -50,7 +51,7 @@ setup_collection = (name, collection) ->
   else
     Houston._collections.collections.insert {name, count: collection.find().count(), fields: fields}
 
-collections = {'users': Meteor.users}  #TODO verify this is still relevant
+collections = {'users': Meteor.users, 'meteor_accounts_loginServiceConfiguration': undefined}  #TODO verify this is still relevant
 sync_collections = ->
   Dummy.findOne()  # hack. TODO: verify this is still necessary
 
@@ -64,11 +65,12 @@ sync_collections = ->
         try
           collections[name] = new Meteor.Collection(name)
         catch e
+          console.log Meteor
           for key, value of root
             if name == value._name
               collections[name] = value
           console.log e unless collections[name]?
-        setup_collection(name, collections[name])
+        setup_collection(name, collections[name]) if collections[name]?
 
   bound_sync_collections = Meteor.bindEnvironment _sync_collections, (e) ->
     console.log "Failed while syncing collections for reason: #{e}"

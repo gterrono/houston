@@ -36,6 +36,7 @@ Router.map ->
   houston_route = (route_name, options) =>
     # Append _houston_ to template and route names to avoid clobbering parent route namespace
     options.template = Houston._houstonize(options.template)
+    options.layoutTemplate = null
     @route Houston._houstonize_route(route_name), options
 
   houston_route 'home',
@@ -52,6 +53,7 @@ Router.map ->
   houston_route 'collection',
     path: '/admin/:name'
     data: ->
+      console.log 'here'
       [collection, @subscription] = setup_collection(@params.name)
       {collection}
     waitOn: -> @subscription
