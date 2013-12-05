@@ -7,7 +7,7 @@ Package.on_use(function(api) {
   api.use('accounts-base', ['client', 'server']);
   api.use('accounts-password', ['client', 'server']);
 
-  api.use(['standard-app-packages',  'iron-router', 'spin', 'handlebars', 'paginated-subscription'], 'client');
+  api.use(['templating', 'check',  'iron-router', 'spin', 'handlebars', 'paginated-subscription'], 'client');
 
   // adding our custom version of bootstrap, to ensure no-conflict with
   // whichever CSS framework the client app uses.
