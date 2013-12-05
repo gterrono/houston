@@ -38,7 +38,7 @@ Houston._setup_collection = (collection) ->
   Houston._publish name, (sort, filter, limit) ->
     check sort, Match.Any
     check filter, Match.Any
-    check limit, Match.Any
+    check limit, Number
     return unless Houston._user_is_admin @userId
     try
       collection.find(filter, sort: sort, limit: limit)
