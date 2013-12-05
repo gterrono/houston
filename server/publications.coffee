@@ -72,10 +72,11 @@ sync_collections = ->
           for key, value of root
             if name == value._name # TODO here - typecheck also?
               collections[name] = value
-              Houston._setup_collection(collections[name])
 
-           unless name of collections
-             console.log """
+        if name of collections  # found it!
+          Houston._setup_collection(collections[name])
+        else
+          console.log """
 Houston: couldn't find access to the #{name} collection.
 If you'd like to access the collection from Houston, either
 (1) make sure it is available as a global (top-level namespace) within the server or
