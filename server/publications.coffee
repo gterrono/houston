@@ -1,8 +1,7 @@
 root = exports ? this
-hidden_collections = {'users': Meteor.users, 'meteor_accounts_loginServiceConfiguration': undefined}
+HIDDEN_COLLECTIONS = {'users': Meteor.users, 'meteor_accounts_loginServiceConfiguration': undefined}
+ADDED_COLLECTIONS = {}
 # TODO: describe what this is, exactly, and how it differs from Houston._collections.
-collections = {}
-
 
 Dummy = new Meteor.Collection("system.dummy")  # hack.
 
@@ -10,7 +9,8 @@ Houston._publish = (name, func) ->
   Meteor.publish Houston._houstonize(name), func
 
 Houston._setup_collection = (collection) ->
-  return if collection._name in collections
+  return if collection._name of ADDED_COLLECTIONS
+
   name = collection._name
   methods = {}
   methods[Houston._houstonize "#{name}_insert"] = (doc) ->
@@ -55,6 +55,7 @@ Houston._setup_collection = (collection) ->
     Houston._collections.collections.update c._id, {$set: count: collection.find().count(), fields: fields}
   else
     Houston._collections.collections.insert {name, count: collection.find().count(), fields: fields}
+  ADDED_COLLECTIONS[name] = collection
 
 sync_collections = ->
   Dummy.findOne()  # hack. TODO: verify this is still necessary
@@ -65,16 +66,17 @@ sync_collections = ->
            (col.collectionName.indexOf "houston_") isnt 0)
 
     collection_names.forEach (name) ->
-      unless name of collections or name of hidden_collections
+      unless name of ADDED_COLLECTIONS or name of HIDDEN_COLLECTIONS
+        new_collection = null
         try
-          collections[name] = new Meteor.Collection(name)
+          new_collection = new Meteor.Collection(name)
         catch e
           for key, value of root
             if name == value._name # TODO here - typecheck also?
-              collections[name] = value
+              new_collection = value
 
-        if name of collections  # found it!
-          Houston._setup_collection(collections[name])
+        if new_collection?  # found it!
+          Houston._setup_collection(new_collection)
         else
           console.log """
 Houston: couldn't find access to the #{name} collection.
