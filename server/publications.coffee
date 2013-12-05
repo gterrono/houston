@@ -1,11 +1,17 @@
 root = exports ? this
+HIDDEN_COLLECTIONS = {'users': Meteor.users, 'meteor_accounts_loginServiceConfiguration': undefined}
+ADDED_COLLECTIONS = {}
+# TODO: describe what this is, exactly, and how it differs from Houston._collections.
 
 Dummy = new Meteor.Collection("system.dummy")  # hack.
 
 Houston._publish = (name, func) ->
   Meteor.publish Houston._houstonize(name), func
 
-setup_collection = (name, collection) ->
+Houston._setup_collection = (collection) ->
+  return if collection._name of ADDED_COLLECTIONS
+
+  name = collection._name
   methods = {}
   methods[Houston._houstonize "#{name}_insert"] = (doc) ->
     return unless Houston._user_is_admin @userId
@@ -49,9 +55,8 @@ setup_collection = (name, collection) ->
     Houston._collections.collections.update c._id, {$set: count: collection.find().count(), fields: fields}
   else
     Houston._collections.collections.insert {name, count: collection.find().count(), fields: fields}
+  ADDED_COLLECTIONS[name] = collection
 
-hidden_collections = {'users': Meteor.users, 'meteor_accounts_loginServiceConfiguration': undefined}
-collections = {}
 sync_collections = ->
   Dummy.findOne()  # hack. TODO: verify this is still necessary
 
@@ -61,15 +66,24 @@ sync_collections = ->
            (col.collectionName.indexOf "houston_") isnt 0)
 
     collection_names.forEach (name) ->
-      unless name of collections or name of hidden_collections
+      unless name of ADDED_COLLECTIONS or name of HIDDEN_COLLECTIONS
+        new_collection = null
         try
-          collections[name] = new Meteor.Collection(name)
+          new_collection = new Meteor.Collection(name)
         catch e
           for key, value of root
-            if name == value._name
-              collections[name] = value
-          console.log e unless collections[name]?
-        setup_collection(name, collections[name]) if collections[name]?
+            if name == value._name # TODO here - typecheck also?
+              new_collection = value
+
+        if new_collection?  # found it!
+          Houston._setup_collection(new_collection)
+        else
+          console.log """
+Houston: couldn't find access to the #{name} collection.
+If you'd like to access the collection from Houston, either
+(1) make sure it is available as a global (top-level namespace) within the server or
+(2) add the collection manually via Houston.add_collection
+"""
 
   bound_sync_collections = Meteor.bindEnvironment _sync_collections, (e) ->
     console.log "Failed while syncing collections for reason: #{e}"
