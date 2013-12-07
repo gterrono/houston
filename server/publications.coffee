@@ -72,7 +72,7 @@ sync_collections = ->
           new_collection = new Meteor.Collection(name)
         catch e
           for key, value of root
-            if name == value._name # TODO here - typecheck also?
+            if name == value?._name # TODO here - typecheck also?
               new_collection = value
 
         if new_collection?  # found it!
