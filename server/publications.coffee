@@ -36,8 +36,8 @@ Houston._setup_collection = (collection) ->
   Meteor.methods methods
 
   Houston._publish name, (sort, filter, limit) ->
-    check sort, Match.Any
-    check filter, Match.Any
+    check sort, Object
+    check filter, Object
     check limit, Number
     return unless Houston._user_is_admin @userId
     try
