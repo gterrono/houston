@@ -36,9 +36,9 @@ Houston._setup_collection = (collection) ->
   Meteor.methods methods
 
   Houston._publish name, (sort, filter, limit) ->
-    check sort, Object
-    check filter, Object
-    check limit, Number
+    check sort, Match.Optional(Object)
+    check filter, Match.Optional(Object)
+    check limit, Match.Optional(Number)
     return unless Houston._user_is_admin @userId
     try
       collection.find(filter, sort: sort, limit: limit)
