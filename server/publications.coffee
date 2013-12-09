@@ -97,7 +97,7 @@ If you'd like to access the collection from Houston, either
 
 Meteor.methods
   _houston_make_admin: (user_id) ->
-    check userId, String
+    check user_id, String
     # limit one admin
     return if Houston._admins.findOne {'user_id': $exists: true}
     Houston._admins.insert {user_id}
