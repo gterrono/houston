@@ -7,14 +7,14 @@ Package.on_use(function(api) {
   api.use('accounts-base', ['client', 'server']);
   api.use('accounts-password', ['client', 'server']);
 
-  api.use(['templating', 'iron-router', 'spin', 'handlebars', 'paginated-subscription'], 'client');
+  api.use(['templating', 'check',  'iron-router', 'spin', 'handlebars', 'paginated-subscription'], 'client');
 
   // adding our custom version of bootstrap, to ensure no-conflict with
   // whichever CSS framework the client app uses.
   // The css is in public/ so that it doesn't get automatically included
   // and interfere with the host app.
   // It also lets us included it on our own in development
-   api.add_files(['public/style.css', 'public/bootstrap.css'], 'client')
+  api.add_files(['public/style.css', 'public/bootstrap.css'], 'client')
 
   // load html first, https://github.com/meteor/meteor/issues/282
   api.add_files([
