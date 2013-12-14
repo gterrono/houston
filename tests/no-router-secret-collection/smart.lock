@@ -1,0 +1,25 @@
+{
+  "meteor": {},
+  "dependencies": {
+    "basePackages": {
+      "houston": {
+        "path": "../.."
+      }
+    },
+    "packages": {
+      "houston": {
+        "path": "../.."
+      },
+      "paginated-subscription": {
+        "git": "https://github.com/tmeasday/meteor-paginated-subscription.git",
+        "tag": "v0.1.2",
+        "commit": "35e0c6112df2b4cfeb60b559276a93cac5ee2dd6"
+      },
+      "iron-router": {
+        "git": "https://github.com/EventedMind/iron-router.git",
+        "tag": "v0.6.1",
+        "commit": "4e1ee0581d68bff422a915dacb0bd30eae10fe08"
+      }
+    }
+  }
+}
