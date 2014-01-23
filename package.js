@@ -33,3 +33,11 @@ Package.on_use(function(api) {
   api.add_files(['lib/collections.coffee', 'lib/shared.coffee'], ['client', 'server']);
   api.add_files(['server/publications.coffee', 'server/exports.coffee'], 'server');
 });
+
+Package.on_test(function (api) {
+  api.use('coffeescript', ['client', 'server']);
+  api.use('accounts-base', ['client', 'server']);
+  api.use('accounts-password', ['client', 'server']);
+  api.use(['houston', 'tinytest', 'test-helpers'], ['client', 'server']);
+  api.add_files('test.coffee', ['client', 'server']);
+});
