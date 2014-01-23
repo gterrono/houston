@@ -27,7 +27,7 @@ if Meteor.isClient
           test.equal error, undefined)
     ,
     (test, expect) ->
-      console.log 'User ID:', Meteor.userId()
+      test.isFalse Houston._user_is_admin Meteor.userId()
       Meteor.call '_houston_make_admin', Meteor.userId(), expect (error) ->
         test.equal error, undefined
     ,
