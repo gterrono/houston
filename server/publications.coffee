@@ -94,6 +94,7 @@ If you'd like to access the collection from Houston, either
     console.log("Using hook-based mongo driver")
   else
   # MongoInternals is the 'right' solution as of 0.6.5
+    console.log("Using normal mongo driver")
     mongo_driver = MongoInternals?.defaultRemoteCollectionDriver() or Meteor._RemoteCollectionDriver
   console.log(mongo_driver, MongoInternals.defaultRemoteCollectionDriver())
   mongo_driver.mongo.db.collections bound_sync_collections
