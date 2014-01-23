@@ -1,4 +1,7 @@
 if Meteor.isServer
+  this.TestCollection = new Meteor.Collection('test_collection')
+  unless TestCollection.findOne()
+    TestCollection.insert({hey:'hi'})
   Meteor.methods
     wipe_users: ->
       for user in Meteor.users.find().fetch()
@@ -8,9 +11,11 @@ if Meteor.isServer
     print_users: ->
       console.log Meteor.users.find().fetch()
       console.log Houston._admins.find().fetch()
+    print_collections: ->
+      console.log Houston._collections.collections.find().fetch()
 
 if Meteor.isClient
-  testAsyncMulti('Houston - Make Admin', [
+  testAsyncMulti('Houston - Admin creation is functional', [
     (test, expect) ->
       Meteor.call 'wipe_users', expect (error) ->
         test.equal error, undefined
@@ -33,4 +38,14 @@ if Meteor.isClient
     ,
     (test, expect) ->
       test.isTrue Houston._user_is_admin Meteor.userId()
+  ])
+
+  testAsyncMulti('Houston - Normal collection is seen by Houston', [
+    (test, expect) ->
+      test.isTrue Houston._user_is_admin Meteor.userId()
+      Houston._subscribe 'collections', expect ->
+        collections = Houston._collections.collections.find().fetch()
+        test.equal collections.length, 1
+        col = _.omit collections[0], '_id'
+        test.equal col, {"name":"test_collection","count":1,"fields":["_id","hey"]}
   ])

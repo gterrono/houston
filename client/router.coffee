@@ -2,7 +2,8 @@ window.Houston ?= {}
 
 Houston._houstonize = (name) -> "_houston_#{name}"
 
-Houston._subscribe = (name) -> Meteor.subscribe Houston._houstonize name
+Houston._subscribe = (name, callback) ->
+  Meteor.subscribe Houston._houstonize(name), callback
 
 Houston._subscribe 'collections'
 Houston._subscribe 'admin_user'
