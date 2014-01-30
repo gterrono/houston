@@ -1,4 +1,7 @@
 if Meteor.isServer
+  secret_collection = new Meteor.Collection('secret_collection')
+  unless secret_collection.findOne()
+    secret_collection.insert({sh:'secret'})
   this.TestCollection = new Meteor.Collection('test_collection')
   unless TestCollection.findOne()
     TestCollection.insert({hey:'hi'})
@@ -13,6 +16,8 @@ if Meteor.isServer
       console.log Houston._admins.find().fetch()
     print_collections: ->
       console.log Houston._collections.collections.find().fetch()
+    add_secret_collection: ->
+      Houston.add_collection secret_collection
 
 if Meteor.isClient
   testAsyncMulti('Houston - Admin creation is functional', [
@@ -48,4 +53,14 @@ if Meteor.isClient
         test.equal collections.length, 1
         col = _.omit collections[0], '_id'
         test.equal col, {"name":"test_collection","count":1,"fields":["_id","hey"]}
+  ])
+
+  testAsyncMulti('Houston - Secret collections can be added manually', [
+    (test, expect) ->
+      Meteor.call 'add_secret_collection', expect (error) ->
+        test.equal error, undefined
+        collections = Houston._collections.collections
+        test.equal collections.find().count(), 2
+        col = _.omit collections.findOne(name: 'secret_collection'), '_id'
+        test.equal col, {"name":"secret_collection","count":1,"fields":["_id","sh"]}
   ])
