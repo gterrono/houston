@@ -14,7 +14,7 @@ Houston._get_fields = (documents) ->
         # handle dates like strings
         if value instanceof Date
           full_path_key = "#{prefix}#{key}"
-          key_to_type[full_path_key] = "String"
+          key_to_type[full_path_key] = "Date"
 
         # recurse into sub documents
         else
