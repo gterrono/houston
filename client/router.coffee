@@ -55,6 +55,11 @@ Router.map ->
     data: ->
       [collection, @subscription] = setup_collection(@params.name)
       {collection}
+    action: ->
+      if Houston._collections.collections.findOne({name})
+        this.render()
+      else
+        this.render Houston._houstonize('error')
     waitOn: -> @subscription
     template: 'collection_view'
 

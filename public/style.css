@@ -31,3 +31,7 @@
 .houston #houston-report-bug {
   float: left;
 }
+
+.houston #houston-error-img {
+  padding-bottom: 10px;
+}

@@ -20,7 +20,7 @@ Package.on_use(function(api) {
   api.add_files([
     'client/admin_login.html', 'client/db_view.html',
     'client/collection_view.html', 'client/document_view.html',
-    'client/admin_navbar.html', 'client/main.html'],
+    'client/admin_navbar.html', 'client/main.html', 'client/error.html'],
   'client');
 
   api.add_files([
