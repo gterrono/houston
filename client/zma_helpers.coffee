@@ -37,10 +37,16 @@ Houston._nested_field_lookup = (object, path) ->
   return '' unless object?
   return object._id._str if path =='_id'and typeof object._id == 'object'
   result = object
+  
   for part in path.split(".")
     result = result[part]
     return '' unless result?  # quit if you can't find anything here
-  if typeof result isnt 'object' then result else ''
+ 
+  # Return date objects and other non-object types
+  if typeof result isnt 'object' or result instanceof Date
+    return result
+  else
+    return ''
 
 # This is temporary until meteor supports mounting of apps.
 # It's so that we can remove all other css files and add our own.
