@@ -121,6 +121,6 @@ onRouteNotFound = Router.onRouteNotFound
 Router.onRouteNotFound = (args...) ->
   non_houston_routes = _.filter(Router.routes, (route) -> route.name.indexOf('houston_') != 0)
   if non_houston_routes.length > 0
-    onRouteNotFound(args...)
+    onRouteNotFound.apply Router, args
   else
     console.log "Note: Houston is suppressing Iron-Router errors because we don't think you are using it."
