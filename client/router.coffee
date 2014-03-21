@@ -88,26 +88,10 @@ hide_non_admin_stuff = ->
   setTimeout func, 0
 
 remove_host_css = ->
-  # Houston._css_files is set in client/zma_helpers.coffee
-  is_houston_link = ($link) ->
-    $link.attr('href') in Houston._css_files
-  links = $('link[rel="stylesheet"]')
-  for link in links
+  $links = $('link[rel="stylesheet"]')
+  for link in $links
     $link = $(link)
-    unless is_houston_link($link)
-      $link.remove()
-
-  links = $('link[rel="stylesheet"]')
-  # when hitting a new path using one of our links (as opposed to hitting a url directly)
-  # the head tag is not reloaded, so it's possible that our css files are already
-  # in the head tag.
-  # Therefore, if after removing all of the non-houston css files, there are the
-  # same number of files as in Houston._css_files, all of our files are in there,
-  # so there is no need to add them again.
-  if links.length < Houston._css_files.length
-    $head = $('head')
-    for file in Houston._css_files
-      $head.append("<link rel=\"stylesheet\" href=\"#{file}\">")
+    $link.remove()
 
 
 Router.before mustBeAdmin,
