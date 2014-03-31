@@ -2,7 +2,9 @@ Houston
 ===============
 Houston (formerly Z-Mongo-Admin) is a zero-config Meteor Admin, modeled after [Django Admin](https://docs.djangoproject.com/en/dev/ref/contrib/admin/), intended as a simple way for developers to give end-users (or themselves) an easy way to view and manipulate their app's data.
 
-Houston is available through the [Atmosphere](https://atmosphere.meteor.com/package/houston) package manager.
+#### [Video presentation](https://www.youtube.com/watch?v=vXeWxbJQr5o)
+
+Houston is available through the [Atmosphere](https://atmospherejs.com/package/houston) package manager.
 
 ### Getting Started
 ```
