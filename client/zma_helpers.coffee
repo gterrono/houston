@@ -37,21 +37,13 @@ Houston._nested_field_lookup = (object, path) ->
   return '' unless object?
   return object._id._str if path =='_id'and typeof object._id == 'object'
   result = object
-  
+
   for part in path.split(".")
     result = result[part]
     return '' unless result?  # quit if you can't find anything here
- 
+
   # Return date objects and other non-object types
   if typeof result isnt 'object' or result instanceof Date
     return result
   else
     return ''
-
-# This is temporary until meteor supports mounting of apps.
-# It's so that we can remove all other css files and add our own.
-# To deploy new files, push to the gh-pages branch of gterrono/houston.
-Houston._css_files = ["//terrono.com/houston/style.css", "//terrono.com/houston/bootstrap.css"]
-# There isn't an obvious way to check if meteor is running in development or production
-# so if you want to test the css files in development, uncomment the line below
-# Houston._css_files = ["/packages/houston/public/style.css", "/packages/houston/public/bootstrap.css"]
