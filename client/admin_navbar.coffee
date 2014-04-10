@@ -13,3 +13,6 @@ expecting and a screenshot if relevant.
 Thanks!
 """
     "https://github.com/gterrono/houston/issues/new?body=#{message}"
+  'menu_items': ->
+    return Houston.menu._get_menu_items()
+  'isActive' : -> 'active' if Router.current()?.path == this.path

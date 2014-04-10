@@ -15,8 +15,8 @@ Once installed, navigate to `/admin` to set up your admin account. You can eithe
 
 #### Auto-discovery
 Houston will auto-discover your collections by exploring the top-level (root) namespace on the server for collections.  If your collections are not on the global namespace, add them to Houston via
-```
-Houston.add_collection(collection)
+```javascript
+Houston.add_collection(collection);
 ```
 
 Features
@@ -40,6 +40,33 @@ Collection view includes support for
 
 #### /admin/login: User-defined Admin based on Meteor Accounts
 ![Login](https://raw.github.com/gterrono/houston/master/doc/login.png)
+
+### Defining Custom Menu Items
+To add custom menu items you can simply call ```Houston.menu``` with an array
+of objects, which are the single menu items. There are following types available:
+
+#### Template
+```javascript
+Houston.menu([{
+  'type': 'template',
+  'use': 'my_analytics_template'
+  'title': 'Analytics',
+}]);
+```
+
+This will render a template for the given menu point.
+
+#### Link
+```javascript
+Houston.menu([{
+  'type': 'link',
+  'use': 'http://google.com'
+  'title': 'Google',
+  'target': 'blank'
+}]);
+```
+
+This basically defines a link menu point which can point to whatever you link you want.
 
 Dependencies
 -----

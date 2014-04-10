@@ -58,6 +58,11 @@ Router.map ->
     waitOn: -> @subscription
     template: 'collection_view'
 
+  houston_route 'template',
+    path: '/admin/view/:template'
+    template: 'template_view'
+    data: -> this.params
+
   houston_route 'document',
     path: '/admin/:collection/:_id'
     data: ->
