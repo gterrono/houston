@@ -105,7 +105,7 @@ Template._houston_collection_view.events
   'click .houston-delete-doc': (e) ->
     e.preventDefault()
     id = $(e.currentTarget).data('id')
-    if confirm('Are you sure you want to delete this document?')
+    if confirm("Are you sure you want to delete the document with _id #{id}?")
       Houston._call("#{Houston._session('collection_name')}_delete", id)
 
   'click .houston-create-doc': (e) ->
