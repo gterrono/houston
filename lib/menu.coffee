@@ -17,8 +17,6 @@ Houston.menu._process_item = (item) ->
   if item.type is 'link'
     item.path = item.use
   else if item.type is 'template'
-    # TODO: Check if collection with this name already exists
-
     item.path = "/admin/#{item.use}"
 
   return item
