@@ -3,6 +3,7 @@ Package.describe({
 });
 
 Package.on_use(function(api) {
+  api.use('deps', ['client', 'server']);
   api.use('coffeescript', ['client', 'server']);
   api.use('accounts-base', ['client', 'server']);
   api.use('accounts-password', ['client', 'server']);
