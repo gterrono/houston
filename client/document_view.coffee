@@ -43,9 +43,10 @@ Template._houston_document_view.events
 
   'click .houston-delete': (e) ->
     e.preventDefault()
-    Houston._call("#{Houston._session('collection_name')}_delete",
-      Houston._session('document_id'))
-    Houston._go 'collection', name: Houston._session('collection_name')
+    id = Houston._session('document_id')
+    if confirm("Are you sure you want to delete the document with _id #{id}?")
+      Houston._call("#{Houston._session('collection_name')}_delete", id)
+      Houston._go 'collection', name: Houston._session('collection_name')
 
 Template._houston_document_view.rendered = ->
   $(window).unbind('scroll')
