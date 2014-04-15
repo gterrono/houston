@@ -49,7 +49,8 @@ more functionality than simply editing the models.
 Houston provides for adding custom functionality in two ways: (1) Templates,
 which live in their own section of the Houston UI, or (2) Links,
 which are easily available from the Houston interface and point to wherever you
-need them to.
+need them to. You can add several object arguments to menu and it will process
+them as single menu items.
 
 #### Template
 ```javascript
@@ -57,7 +58,7 @@ Houston.menu({
   'type': 'template',
   'use': 'my_analytics_template',
   'title': 'Analytics'
-});
+}, {...}, {...});
 ```
 
 #### Link
