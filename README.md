@@ -42,31 +42,33 @@ Collection view includes support for
 ![Login](https://raw.github.com/gterrono/houston/master/doc/login.png)
 
 ### Defining Custom Menu Items
-To add custom menu items you can simply call ```Houston.menu``` with an array
-of objects, which are the single menu items. There are following types available:
+![Custom Menu](https://raw.github.com/gterrono/houston/master/doc/menu.png)
+
+Often, when delivering an admin interface for an end user, you may want to have
+more functionality than simply editing the models.
+Houston provides for adding custom functionality in two ways: (1) Templates,
+which live in their own section of the Houston UI, or (2) Links,
+which are easily available from the Houston interface and point to wherever you
+need them to.
 
 #### Template
 ```javascript
-Houston.menu([{
+Houston.menu({
   'type': 'template',
-  'use': 'my_analytics_template'
-  'title': 'Analytics',
-}]);
+  'use': 'my_analytics_template',
+  'title': 'Analytics'
+});
 ```
-
-This will render a template for the given menu point.
 
 #### Link
 ```javascript
-Houston.menu([{
+Houston.menu({
   'type': 'link',
-  'use': 'http://google.com'
+  'use': 'http://google.com',
   'title': 'Google',
   'target': 'blank'
-}]);
+});
 ```
-
-This basically defines a link menu point which can point to whatever you link you want.
 
 Dependencies
 -----
