@@ -41,7 +41,7 @@ Router.map ->
 
   houston_route 'home',
     path: '/admin',
-    before: ->
+    onBeforeAction: ->
       # TODO use wait
       Houston._session 'collections', Houston._collections.collections.find().fetch()
     template: 'db_view'
@@ -54,6 +54,11 @@ Router.map ->
     path: '/admin/:template'
     template: 'custom_template_view'
     data: -> this.params
+
+  houston_route 'change_password',
+    path: '/admin/password',
+    template: 'change_password'
+
 
   houston_route 'collection',
     path: '/admin/collection/:name'
@@ -99,11 +104,11 @@ remove_host_css = ->
     $link.remove()
 
 
-Router.before mustBeAdmin,
-  only: (Houston._houstonize_route(name) for name in ['home', 'collection', 'document'])
-Router.after hide_non_admin_stuff,
+Router.onBeforeAction mustBeAdmin,
+  only: (Houston._houstonize_route(name) for name in ['home', 'collection', 'document', 'change_password'])
+Router.onAfterAction hide_non_admin_stuff,
   only: (Houston._houstonize_route(name) for name in ['home', 'collection', 'document', 'login'])
-Router.before remove_host_css,
+Router.onBeforeAction remove_host_css,
   only: (Houston._houstonize_route(name) for name in ['home', 'collection', 'document', 'login'])
 
 onRouteNotFound = Router.onRouteNotFound

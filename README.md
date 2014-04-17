@@ -6,6 +6,8 @@ Houston (formerly Z-Mongo-Admin) is a zero-config Meteor Admin, modeled after [D
 
 Houston is available through the [Atmosphere](https://atmospherejs.com/package/houston) package manager.
 
+Play around with the demo [here](http://houston-test.meteor.com/admin). The email is `ad@min.com`, and the password is `admin`.
+
 ### Getting Started
 ```
 mrt add houston
