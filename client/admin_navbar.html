@@ -9,11 +9,12 @@
             <span class="icon-bar"></span>
         </button>
           <a class="brand" href="{{pathFor 'houston_home'}}">Admin</a>
-          <div class="nav-collapse collapse">
-            <ul class="nav">
-            </ul>
-          </div>
           <ul class="nav pull-right">
+            {{#each menu_items}}
+              <li class="{{isActive}}">
+                <a target="{{target}}" href="{{path}}">{{title}}</a>
+              </li>
+            {{/each}}
             <li>
               <a id="houston-report-bug" href="{{bugreport_url}}" target="_blank">Report a Bug</a>
             </li>

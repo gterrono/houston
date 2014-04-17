@@ -50,12 +50,18 @@ Router.map ->
     path: '/admin/login',
     template: 'login'
 
+  houston_route 'template',
+    path: '/admin/:template'
+    template: 'custom_template_view'
+    data: -> this.params
+
   houston_route 'change_password',
     path: '/admin/password',
     template: 'change_password'
 
+
   houston_route 'collection',
-    path: '/admin/:name'
+    path: '/admin/collection/:name'
     data: ->
       [collection, @subscription] = setup_collection(@params.name)
       {collection}
