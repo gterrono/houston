@@ -107,7 +107,7 @@ remove_host_css = ->
 Router.onBeforeAction mustBeAdmin,
   only: (Houston._houstonize_route(name) for name in ['home', 'collection', 'document', 'change_password'])
 Router.onAfterAction hide_non_admin_stuff,
-  only: (Houston._houstonize_route(name) for name in ['home', 'collection', 'document', 'login'])
+  only: (Houston._houstonize_route(name) for name in ['home', 'collection', 'document', 'login', 'template'])
 Router.onBeforeAction remove_host_css,
   only: (Houston._houstonize_route(name) for name in ['home', 'collection', 'document', 'login'])
 
