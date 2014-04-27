@@ -1,5 +1,5 @@
 root = exports ? this
-HIDDEN_COLLECTIONS = {'users': Meteor.users, 'meteor_accounts_loginServiceConfiguration': undefined}
+Houston._HIDDEN_COLLECTIONS = {'users': Meteor.users, 'meteor_accounts_loginServiceConfiguration': undefined}
 ADDED_COLLECTIONS = {}
 # TODO: describe what this is, exactly, and how it differs from Houston._collections.
 
@@ -69,7 +69,7 @@ sync_collections = ->
            (col.collectionName.indexOf "houston_") isnt 0)
 
     collection_names.forEach (name) ->
-      unless name of ADDED_COLLECTIONS or name of HIDDEN_COLLECTIONS
+      unless name of ADDED_COLLECTIONS or name of Houston._HIDDEN_COLLECTIONS
         new_collection = null
         try
           new_collection = new Meteor.Collection(name)
