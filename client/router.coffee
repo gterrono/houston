@@ -50,7 +50,7 @@ Router.map ->
     path: '/admin/login',
     template: 'login'
 
-  houston_route 'template',
+  houston_route 'custom_template',
     path: '/admin/:template'
     template: 'custom_template_view'
     data: -> this.params
@@ -107,7 +107,7 @@ remove_host_css = ->
 Router.onBeforeAction mustBeAdmin,
   only: (Houston._houstonize_route(name) for name in ['home', 'collection', 'document', 'change_password'])
 Router.onAfterAction hide_non_admin_stuff,
-  only: (Houston._houstonize_route(name) for name in ['home', 'collection', 'document', 'login'])
+  only: (Houston._houstonize_route(name) for name in ['home', 'collection', 'document', 'login', 'custom_template'])
 Router.onBeforeAction remove_host_css,
   only: (Houston._houstonize_route(name) for name in ['home', 'collection', 'document', 'login'])
 
