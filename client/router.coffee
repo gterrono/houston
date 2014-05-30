@@ -53,7 +53,32 @@ Router.map ->
   houston_route 'custom_template',
     path: '/admin/:template'
     template: 'custom_template_view'
-    data: -> this.params
+    data: ->
+      # The subscriptions sent to this template
+      @subscriptions = []
+
+      # The menu item corresponding to this URL
+      customTemplateMenuItem = null
+
+      # Find the menu item corresponding to this URL
+      for menuItem in Houston.menu._menu_items
+        menuItemPath = Houston._houstonize_custom_template_path menuItem.use
+        if menuItemPath == this.path
+          customTemplateMenuItem = menuItem
+          break
+
+      # For each collection we need to subscribe to, subscribe and save in 
+      # list.
+      for collectionName in customTemplateMenuItem.subscribedCollections
+        [subscriptionName, subscription] = setup_collection(collectionName)
+        @subscriptions.push(subscription)
+
+      @params.subscriptions = @subscriptions
+
+      @params
+
+    waitOn: -> @subscriptions
+
 
   houston_route 'change_password',
     path: '/admin/password',
