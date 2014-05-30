@@ -30,3 +30,5 @@ Houston._get_fields = (documents) ->
 
 Houston._get_field_names = (documents) ->
   _.pluck(Houston._get_fields(documents), 'name')
+
+Houston._houstonize_custom_template_path = (name) -> "/admin/#{name}"

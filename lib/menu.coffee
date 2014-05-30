@@ -17,7 +17,13 @@ Houston.menu._process_item = (item) ->
   if item.type is 'link'
     item.path = item.use
   else if item.type is 'template'
-    item.path = "/admin/#{item.use}"
+    item.path = Houston._houstonize_custom_template_path item.use
+
+    if item.subscribedCollections
+      if !_.isArray(item.subscribedCollections)
+        throw new Meteor.Error 400, 'subscribedCollections must be an array'
+    else
+      item.subscribedCollections = []
 
   return item
 
