@@ -1,0 +1,7 @@
+{
+  "meteor": {
+  },
+  "packages": {
+    "houston": {"path": "/Users/greg/Code/houston"}
+  }
+}
