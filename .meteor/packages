@@ -8,3 +8,7 @@ router
 coffeescript
 accounts-password
 spin
+
+houston
+paginated-subscription
+iron-router
