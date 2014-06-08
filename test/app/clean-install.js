@@ -1,7 +1,8 @@
 stuff = new Meteor.Collection("stuff");
+stuff.remove({});
 
-Meteor.users.remove(Meteor.users.findOne())
-Houston._admins.remove(Houston._admins.findOne())
+Meteor.users.remove({});
+Houston._admins.remove({});
 
 if (Meteor.isClient) {
   Template.hello.greeting = function () {
@@ -20,6 +21,7 @@ if (Meteor.isClient) {
 if (Meteor.isServer) {
   Meteor.startup(function () {
     var secret = new Meteor.Collection("shhh");
+    secret.remove({});
     Houston.add_collection(secret);
 
     // code to run on server at startup
