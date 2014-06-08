@@ -1,10 +1,10 @@
 wait = (fn, ms=500) -> casper.wait ms, fn
 
-test = (name, num_tests, url, fn) ->
+test = (name, num_tests, url, fn, wait_time=500) ->
   casper.test.begin name, num_tests, (test) ->
     casper.start url, (response) ->
       fn.bind(@)
-      wait fn
+      wait fn, wait_time
     casper.run ->
       test.done()
 
@@ -37,3 +37,8 @@ test 'User can log in', 3, 'http://localhost:3000/admin', ->
       Meteor.user().emails[0].address == 'ad@min.com'),
       'admin logged in successfully'),
     2000
+
+test 'DB view', 2, 'http://localhost:3000/admin', (->
+  @test.assertSelectorHasText 'td[record-name="shhh"].num-records', '1'
+  @test.assertSelectorHasText 'td[record-name="stuff"].num-records', '1000'),
+  1000
