@@ -21,6 +21,12 @@ Houston will auto-discover your collections by exploring the top-level (root) na
 Houston.add_collection(collection);
 ```
 
+The users collection is hidden by default. If you want to access your users in Houston and/or be able to add houston admins just:
+```javascript
+Houston.add_collection(Meteor.users);
+Houston.add_collection(Houston._admins);
+```
+
 Features
 ========
 
