@@ -3,12 +3,12 @@
   "dependencies": {
     "basePackages": {
       "houston": {
-        "path": "../../../../../Code/houston"
+        "path": "../.."
       }
     },
     "packages": {
       "houston": {
-        "path": "../../../../../Code/houston"
+        "path": "../.."
       },
       "paginated-subscription": {
         "git": "https://github.com/tmeasday/meteor-paginated-subscription.git",

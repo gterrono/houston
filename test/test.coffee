@@ -39,6 +39,6 @@ test 'User can log in', 3, 'http://localhost:3000/admin', ->
     2000
 
 test 'DB view', 2, 'http://localhost:3000/admin', (->
-  @test.assertSelectorHasText 'td[record-name="shhh"].num-records', '1'
-  @test.assertSelectorHasText 'td[record-name="stuff"].num-records', '1000'),
+  @test.assertSelectorHasText 'td[record-name="HiddenCollection"].num-records', '1'
+  @test.assertSelectorHasText 'td[record-name="GlobalCollection"].num-records', '1000'),
   1000
