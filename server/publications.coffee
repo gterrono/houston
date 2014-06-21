@@ -14,10 +14,13 @@ Houston._setup_collection = (collection) ->
   name = collection._name
   methods = {}
   methods[Houston._houstonize "#{name}_insert"] = (doc) ->
+    check doc, Object
     return unless Houston._user_is_admin @userId
     collection.insert(doc)
 
   methods[Houston._houstonize "#{name}_update"] = (id, update_dict) ->
+    check id, Match.Any
+    check update_dict, Object
     return unless Houston._user_is_admin @userId
     if collection.findOne(id)
       collection.update(id, update_dict)
@@ -25,7 +28,8 @@ Houston._setup_collection = (collection) ->
       id = collection.findOne(new Meteor.Collection.ObjectID(id))
       collection.update(id, update_dict)
 
-  methods[Houston._houstonize "#{name}_delete"] = (id, update_dict) ->
+  methods[Houston._houstonize "#{name}_delete"] = (id) ->
+    check id, Match.Any
     return unless Houston._user_is_admin @userId
     if collection.findOne(id)
       collection.remove(id)
@@ -35,10 +39,11 @@ Houston._setup_collection = (collection) ->
 
   Meteor.methods methods
 
-  Houston._publish name, (sort, filter, limit) ->
+  Houston._publish name, (sort, filter, limit, unknown_arg) ->
     check sort, Match.Optional(Object)
     check filter, Match.Optional(Object)
     check limit, Match.Optional(Number)
+    check unknown_arg, Match.Any
     return unless Houston._user_is_admin @userId
     try
       collection.find(filter, sort: sort, limit: limit)
