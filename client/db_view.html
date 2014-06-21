@@ -22,7 +22,7 @@
             {{#each collections}}
             <tr>
               <td><a href="{{pathFor 'houston_collection'}}">{{name}}</a></td>
-              <td>{{ num_of_records }}</td>
+              <td class="num-records" record-name="{{name}}">{{ num_of_records }}</td>
             </tr>
             {{/each}}
           </tbody>
