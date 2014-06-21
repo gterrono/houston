@@ -3,7 +3,7 @@
   "description": "A zero-config Meteor Admin",
   "homepage": "https://github.com/gterrono/houston",
   "author": "Greg Terrono, Alexey Komissarouk, Geoff Vedernikoff",
-  "version": "1.0.4",
+  "version": "1.0.5",
   "git": "https://github.com/gterrono/houston.git",
   "packages": {
     "paginated-subscription": {},
