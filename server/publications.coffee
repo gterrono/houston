@@ -54,10 +54,10 @@ Houston._setup_collection = (collection) ->
     added: (document) ->
       Houston._collections.collections.update {name},
         $inc: {count: 1},
-        $addToSet: fields: $each: Houston._get_field_names([document])
+        $addToSet: fields: $each: Houston._get_fields([document])
     removed: (document) -> Houston._collections.collections.update {name}, {$inc: {count: -1}}
 
-  fields = Houston._get_field_names(collection.find().fetch())
+  fields = Houston._get_fields(collection.find().fetch())
   c = Houston._collections.collections.findOne {name}
   if c
     Houston._collections.collections.update c._id, {$set: count: collection.find().count(), fields: fields}

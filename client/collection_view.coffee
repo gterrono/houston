@@ -31,7 +31,7 @@ collection_count = -> collection_info()?.count
 Template._houston_collection_view.helpers
   headers: -> get_collection_view_fields()
   nonid_headers: -> get_collection_view_fields()[1..]
-  name: -> Houston._session('collection_name')
+  col_name: -> Houston._session('collection_name')
   document_id: -> @_id + ""
   num_of_records: ->
     collection_count() or "no"
@@ -46,8 +46,8 @@ Template._houston_collection_view.helpers
   values_in_order: ->
     fields_in_order = get_collection_view_fields()
     names_in_order = _.clone fields_in_order
-    values = (Houston._nested_field_lookup(@, field_name) for field_name in fields_in_order[1..])  # skip _id
-    ({field_value, field_name} for [field_value, field_name] in _.zip values, names_in_order[1..])
+    values = (Houston._nested_field_lookup(@, field.name) for field in fields_in_order[1..])  # skip _id
+    ({field_value, field_name} for [field_value, {name:field_name}] in _.zip values, names_in_order[1..])
   filter_value: ->
     if Houston._session('field_selectors') and Houston._session('field_selectors')[@]
       Houston._session('field_selectors')[@]
@@ -85,6 +85,13 @@ Template._houston_collection_view.events
       $this.addClass('houston-collection-field')
       id = $('td:first-child a', $this.parents('tr')).html()
       field_name = $this.data('field')
+      old_val = Houston._nested_field_lookup(get_current_collection().findOne(id), field_name)
+      constructor = old_val.constructor
+      field_properties = _.find(get_collection_view_fields(), (f) -> f.name == field_name)
+      updated_val = if typeof old_val == 'object'
+          new constructor(updated_val)
+        else
+          constructor(updated_val)
       update_dict = {}
       update_dict[field_name] = updated_val
       Houston._call("#{Houston._session('collection_name')}_update",

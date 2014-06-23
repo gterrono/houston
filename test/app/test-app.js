@@ -1,5 +1,29 @@
 globalCollection = new Meteor.Collection("GlobalCollection");
 
+// collection2 schema
+var Schemas = {};
+Schemas.Book = new SimpleSchema({
+    title: {
+        type: String,
+        max: 200
+    },
+    author: {
+        type: String,
+    },
+    copies: {
+        type: Number,
+        min: 0
+    },
+    lastCheckedOut: {
+        type: Date
+    }
+});
+
+Books = new Meteor.Collection("books");
+
+Books.attachSchema(Schemas.Book);
+
+
 if (Meteor.isClient) {
   Template.hello.greeting = function () {
     return "Welcome to clean-install.";
@@ -23,9 +47,11 @@ if (Meteor.isServer) {
     Meteor.users.remove({});
     Houston._admins.remove({});
     hiddenCollection.remove({});
+    Books.remove({});
 
     Houston.add_collection(hiddenCollection);
 
+    Books.insert({title:"Title", author: "Author", copies: 5, lastCheckedOut: new Date()});
     // code to run on server at startup
     if (!globalCollection.findOne()) {
       hiddenCollection.insert({str: "hidden test"});
