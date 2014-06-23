@@ -9,7 +9,11 @@ Template._houston_document_view.helpers
       catch error
         console.log error
     fields = Houston._get_fields([document])
-    return (name: field.name, value: Houston._nested_field_lookup(document, field.name) for field in fields)
+    result = []
+    for field in fields
+      value = Houston._nested_field_lookup(document, field.name)
+      result.push(name: "#{field.name} (#{typeof value})", value: value)
+    return result
   document_id: -> Houston._session('document_id')
 
 Template._houston_document_field.helpers
@@ -29,11 +33,13 @@ Template._houston_document_view.events
         console.log error
     update_dict = {}
     for field in $('.houston-field')
-      unless field.name is '_id'
-        update_dict[field.name] = if typeof(old_object[field.name]) == 'number'
-            parseFloat(field.value)
+      field_name = field.name.split(' ')[0]
+      unless field_name is '_id'
+        constructor = old_object[field_name].constructor
+        update_dict[field_name] = if typeof old_object[field_name] == 'object'
+            new constructor(field.value)
           else
-            field.value
+            constructor(field.value)
     Houston._call("#{Houston._session('collection_name')}_update",
       Houston._session('document_id'), $set: update_dict)
     Houston._session('should_show', true)

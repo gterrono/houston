@@ -87,7 +87,6 @@ Template._houston_collection_view.events
       field_name = $this.data('field')
       old_val = Houston._nested_field_lookup(get_current_collection().findOne(id), field_name)
       constructor = old_val.constructor
-      field_properties = _.find(get_collection_view_fields(), (f) -> f.name == field_name)
       updated_val = if typeof old_val == 'object'
           new constructor(updated_val)
         else
