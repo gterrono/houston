@@ -25,21 +25,12 @@ get_collection = -> Houston._get_collection(Houston._session('collection_name'))
 Template._houston_document_view.events
   'click .houston-save': (e) ->
     e.preventDefault()
-    old_object = get_collection().findOne _id: Houston._session('document_id')
-    unless old_object
-      try
-        old_object = get_collection().findOne _id: new Meteor.Collection.ObjectID(Houston._session('document_id'))
-      catch error
-        console.log error
     update_dict = {}
     for field in $('.houston-field')
       field_name = field.name.split(' ')[0]
       unless field_name is '_id'
-        constructor = old_object[field_name].constructor
-        update_dict[field_name] = if typeof old_object[field_name] == 'object'
-            new constructor(field.value)
-          else
-            constructor(field.value)
+        update_dict[field_name] = Houston._convert_to_correct_type(field_name, field.value,
+          get_collection())
     Houston._call("#{Houston._session('collection_name')}_update",
       Houston._session('document_id'), $set: update_dict)
     Houston._session('should_show', true)

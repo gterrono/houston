@@ -47,3 +47,13 @@ Houston._nested_field_lookup = (object, path) ->
     return result
   else
     return ''
+
+Houston._convert_to_correct_type = (field, val, collection) ->
+  find_obj = {}
+  find_obj[field] = $exists: true
+  sample_val = Houston._nested_field_lookup(collection.findOne(find_obj), field)
+  constructor = sample_val.constructor
+  if typeof sample_val == 'object'
+    new constructor(val)
+  else
+    constructor(val)
