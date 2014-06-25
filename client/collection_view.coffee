@@ -31,7 +31,7 @@ collection_count = -> collection_info()?.count
 Template._houston_collection_view.helpers
   headers: -> get_collection_view_fields()
   nonid_headers: -> get_collection_view_fields()[1..]
-  name: -> Houston._session('collection_name')
+  col_name: -> Houston._session('collection_name')
   document_id: -> @_id + ""
   num_of_records: ->
     collection_count() or "no"
@@ -46,8 +46,8 @@ Template._houston_collection_view.helpers
   values_in_order: ->
     fields_in_order = get_collection_view_fields()
     names_in_order = _.clone fields_in_order
-    values = (Houston._nested_field_lookup(@, field_name) for field_name in fields_in_order[1..])  # skip _id
-    ({field_value, field_name} for [field_value, field_name] in _.zip values, names_in_order[1..])
+    values = (Houston._nested_field_lookup(@, field.name) for field in fields_in_order[1..])  # skip _id
+    ({field_value, field_name} for [field_value, {name:field_name}] in _.zip values, names_in_order[1..])
   filter_value: ->
     if Houston._session('field_selectors') and Houston._session('field_selectors')[@]
       Houston._session('field_selectors')[@]
@@ -67,10 +67,11 @@ get_collection_view_fields = -> collection_info()?.fields or []
 Template._houston_collection_view.events
   "click a.houston-sort": (e) ->
       e.preventDefault()
-      if (Houston._session('sort_key') == this.toString())
+      sort_key = this.name
+      if (Houston._session('sort_key') == sort_key)
         Houston._session('sort_order', Houston._session('sort_order') * - 1)
       else
-        Houston._session('sort_key', this.toString())
+        Houston._session('sort_key', sort_key)
         Houston._session('sort_order', 1)
       resubscribe()
 
@@ -85,6 +86,8 @@ Template._houston_collection_view.events
       $this.addClass('houston-collection-field')
       id = $('td:first-child a', $this.parents('tr')).html()
       field_name = $this.data('field')
+      updated_val = Houston._convert_to_correct_type(field_name, updated_val,
+        get_current_collection())
       update_dict = {}
       update_dict[field_name] = updated_val
       Houston._call("#{Houston._session('collection_name')}_update",
@@ -117,12 +120,14 @@ Template._houston_collection_view.events
       keys = field.name.split('.')
       final_key = keys.pop()
 
+      value = Houston._convert_to_correct_type(field.name, field.value,
+        get_current_collection())
       doc_iter = new_doc
       for key in keys
         doc_iter[key] = {} unless doc_iter[key]
         doc_iter = doc_iter[key]
 
-      doc_iter[final_key] = field.value
+      doc_iter[final_key] = value
 
       field.value = ''
     Houston._call("#{Houston._session('collection_name')}_insert", new_doc)

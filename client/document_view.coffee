@@ -9,7 +9,11 @@ Template._houston_document_view.helpers
       catch error
         console.log error
     fields = Houston._get_fields([document])
-    return (name: field.name, value: Houston._nested_field_lookup(document, field.name) for field in fields)
+    result = []
+    for field in fields
+      value = Houston._nested_field_lookup(document, field.name)
+      result.push(name: "#{field.name} (#{typeof value})", value: value)
+    return result
   document_id: -> Houston._session('document_id')
 
 Template._houston_document_field.helpers
@@ -21,19 +25,12 @@ get_collection = -> Houston._get_collection(Houston._session('collection_name'))
 Template._houston_document_view.events
   'click .houston-save': (e) ->
     e.preventDefault()
-    old_object = get_collection().findOne _id: Houston._session('document_id')
-    unless old_object
-      try
-        old_object = get_collection().findOne _id: new Meteor.Collection.ObjectID(Houston._session('document_id'))
-      catch error
-        console.log error
     update_dict = {}
     for field in $('.houston-field')
-      unless field.name is '_id'
-        update_dict[field.name] = if typeof(old_object[field.name]) == 'number'
-            parseFloat(field.value)
-          else
-            field.value
+      field_name = field.name.split(' ')[0]
+      unless field_name is '_id'
+        update_dict[field_name] = Houston._convert_to_correct_type(field_name, field.value,
+          get_collection())
     Houston._call("#{Houston._session('collection_name')}_update",
       Houston._session('document_id'), $set: update_dict)
     Houston._session('should_show', true)
