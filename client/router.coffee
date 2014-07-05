@@ -80,10 +80,10 @@ Router.map ->
 # ########
 # filters
 # ########
-mustBeAdmin = ->
-  unless Meteor.loggingIn() # don't check for admin user until ready
+mustBeAdmin = (pause) ->
+  unless Meteor.loggingIn()  # don't check for admin user until ready
     unless Houston._user_is_admin Meteor.userId()
-      @stop()
+      @pause()
       Houston._go 'login'
 
 # If the host app doesn't have a router, their html may show up
