@@ -1,5 +1,12 @@
 #!/bin/bash
 
+if [! hash python >/dev/null 2>&1 ]
+then
+  echo "Tests require casper.js to run. Install casper.js with either"
+  echo "'brew update && brew install casperjs'       (homebrew)"
+  echo "or '[sudo] npm install -j casperjs'          (npm)"
+fi
+
 cd test/app
 mrt > /dev/null &
 cd ../..
