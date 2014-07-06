@@ -8,6 +8,8 @@
   "packages": {
     "paginated-subscription": {},
     "spin": {},
-    "iron-router": {}
+    "iron-router": {
+      "tag": "v0.6.1"
+    }
   }
 }

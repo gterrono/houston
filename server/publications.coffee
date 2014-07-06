@@ -96,8 +96,15 @@ If you'd like to access the collection from Houston, either
   bound_sync_collections = Meteor.bindEnvironment _sync_collections, (e) ->
     console.log "Failed while syncing collections for reason: #{e}"
 
+  if Meteor.settings.app_mongourl?
+    # for Houston-Hook, we may want to use an alternate mongo-url
+    mongo_driver = new MongoInternals.RemoteCollectionDriver(Meteor.settings.app_mongourl, {})
+    console.log("Using hook-based mongo driver")
+  else
   # MongoInternals is the 'right' solution as of 0.6.5
-  mongo_driver = MongoInternals?.defaultRemoteCollectionDriver() or Meteor._RemoteCollectionDriver
+    console.log("Using normal mongo driver")
+    mongo_driver = MongoInternals?.defaultRemoteCollectionDriver() or Meteor._RemoteCollectionDriver
+  console.log(mongo_driver, MongoInternals.defaultRemoteCollectionDriver())
   mongo_driver.mongo.db.collections bound_sync_collections
 
 Meteor.methods
