@@ -10,7 +10,7 @@ function run_test {
   TEST_FILE=$1
   CUSTOM_TEST_ARGS="$2"
   cd test/app
-  mrt $CUSTOM_TEST_ARGS > /dev/null &
+  mrt --port=3500 $CUSTOM_TEST_ARGS > /dev/null &
   cd ../..
   casperjs test test/$TEST_FILE
   kill_mrt
