@@ -79,6 +79,11 @@ Houston.menu({
 });
 ```
 
+Running Tests
+-----
+Requires Casper.js
+run with ./run-tests.sh
+
 Dependencies
 -----
 
@@ -89,6 +94,7 @@ Dependencies
 
 ###Current State
 We've put a fair bit of work into the 1.0 release and will be actively supporting it. Please send in feature requests, bug reports, and contribute.
+
 
 Wishlist
 -------
