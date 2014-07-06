@@ -51,18 +51,20 @@ Houston._setup_collection = (collection) ->
       console.log e
 
   collection.find().observe
+    _suppress_initial: true  # fixes houston for large initial datasets
     added: (document) ->
       Houston._collections.collections.update {name},
         $inc: {count: 1},
         $addToSet: fields: $each: Houston._get_fields([document])
     removed: (document) -> Houston._collections.collections.update {name}, {$inc: {count: -1}}
 
-  fields = Houston._get_fields(collection.find().fetch())
+  fields = Houston._get_fields_from_collection(collection)
   c = Houston._collections.collections.findOne {name}
+  count = collection.find().count()
   if c
-    Houston._collections.collections.update c._id, {$set: count: collection.find().count(), fields: fields}
+    Houston._collections.collections.update c._id, {$set: {count, fields}}
   else
-    Houston._collections.collections.insert {name, count: collection.find().count(), fields: fields}
+    Houston._collections.collections.insert {name, count, fields}
   ADDED_COLLECTIONS[name] = collection
 
 sync_collections = ->
