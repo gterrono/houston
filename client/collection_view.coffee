@@ -101,6 +101,10 @@ Template._houston_collection_view.events
     Houston._session 'field_selectors', field_selectors
     resubscribe()
 
+  'click #houston-custom-filter-btn': ->
+    alert "OK!"
+    #TODO(AMK) from here
+
   'click #houston-create-btn': ->
     $('#houston-create-document').removeClass('hide hidden')
     $('#houston-create-btn').hide()

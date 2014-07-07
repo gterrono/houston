@@ -75,6 +75,9 @@
                         <input name="{{name}}" class="houston-column-filter input-small" type="text" value="{{filter_value}}"/>
                         {{/each}}
                     </form>
+                    <label for="houston-custom-filter">Custom Filter <br /><em>(mongo query)</em></label>
+                    <textarea placeholder="IE {name: 'Joe'}" id="houston-custom-filter" rows="4"></textarea>
+                    <button id="houston-custom-filter-btn" class="btn btn-sm">Custom Filter</button>
                 </div>
           </div>
         </div>
