@@ -8,7 +8,7 @@ test = (name, num_tests, url, fn, wait_time=500) ->
     casper.run ->
       test.done()
 
-test 'User sign up works w/ custom route', 3, 'http://localhost:3000/bob', ->
+test 'User sign up works w/ custom route', 3, 'http://localhost:3500/bob', ->
   @test.assertUrlMatch /\/bob\/login/, 'redirected to login'
   @test.assertExists 'input[value="Sign up"]', 'sign up form exists'
   @fill '#houston-sign-in-form'
