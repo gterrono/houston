@@ -1,6 +1,6 @@
 window.Houston ?= {}
 
-Houston._ROOT_ROUTE = "/admin"
+Houston._ROOT_ROUTE = Meteor.settings?.public?.houston_root_route or "/admin"
 Houston._houstonize = (name) -> "_houston_#{name}"
 
 Houston._subscribe = (name) -> Meteor.subscribe Houston._houstonize name
