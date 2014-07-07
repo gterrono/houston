@@ -41,10 +41,11 @@ Collection view includes support for
 ![Login](https://raw.github.com/gterrono/houston/master/doc/login.png)
 
 
-### Customizing Houston
+Customizing Houston
+========
 
-#### Adding undiscovered collections to Houston
-If Houston didn't find your collection automatically, you can always add it manually via.
+### Adding undiscovered collections to Houston
+If Houston didn't find your collection automatically, you can always add it manually via
 ```javascript
 Houston.add_collection(collection);
 ```
@@ -55,18 +56,23 @@ Houston.add_collection(Meteor.users);
 Houston.add_collection(Houston._admins);
 ```
 
-You can also ```javascript
-Houston.remove_collection(collection);
-```, though this is not as well-tested.
+You can also `Houston.remove_collection(collection)`, though this is not as well-tested.
 
-#### Changing the root path of Houston from `/admin`
-By default, Houston is hosted on `/admin`, but you're welcome to change this using [`Meteor.settings`](http://docs.meteor.com/#meteor_settings).
+### Changing the root path of Houston from `/admin`
+By default, Houston is hosted on `/admin`, but you're welcome to change this using [`Meteor.settings` (read the docs)](http://docs.meteor.com/#meteor_settings).
 
-- setup: `echo {\"public\": {\"houston_root_route\": \"/your_fancy_route\"}} > settings.json`
-- run locally: `mrt settings=settings.json`
-- run on meteor.com hosting: `meteor deploy <site> --settings settings.json`
+Don't want to read the settings docs? Here's your TL;DR:
+####Setup
+Add a settings.json file to your project, a la
+`echo {\"public\": {\"houston_root_route\": \"/your_fancy_route\"}} > settings.json`
 
-#### Defining Custom Menu Items
+####Run locally
+`mrt --settings=settings.json`
+
+####Run on meteor.com hosting
+`meteor deploy <site> --settings settings.json`
+
+### Defining Custom Menu Items
 ![Custom Menu](https://raw.github.com/gterrono/houston/master/doc/menu.png)
 
 Often, when delivering an admin interface for an end user, you may want to have
