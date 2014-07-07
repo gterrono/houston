@@ -16,16 +16,7 @@ mrt add houston
 Once installed, navigate to `/admin` to set up your admin account. You can either create a new user to act as Houston's Admin, or upgrade an existing user into an admin.
 
 #### Auto-discovery
-Houston will auto-discover your collections by exploring the top-level (root) namespace on the server for collections.  If your collections are not on the global namespace, add them to Houston via
-```javascript
-Houston.add_collection(collection);
-```
-
-The users collection is hidden by default. If you want to access your users in Houston and/or be able to add houston admins just:
-```javascript
-Houston.add_collection(Meteor.users);
-Houston.add_collection(Houston._admins);
-```
+Houston will auto-discover your collections by exploring the top-level (root) namespace on the server for collections.  If your collections are not on the global namespace, see [Customizing Houston](#customizing-houston)
 
 Features
 ========
@@ -49,7 +40,33 @@ Collection view includes support for
 #### /admin/login: User-defined Admin based on Meteor Accounts
 ![Login](https://raw.github.com/gterrono/houston/master/doc/login.png)
 
-### Defining Custom Menu Items
+
+### Customizing Houston
+
+#### Adding undiscovered collections to Houston
+If Houston didn't find your collection automatically, you can always add it manually via.
+```javascript
+Houston.add_collection(collection);
+```
+
+The users collection is hidden by default. If you want to access your users in Houston and/or be able to add houston admins just:
+```javascript
+Houston.add_collection(Meteor.users);
+Houston.add_collection(Houston._admins);
+```
+
+You can also ```javascript
+Houston.remove_collection(collection);
+```, though this is not as well-tested.
+
+#### Changing the root path of Houston from `/admin`
+By default, Houston is hosted on `/admin`, but you're welcome to change this using [`Meteor.settings`](http://docs.meteor.com/#meteor_settings).
+
+- setup: `echo {\"public\": {\"houston_root_route\": \"/your_fancy_route\"}} > settings.json`
+- run locally: `mrt settings=settings.json`
+- run on meteor.com hosting: `meteor deploy <site> --settings settings.json`
+
+#### Defining Custom Menu Items
 ![Custom Menu](https://raw.github.com/gterrono/houston/master/doc/menu.png)
 
 Often, when delivering an admin interface for an end user, you may want to have
