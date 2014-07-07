@@ -1,5 +1,6 @@
 window.Houston ?= {}
 
+Houston._ROOT_ROUTE = "/admin"
 Houston._houstonize = (name) -> "_houston_#{name}"
 
 Houston._subscribe = (name) -> Meteor.subscribe Houston._houstonize name
@@ -26,42 +27,42 @@ setup_collection = (collection_name, document_id) ->
   Houston._session('collection_name', collection_name)
   return [collection, Houston._paginated_subscription]
 
-Houston._houstonize_route = (name) -> Houston._houstonize(name)[1..]
+Houston._houstonize_route = (name) ->
+  Houston._houstonize(name)[1..]
 
 Houston._go = (route_name, options) ->
   Router.go Houston._houstonize_route(route_name), options
-
 
 Router.map ->
   houston_route = (route_name, options) =>
     # Append _houston_ to template and route names to avoid clobbering parent route namespace
     options.template = Houston._houstonize(options.template)
     options.layoutTemplate = null
+    options.path = "#{Houston._ROOT_ROUTE}#{options.houston_path}"
     @route Houston._houstonize_route(route_name), options
 
   houston_route 'home',
-    path: '/admin',
+    houston_path: "/",
     onBeforeAction: ->
       # TODO use wait
       Houston._session 'collections', Houston._collections.collections.find().fetch()
     template: 'db_view'
 
   houston_route 'login',
-    path: '/admin/login',
+    houston_path: "/login"
     template: 'login'
 
   houston_route 'custom_template',
-    path: '/admin/:template'
+    houston_path: "/:template"
     template: 'custom_template_view'
     data: -> this.params
 
   houston_route 'change_password',
-    path: '/admin/password',
+    houston_path: "/password",
     template: 'change_password'
 
-
   houston_route 'collection',
-    path: '/admin/collection/:name'
+    houston_path: "/collection/:name"
     data: ->
       [collection, @subscription] = setup_collection(@params.name)
       {collection}
@@ -69,7 +70,7 @@ Router.map ->
     template: 'collection_view'
 
   houston_route 'document',
-    path: '/admin/:collection/:_id'
+    houston_path: "/:collection/:_id"
     data: ->
       Houston._session('document_id', @params._id)
       [collection, @subscription] = setup_collection(
