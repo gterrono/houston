@@ -41,6 +41,7 @@ Router.map ->
     options.waitOn = ->
       ready: -> !Meteor.loggingIn() and Houston._subscribe('admin_user').ready()
     options.action = -> if @ready() then @render()
+    options.path = "#{Houston._ROOT_ROUTE}#{options.houston_path}"
     @route Houston._houstonize_route(route_name), options
 
   houston_route 'home',
