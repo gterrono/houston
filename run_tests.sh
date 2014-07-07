@@ -8,7 +8,7 @@ then
 fi
 
 cd test/app
-mrt > /dev/null &
+mrt --port=3500 > /dev/null &
 cd ../..
 casperjs test test/test.coffee
 

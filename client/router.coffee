@@ -5,7 +5,6 @@ Houston._houstonize = (name) -> "_houston_#{name}"
 Houston._subscribe = (name) -> Meteor.subscribe Houston._houstonize name
 
 Houston._subscribe 'collections'
-Houston._subscribe 'admin_user'
 
 setup_collection = (collection_name, document_id) ->
   Houston._page_length = 20
@@ -37,6 +36,9 @@ Router.map ->
     # Append _houston_ to template and route names to avoid clobbering parent route namespace
     options.template = Houston._houstonize(options.template)
     options.layoutTemplate = null
+    options.waitOn = ->
+      ready: -> !Meteor.loggingIn() and Houston._subscribe('admin_user').ready()
+    options.action = -> if @ready() then @render()
     @route Houston._houstonize_route(route_name), options
 
   houston_route 'home',
@@ -81,10 +83,9 @@ Router.map ->
 # filters
 # ########
 mustBeAdmin = ->
-  unless Meteor.loggingIn() # don't check for admin user until ready
-    unless Houston._user_is_admin Meteor.userId()
-      @stop()
-      Houston._go 'login'
+  if @ready() and not Houston._user_is_admin Meteor.userId()
+    @stop()
+    Houston._go 'login'
 
 # If the host app doesn't have a router, their html may show up
 hide_non_admin_stuff = ->
@@ -106,7 +107,7 @@ remove_host_css = ->
 
 Router.onBeforeAction mustBeAdmin,
   only: (Houston._houstonize_route(name) for name in ['home', 'collection', 'document', 'change_password'])
-Router.onAfterAction hide_non_admin_stuff,
+Router.onBeforeAction hide_non_admin_stuff,
   only: (Houston._houstonize_route(name) for name in ['home', 'collection', 'document', 'login', 'custom_template'])
 Router.onBeforeAction remove_host_css,
   only: (Houston._houstonize_route(name) for name in ['home', 'collection', 'document', 'login'])
