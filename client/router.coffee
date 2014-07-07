@@ -1,7 +1,5 @@
 window.Houston ?= {}
 
-Houston._houstonize = (name) -> "_houston_#{name}"
-
 Houston._subscribe = (name) -> Meteor.subscribe Houston._houstonize name
 
 Houston._subscribe 'collections'
@@ -29,7 +27,6 @@ Houston._houstonize_route = (name) -> Houston._houstonize(name)[1..]
 
 Houston._go = (route_name, options) ->
   Router.go Houston._houstonize_route(route_name), options
-
 
 Router.map ->
   houston_route = (route_name, options) =>

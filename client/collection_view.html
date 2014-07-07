@@ -69,15 +69,30 @@
                 </div>
                 <div class="span2">
                     <form>
-                        <legend>Filter</legend>
+                        <legend>Field Filter</legend>
+                        {{#if field_filter_disabled}}
+                          <div class="alert alert-info">
+                            Remove custom filter to enable field filters
+                          </div>
+                        {{/if}}
                         {{# each nonid_headers }}
                         <label>{{name}} ({{type}})</label>
-                        <input name="{{name}}" class="houston-column-filter input-small" type="text" value="{{filter_value}}"/>
+                        <input name="{{name}}" class="houston-column-filter input-small" type="text" value="{{filter_value}}" {{field_filter_disabled}} />
                         {{/each}}
                     </form>
-                    <label for="houston-custom-filter">Custom Filter <br /><em>(mongo query)</em></label>
-                    <textarea placeholder="IE {name: 'Joe'}" id="houston-custom-filter" rows="4"></textarea>
-                    <button id="houston-custom-filter-btn" class="btn btn-sm">Custom Filter</button>
+                    <div class="control-group {{custom_selector_error_class}}">
+                      <legend for="houston-custom-filter">Custom Filter</legend>
+                      {{#if custom_selector_error}}
+                        <div class="alert alert-error">
+                          {{custom_selector_error}}
+                        </div>
+                      {{/if}}
+                      <textarea placeholder="IE {name: 'Joe'}" id="houston-custom-filter" rows="4"></textarea>
+                      <a target="_blank" href="http://docs.meteor.com/#selectors" class="btn btn-mini btn-link">
+                        mongo selector reference
+                      </a>
+                      <button id="houston-custom-filter-btn" class="btn">Custom Filter</button>
+                    </div>
                 </div>
           </div>
         </div>
