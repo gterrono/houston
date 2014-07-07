@@ -6,7 +6,7 @@ function kill_mrt {
   # kill -- -$(ps -o pgid= $! | grep -o [0-9]*) 2> /dev/null > /dev/null 3> /dev/null
 
   #... yes, but this actually works.
-  killall node
+  killall node >/dev/null 2>/dev/null 3>/dev/null
 }
 
 function run_test {
