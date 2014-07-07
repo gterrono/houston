@@ -56,7 +56,7 @@ Houston.add_collection(Meteor.users);
 Houston.add_collection(Houston._admins);
 ```
 
-You can also `Houston.remove_collection(collection)`, though this is not as well-tested.
+You can also `Houston.hide_collection(collection)`, though this is not as well-tested.
 
 ### Changing the root path of Houston from `/admin`
 By default, Houston is hosted on `/admin`, but you're welcome to change this using `Meteor.settings` [(see the docs)](http://docs.meteor.com/#meteor_settings).
