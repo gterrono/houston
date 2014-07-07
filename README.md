@@ -59,12 +59,15 @@ Houston.add_collection(Houston._admins);
 You can also `Houston.remove_collection(collection)`, though this is not as well-tested.
 
 ### Changing the root path of Houston from `/admin`
-By default, Houston is hosted on `/admin`, but you're welcome to change this using [`Meteor.settings` (read the docs)](http://docs.meteor.com/#meteor_settings).
+By default, Houston is hosted on `/admin`, but you're welcome to change this using `Meteor.settings` [(see the docs)](http://docs.meteor.com/#meteor_settings).
 
 Don't want to read the settings docs? Here's your TL;DR:
+
 ####Setup
-Add a settings.json file to your project, a la
-`echo {\"public\": {\"houston_root_route\": \"/your_fancy_route\"}} > settings.json`
+Add a settings.json file to your project. Something like:
+```bash
+echo {\"public\": {\"houston_root_route\": \"/your_fancy_route\"}} > settings.json
+```
 
 ####Run locally
 `mrt --settings=settings.json`
