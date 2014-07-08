@@ -113,7 +113,10 @@ Template._houston_collection_view.events
     # apply custom filter both on button click and on 'enter' in textarea
     if event.type == "keydown"
       return unless event.keyCode == 13
-      # don't insert enter into text, lose focus (as if you're done)
+      # shift-enter does a normal "newline"
+      return if event.keyCode == 13 and event.shiftKey
+
+      # enter without shift = trigger update, so don't add enter
       event.preventDefault()
     try
       selector_text = $('#houston-custom-filter').val()
@@ -123,6 +126,7 @@ Template._houston_collection_view.events
         selector_json = JSON.parse(selector_text)
         Houston._session 'custom_selector', selector_json
       Houston._session 'custom_selector_error', null
+      # successful, update, so lose focus on text
       event.currentTarget.blur()
     catch e
       Houston._session 'custom_selector_error', e.toString()
