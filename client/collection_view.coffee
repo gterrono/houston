@@ -6,13 +6,18 @@ get_sort_by = ->
 get_filter_query = ->
   # Make find query using the filter stored in the session. The regexes are
   # escaped, but $regex is used so it can match anywhere in the string.
-  query = {}
-  fill_query_with_regex = (session_key) ->
-    return unless Houston._session(session_key)?
-    for key, val of Houston._session(session_key)
-      # From http://stackoverflow.com/questions/3115150/how-to-escape-regular-expression-special-characters-using-javascript#answer-9310752
-      query[key] = $regex: val.replace(/[-[\]{}()*+?.,\\^$|#\s]/g, "\\$&")
-  fill_query_with_regex('field_selectors')
+  query = if Houston._session('custom_selector')
+    Houston._session('custom_selector')
+  else
+    field_query = {}
+    fill_query_with_regex = (session_key) ->
+      return unless Houston._session(session_key)?
+      for key, val of Houston._session(session_key)
+        # From http://stackoverflow.com/questions/3115150/how-to-escape-regular-expression-special-characters-using-javascript#answer-9310752
+        field_query[key] = $regex: val.replace(/[-[\]{}()*+?.,\\^$|#\s]/g, "\\$&")
+    fill_query_with_regex('field_selectors')
+    field_query
+
   return query
 
 resubscribe = ->
@@ -29,6 +34,9 @@ collection_info = -> Houston._collections.collections.findOne(name: Houston._ses
 collection_count = -> collection_info()?.count
 
 Template._houston_collection_view.helpers
+  custom_selector_error_class: -> if Houston._session("custom_selector_error") then "error" else ""
+  custom_selector_error: -> Houston._session("custom_selector_error")
+  field_filter_disabled: -> if Houston._session("custom_selector") then "disabled" else ""
   headers: -> get_collection_view_fields()
   nonid_headers: -> get_collection_view_fields()[1..]
   col_name: -> Houston._session('collection_name')
@@ -99,6 +107,30 @@ Template._houston_collection_view.events
       if item.value
         field_selectors[item.name] = item.value
     Houston._session 'field_selectors', field_selectors
+    resubscribe()
+
+  'click #houston-custom-filter-btn, keydown #houston-custom-filter': (event) ->
+    # apply custom filter both on button click and on 'enter' in textarea
+    if event.type == "keydown"
+      return unless event.keyCode == 13
+      # shift-enter does a normal "newline"
+      return if event.keyCode == 13 and event.shiftKey
+
+      # enter without shift = trigger update, so don't add enter
+      event.preventDefault()
+    try
+      selector_text = $('#houston-custom-filter').val()
+      if selector_text == ""
+        Houston._session 'custom_selector', null
+      else
+        selector_json = JSON.parse(selector_text)
+        Houston._session 'custom_selector', selector_json
+      Houston._session 'custom_selector_error', null
+      # successful, update, so lose focus on text
+      event.currentTarget.blur()
+    catch e
+      Houston._session 'custom_selector_error', e.toString()
+      Houston._session 'custom_selector', null
     resubscribe()
 
   'click #houston-create-btn': ->
