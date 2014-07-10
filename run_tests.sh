@@ -9,14 +9,14 @@ function kill_mrt {
   # | kill each one
   # > don't show normal output to user
   ps -o pid,pgid | grep $MRT_ID | cut -f 1 -d " " | xargs kill > /dev/null
+  # kill any DB state
+  rm -r test/app/.meteor/local > /dev/null
 }
 
 function run_test {
   TEST_FILE=$1
   CUSTOM_TEST_ARGS="$2"
   cd test/app
-  # clear any past DB state
-  rm -r .meteor/local > /dev/null
   # meteor, not mrt, so there are fewer child processes to chase down
   meteor --port=3500 $CUSTOM_TEST_ARGS > /dev/null &
   MRT_ID=$!
@@ -33,5 +33,7 @@ then
   echo "or '[sudo] npm install -g casperjs'          (npm)"
 fi
 
+# clear any past DB state
+rm -r test/app/.meteor/local > /dev/null
 run_test test_base.coffee ""
 run_test test_custom_root_route.coffee "--settings settings.json"
