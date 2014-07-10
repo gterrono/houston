@@ -1,6 +1,7 @@
 if Handlebars?
   Handlebars.registerHelper('onHoustonPage', ->
-    window.location.pathname.indexOf('/admin') == 0)
+    throw "Can't find root route" unless Houston._ROOT_ROUTE?
+    window.location.pathname.indexOf(Houston._ROOT_ROUTE) == 0)
 
 Houston._collections ?= {}
 

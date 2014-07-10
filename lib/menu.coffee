@@ -17,7 +17,7 @@ Houston.menu._process_item = (item) ->
   if item.type is 'link'
     item.path = item.use
   else if item.type is 'template'
-    item.path = "/admin/#{item.use}"
+    item.path = "#{Houston._ROOT_ROUTE}/#{item.use}"
 
   return item
 
