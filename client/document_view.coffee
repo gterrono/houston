@@ -12,12 +12,13 @@ Template._houston_document_view.helpers
     result = []
     for field in fields
       value = Houston._nested_field_lookup(document, field.name)
-      result.push(name: "#{field.name} (#{typeof value})", value: value)
+      result.push(name: "#{field.name} (#{typeof value})", name_id: field.name, type: typeof value, value: value)
     return result
   document_id: -> Houston._session('document_id')
 
 Template._houston_document_field.helpers
   field_is_id: -> @name is '_id'
+  type_is_boolean: -> @type is 'boolean'
   document_id: -> Houston._session('document_id')
 
 get_collection = -> Houston._get_collection(Houston._session('collection_name'))
@@ -36,7 +37,7 @@ Template._houston_document_view.events
     Houston._session('should_show', true)
     setTimeout (->
       Houston._session('should_show', false)
-    ), 1500
+    ), 3600
 
   'click .houston-delete': (e) ->
     e.preventDefault()

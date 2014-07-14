@@ -25,8 +25,8 @@
             {{/each}}
           </tbody>
         </table>
-        <span class="btn houston-save">Save</span>
-        <span class="btn houston-delete">Delete</span>
+        <span class="btn houston-save btn-success">Save</span>
+        <span class="btn houston-delete btn-danger">Delete</span>
       </div>
     {{/if}}
   </div>
@@ -38,7 +38,13 @@
     {{#if field_is_id }}
     <td>{{ value }}</td>
     {{else}}
-    <td><textarea class="houston-field" name="{{ name }}">{{ value }}</textarea></td>
+    <td>
+      {{#if type_is_boolean}}
+        <input type="checkbox" checked="{{ value }}">
+      {{else}}
+        <textarea class="houston-field form-control" name="{{ name }}">{{ value }}</textarea>
+      {{/if}}
+    </td>
     {{/if}}
   </tr>
 </template>
