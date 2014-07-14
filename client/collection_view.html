@@ -4,7 +4,7 @@
         {{> spinner}}
         {{else}}
         {{> _houston_navbar}}
-        <div class="container content">
+        <div class="container-fluid content">
             <ul class="breadcrumb">
                 <li><a href="{{pathFor 'houston_home'}}" class="houston-home">Home</a> <span class="divider">/</span></li>
                 <li class="active">{{col_name}}</li>
@@ -36,7 +36,7 @@
                 </div>
             </div>
             <div class="row">
-                <div class="span12">
+                <div class="col-md-12">
                     <div class="page-header">
                         <button id="houston-create-btn" class="btn btn-success pull-right">Add {{col_name}}</button>
                         <h1>{{col_name}} ({{num_of_records}} record{{pluralize}})</h1>
@@ -44,12 +44,25 @@
                 </div>
             </div>
             <div class='row'>
-                <div class="span10" style="overflow-x: auto">
-                    <table class="table table-bordered table-striped table-hover">
+              <div class="col-md-12">
+                    <form class="form-inline">
+                        <legend>Filter</legend>
+                        {{# each nonid_headers }}
+                        <div class="form-group col-md-2">
+                          <label>{{name}} ({{type}})</label>
+                          <input name="{{name}}" class="form-control houston-column-filter input-sm" type="text" value="{{filter_value}}"/>
+                        </div>
+                        {{/each}}
+                    </form>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12" style="overflow-x: auto">
+                    <table class="table table-condensed table-striped table-hover">
                         <thead>
                         <tr>
                             {{# each headers }}
-                            <th><a href="#" class="houston-sort">{{name}} ({{type}})</a></th>
+                            <th><a href="#" class="houston-sort">{{name}}</a></th>
                             {{/each}}
                             <th>Action</th>
                         </tr>
@@ -66,33 +79,6 @@
                         {{/each}}
                         </tbody>
                     </table>
-                </div>
-                <div class="span2">
-                    <form>
-                        <legend>Field Filter</legend>
-                        {{#if field_filter_disabled}}
-                          <div class="alert alert-info">
-                            Remove custom filter to enable field filters
-                          </div>
-                        {{/if}}
-                        {{# each nonid_headers }}
-                        <label>{{name}} ({{type}})</label>
-                        <input name="{{name}}" class="houston-column-filter input-small" type="text" value="{{filter_value}}" {{field_filter_disabled}} />
-                        {{/each}}
-                    </form>
-                    <div class="control-group {{custom_selector_error_class}}">
-                      <legend for="houston-custom-filter">Custom Filter</legend>
-                      {{#if custom_selector_error}}
-                        <div class="alert alert-error">
-                          {{custom_selector_error}}
-                        </div>
-                      {{/if}}
-                      <textarea placeholder="IE {&quot;name&quot; &quot;Joe&quot;}" id="houston-custom-filter" rows="4"></textarea>
-                      <a target="_blank" href="http://docs.meteor.com/#selectors" class="btn btn-mini btn-link">
-                        mongo selector reference
-                      </a>
-                      <button id="houston-custom-filter-btn" class="btn">Custom Filter</button>
-                    </div>
                 </div>
           </div>
         </div>

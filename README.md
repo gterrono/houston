@@ -16,7 +16,16 @@ mrt add houston
 Once installed, navigate to `/admin` to set up your admin account. You can either create a new user to act as Houston's Admin, or upgrade an existing user into an admin.
 
 #### Auto-discovery
-Houston will auto-discover your collections by exploring the top-level (root) namespace on the server for collections.  If your collections are not on the global namespace, see [Customizing Houston](#customizing-houston)
+Houston will auto-discover your collections by exploring the top-level (root) namespace on the server for collections.  If your collections are not on the global namespace, add them to Houston via
+```javascript
+Houston.add_collection(collection);
+```
+
+The users collection is hidden by default. If you want to access your users in Houston and/or be able to add houston admins just:
+```javascript
+Houston.add_collection(Meteor.users);
+Houston.add_collection(Houston._admins);
+```
 
 Features
 ========
