@@ -8,6 +8,7 @@
   "packages": {
     "paginated-subscription": {},
     "spin": {},
-    "iron-router": {}
+    "iron-router": {},
+    "autoform": {}
   }
 }
