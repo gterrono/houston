@@ -45,7 +45,7 @@ Customizing Houston
 ========
 
 ### Adding undiscovered collections to Houston
-If Houston didn't find your collection automatically, you can always add it manually via
+If Houston didn't find your collection automatically, you can always add it manually on the server via
 ```javascript
 Houston.add_collection(collection);
 ```
