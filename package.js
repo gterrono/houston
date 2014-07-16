@@ -20,9 +20,10 @@ Package.on_use(function(api) {
   'client');
 
   api.add_files([
+    'lib/jquery.min.js', 'lib/jqueryui.min.js',
     'client/custom_template_view.coffee',
     'client/router.coffee', 'client/admin_login.coffee',
-    'client/collection_view.coffee', 'client/document_view.coffee',
+    'client/collection_view.coffee', 'client/sortable.js',  'client/document_view.coffee',
     'client/zma_helpers.coffee', 'client/admin_change_password.coffee',
     'client/admin_navbar.coffee', 'client/db_view.coffee'],
   'client');
