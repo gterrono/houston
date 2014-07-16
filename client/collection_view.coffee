@@ -1,3 +1,36 @@
+FindReplace = (order_id, index) ->
+  data = Products.findOne({sort_order: order_id})
+  Products.update
+    _id: data._id
+  ,
+    $set:
+      sort_order: index
+
+fixHelper = (e, ui) ->
+  ui.children().each ->
+    $(this).width $(this).width()
+    return
+
+  ui
+
+initSortable = ->
+  $("#data-table tbody").sortable(
+    opacity: 0.6
+    cursor: "move"
+    helper: fixHelper
+    scrollSensitivity: 40
+    update: ->
+      sort = $(this).sortable("toArray")
+      jQuery.map sort, (order, i) ->
+        order_id = order.match(/\d/g)
+        order_id = order_id.join("")
+        FindReplace parseFloat(order_id), i
+        return
+
+      return
+  ).disableSelection()
+  return
+
 get_sort_by = ->
   sort_by = {}
   sort_by[Houston._session('sort_key')] = Houston._session('sort_order')
@@ -60,6 +93,8 @@ Template._houston_collection_view.rendered = ->
     if $win.scrollTop() + 300 > $(document).height() - $win.height() and
       Houston._paginated_subscription.limit() < collection_count()
         Houston._paginated_subscription.loadNextPage()
+  Meteor.defer ->
+    initSortable()
 
 get_current_collection = -> Houston._get_collection(Houston._session('collection_name'))
 get_collection_view_fields = -> collection_info()?.fields or []
@@ -74,6 +109,8 @@ Template._houston_collection_view.events
         Houston._session('sort_key', sort_key)
         Houston._session('sort_order', 1)
       resubscribe()
+  'click .houston-activate-sort': (e) ->
+    initSortable()
 
   'dblclick .houston-collection-field': (e) ->
     $this = $(e.currentTarget)
