@@ -1,4 +1,5 @@
 <template name='_houston_db_view'>
+
   <div class="houston">
     {{#if loggingIn}}
       {{> spinner}}
@@ -8,6 +9,7 @@
         <ul class="breadcrumb">
           <li class="active">Home</li>
         </ul>
+         <h1>document view</h1>
         {{# unless collections }}
           <p class="lead">If this is your first time using Houston, you may need to <a id="refresh" class="btn btn-large btn-warning">Refresh this page</a></p>
         {{/unless}}

@@ -4,6 +4,7 @@
         {{> spinner}}
         {{else}}
         {{> _houston_navbar}}
+
         <div class="container-fluid content">
             <ul class="breadcrumb">
                 <li><a href="{{pathFor 'houston_home'}}" class="houston-home">Home</a> <span class="divider">/</span></li>
@@ -71,6 +72,7 @@
               </div>
             </div>
             <div class="row">
+
                 <div class="col-md-12" style="overflow-x: auto">
                     <table class="table table-condensed table-striped table-hover">
                         <thead>
@@ -83,10 +85,11 @@
                         </thead>
                         <tbody>
                         {{#each rows }}
+
                         <tr>
-                            <td><a href="{{pathFor 'houston_document'}}">{{_id}}</a></td>
+                            <td><a href="{{pathFor 'houston_document'}}">{{_id}}  </a></td>
                             {{#each values_in_order}}
-                            <td data-field='{{ field_name }}' class='houston-collection-field'>{{ field_value }}</td>
+                            <td data-field='{{ field_name }}' class='houston-collection-field'>{{#if is_image field_value}}<img src="{{field_value}}" alt="" width="150" height="150">{{else}}{{ field_value }}{{/if}}</td>
                             {{/each}}
                             <td><div data-id="{{_id}}" class="btn houston-delete-doc btn-danger">Delete</div></td>
                         </tr>

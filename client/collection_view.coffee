@@ -48,12 +48,20 @@ Template._houston_collection_view.helpers
     names_in_order = _.clone fields_in_order
     values = (Houston._nested_field_lookup(@, field.name) for field in fields_in_order[1..])  # skip _id
     ({field_value, field_name} for [field_value, {name:field_name}] in _.zip values, names_in_order[1..])
+    #is_image = Houston.get_fields('*').match(/([a-z\-_0-9\/\:\.]*\.(jpg|jpeg|png|gif))/i)
   filter_value: ->
     if Houston._session('field_selectors') and Houston._session('field_selectors')[@]
       Houston._session('field_selectors')[@]
     else
       ''
-
+  is_image: (my_string) ->
+    #console.log my_string
+    #console.log my_string.match /http/i
+    #true unless my_string.match(/http/i) is `undefined`
+    if typeof my_string is 'string'
+      pattern = /([placehold][a-z\-_0-9\/\:\.]*\.(jpg|jpeg|png|gif|))/i
+     # console.log my_string
+      my_string.match pattern
 Template._houston_collection_view.rendered = ->
   $win = $(window)
   $win.scroll ->
