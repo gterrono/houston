@@ -39,7 +39,7 @@
             <div class="row">
                 <div class="col-md-12">
                     <div class="page-header">
-                        <button id="houston-create-btn" class="btn btn-primary pull-right">Add {{col_name}}</button>
+                        <button id="houston-create-btn" class="btn btn-primary pull-right">Add {{col_name}}</button> <button id="houston-sortable" class="btn btn-danger pull-right houston-activate-sort">Activate Sort</button>
                         <h1>{{col_name}} ({{num_of_records}} record{{pluralize}})</h1>
                     </div>
                 </div>
@@ -74,7 +74,7 @@
             <div class="row">
 
                 <div class="col-md-12" style="overflow-x: auto">
-                    <table class="table table-condensed table-striped table-hover">
+                    <table id="data-table" class="table table-condensed table-striped table-hover">
                         <thead>
                         <tr>
                             {{# each headers }}
@@ -85,9 +85,8 @@
                         </thead>
                         <tbody>
                         {{#each rows }}
-
-                        <tr>
-                            <td><a href="{{pathFor 'houston_document'}}">{{_id}}  </a></td>
+                        <tr id="ID_{{sort_order}}">
+                            <td><a href="{{pathFor 'houston_document'}}">{{_id}}</a></td>
                             {{#each values_in_order}}
                             <td data-field='{{ field_name }}' class='houston-collection-field'>{{#if is_image field_value}}<img src="{{field_value}}" alt="" width="150" height="150">{{else}}{{ field_value }}{{/if}}</td>
                             {{/each}}
