@@ -3,18 +3,12 @@
   "dependencies": {
     "basePackages": {
       "houston": {
-        "path": "../.."
-      },
-      "collection2": {}
+        "path": "."
+      }
     },
     "packages": {
       "houston": {
-        "path": "../.."
-      },
-      "collection2": {
-        "git": "https://github.com/aldeed/meteor-collection2.git",
-        "tag": "v0.4.2",
-        "commit": "4ff4b707bec8be434919730bf101325adb215444"
+        "path": "."
       },
       "paginated-subscription": {
         "git": "https://github.com/tmeasday/meteor-paginated-subscription.git",
@@ -41,15 +35,20 @@
         "tag": "v0.0.4",
         "commit": "4e5106793e523d110bd3d11b5bedecc277225e39"
       },
+      "blaze-layout": {
+        "git": "https://github.com/EventedMind/blaze-layout.git",
+        "tag": "v0.2.4",
+        "commit": "b40e9b0612329288d75cf52ad14a7da64bb8618f"
+      },
       "simple-schema": {
         "git": "https://github.com/aldeed/meteor-simple-schema.git",
         "tag": "v0.6.0",
         "commit": "418ec496612fb2afc853e342f0d2269b6674a2fe"
       },
-      "blaze-layout": {
-        "git": "https://github.com/EventedMind/blaze-layout.git",
-        "tag": "v0.2.4",
-        "commit": "b40e9b0612329288d75cf52ad14a7da64bb8618f"
+      "collection2": {
+        "git": "https://github.com/aldeed/meteor-collection2.git",
+        "tag": "v0.4.2",
+        "commit": "4ff4b707bec8be434919730bf101325adb215444"
       },
       "moment": {
         "git": "https://github.com/acreeger/meteor-moment.git",
