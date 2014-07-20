@@ -2,9 +2,6 @@
     <div class="houston">
         {{> bootstrap}}
         {{> style}}
-        {{#if loggingIn}}
-        {{> spinner}}
-        {{else}}
         {{> _houston_navbar}}
         <div class="container-fluid">
             <div class="row">
@@ -12,10 +9,13 @@
                     {{> _houston_sidenav}}
                 </div>
                 <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
+                    {{#if loggingIn}}
+                    {{> spinner}}
+                    {{else}}
                     {{> yield}}
+                    {{/if}}
                 </div>
             </div>
         </div>
-        {{/if}}
     </div>
 </template>
