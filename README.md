@@ -1,3 +1,6 @@
+#TODO icons
+#TODO side navigation
+
 Houston
 ===============
 Houston (formerly Z-Mongo-Admin) is a zero-config Meteor Admin, modeled after [Django Admin](https://docs.djangoproject.com/en/dev/ref/contrib/admin/), intended as a simple way for developers to give end-users (or themselves) an easy way to view and manipulate their app's data.
