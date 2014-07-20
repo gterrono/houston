@@ -4,12 +4,10 @@
         {{> spinner}}
         {{else}}
         {{> _houston_navbar}}
-        <div class="container content houston-form">
+        <div id="houston-sign-in" class="container">
             {{#if logged_in }}
-            <h1 class="form-heading">You are currently logged in.</h1>
-
+            <h1 class="form-signin-heading">You are currently logged in.</h1>
             <div>
-                <a href="/admin" class="btn btn-lg btn-primary btn-block">Back to Admin Home</a>
                 {{#unless admin_user_exists}}
                 <button id="become-houston-admin" class="btn btn-lg btn-success btn-block">Claim Admin</button>
                 {{/unless}}
@@ -18,7 +16,7 @@
             {{else}}
             <form id="houston-sign-in-form" role="form">
                 {{! nobody is logged in - sign in or sign up}}
-                <h1 class="form-heading">
+                <h1 class="form-signin-heading">
                     {{#if admin_user_exists}} Log In {{else}} Create an admin account {{/if}}
                 </h1>
                 <input type="email" class="form-control" placeholder="Email address" name="houston-email"
@@ -27,8 +25,7 @@
                        id='houston-password' required>
 
                 <div>
-                    <button class="btn btn-lg {{#if admin_user_exists}}btn-primary{{else}}btn-success{{/if}} btn-block"
-                            type="submit">
+                    <button class="btn btn-lg btn-primary btn-block" type="submit">
                         {{#if admin_user_exists}}Log In{{else}}Create account {{/if}}
                     </button>
                 </div>

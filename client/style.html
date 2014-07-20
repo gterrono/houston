@@ -1,86 +1,5 @@
 <template name="style">
     <style>
-        .navbar-brand.brand {
-            color: #fff;
-            transition: color 0.2s;
-            -webkit-transition: color 0.2s;
-            -moz-transition: color 0.2s;
-            -o-transition: color 0.2s;
-            font-size: 24px;
-        }
-
-        .navbar-brand.brand:hover {
-            color: #ddd;
-        }
-
-        .brand > small {
-            color: #ddd;
-            font-size: 16px;
-        }
-
-        /*
- * Sidebar
- */
-
-        /* Hide for mobile, show later */
-        .sidebar {
-            display: none;
-        }
-
-        @media (min-width: 768px) {
-            .sidebar {
-                position: fixed;
-                top: 51px;
-                bottom: 0;
-                left: 0;
-                z-index: 1000;
-                display: block;
-                padding: 20px;
-                overflow-x: hidden;
-                overflow-y: auto; /* Scrollable contents if viewport is shorter than content. */
-                background-color: #f5f5f5;
-                border-right: 1px solid #eee;
-            }
-        }
-
-        /* Sidebar navigation */
-        .houston .nav-sidebar {
-            margin-right: -21px; /* 20px padding + 1px border */
-            margin-bottom: 20px;
-            margin-left: -20px;
-        }
-
-        .houston .nav-sidebar > li > a {
-            padding-right: 20px;
-            padding-left: 20px;
-        }
-
-        .houston .nav-sidebar > .active > a,
-        .houston .nav-sidebar > .active > a:hover,
-        .houston .nav-sidebar > .active > a:focus {
-            color: #fff;
-            background-color: #428bca;
-        }
-
-        /*
-         * Main content
-         */
-
-        .houston .main {
-            padding: 60px;
-        }
-
-        @media (min-width: 768px) {
-            .houston .main {
-                padding-left: 40px;
-                padding-right: 40px;
-            }
-        }
-
-        .houston .main .page-header {
-            margin-top: 0;
-        }
-
         .spinner {
             margin-top: 50px;
         }
@@ -93,7 +12,7 @@
             margin-top: 50px;
             padding: 10px;
             overflow-x: auto;
-            /*border: 1px solid #eee;*/
+            border: 1px solid #eee;
         }
 
         .houston textarea {
@@ -107,25 +26,21 @@
             visibility: visible;
         }
 
-        .houston .houston-collection {
-            overflow: hidden;
-        }
-
         .houston #houston-report-bug {
             float: left;
         }
 
-        .houston .houston-form {
+        .houston #houston-sign-in {
             max-width: 330px;
         }
 
-        .houston-form > form {
+        .houston #houston-sign-in-form {
             margin: 0 auto;
             padding: 15px;
         }
 
-        .houston-form .form-heading,
-        .houston-form .form-control {
+        #houston-sign-in .form-signin-heading,
+        #houston-sign-in .form-control {
             position: relative;
             height: auto;
             -webkit-box-sizing: border-box;
@@ -135,30 +50,28 @@
             font-size: 16px;
         }
 
-        .houston-form .form-heading {
+        #houston-sign-in .form-signin-heading {
             font-size: 20px;
         }
-
-        .houston-sign-in-form .form-heading {
+        #houston-sign-in-form .form-signin-heading {
             padding-top: 0;
             margin-top: 0;
         }
 
-        .houston-form .form-control:focus {
+        #houston-sign-in .form-control:focus {
             z-index: 2;
         }
 
-        .houston-form input {
+        #houston-sign-in input {
             border-radius: 8px;
         }
-
-        .houston-form input:first-of-type {
+        #houston-sign-in input[type="email"] {
             margin-bottom: -2px;
             border-bottom-right-radius: 0;
             border-bottom-left-radius: 0;
         }
 
-        .houston-form input:last-of-type {
+        #houston-sign-in input[type="password"] {
             margin-bottom: 20px;
             border-top-left-radius: 0;
             border-top-right-radius: 0;

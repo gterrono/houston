@@ -29,11 +29,11 @@ Template._houston_login.events(
         # else - user got created
         Houston._call('make_admin', Meteor.userId(), afterLogin)
 
-  'click .houston-logout': (e) ->
+  'click #houston-logout': (e) ->
     e.preventDefault()
     Meteor.logout()
 
-  'click .become-houston-admin': (e) ->
+  'click #become-houston-admin': (e) ->
     e.preventDefault()
     Houston._call('make_admin', Meteor.userId())
     Houston._go 'home'
