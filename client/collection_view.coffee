@@ -1,3 +1,6 @@
+# TODO filter not working
+# TODO understand Activate sort
+
 FindReplace = (order_id, index) ->
   data = Products.findOne({sort_order: order_id})
   Products.update
