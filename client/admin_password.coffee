@@ -1,8 +1,4 @@
-Template._houston_change_password.helpers(
-  admin_user_exists: -> admin_user_exists()
-)
-
-Template._houston_change_password.events(
+Template.password.events(
   'submit #houston-change-password-form': (e) ->
     e.preventDefault()
     current_password = $('input[name="houston-current-password"]').val()
@@ -16,5 +12,5 @@ Template._houston_change_password.events(
     )
 )
 
-Template._houston_change_password.rendered = ->
+Template.password.rendered = ->
   $(window).unbind('scroll')
