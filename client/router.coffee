@@ -36,7 +36,7 @@ Router.map ->
   houston_route = (route_name, options) =>
     # Append _houston_ to template and route names to avoid clobbering parent route namespace
     options.template = Houston._houstonize(options.template)
-    options.layoutTemplate = null
+    options.layoutTemplate = 'masterLayout'
     @route Houston._houstonize_route(route_name), options
 
   houston_route 'home',
@@ -48,7 +48,9 @@ Router.map ->
 
   houston_route 'login',
     path: '/admin/login',
-    template: 'login'
+    template: 'login',
+    layoutTemplate: ''
+
 
   houston_route 'custom_template',
     path: '/admin/:template'
