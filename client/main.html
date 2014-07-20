@@ -1,14 +1,37 @@
-<body>
-  {{#if onHoustonPage}}
-    {{> bootstrap3 }}
-    {{> style }}
-    {{renderPage}}
-    <div class='row'>
-      <div class='small-12 columns col-md-12' id='footer'>
-        <ul>
+<!--<body>-->
+<!--{{#if onHoustonPage}}-->
+<!--{{> bootstrap }}-->
+<!--{{> style }}-->
+<!--{{renderPage}}-->
+<!--<div class='row'>-->
+<!--<div class='small-12 columns col-md-12' id='footer'>-->
+<!--<ul>-->
 
-        </ul>
-      </div>
+<!--</ul>-->
+<!--</div>-->
+<!--</div>-->
+<!--{{/if}}-->
+<!--</body>-->
+<template name="masterLayout">
+    {{> bootstrap}}
+    {{> style}}
+    {{ renderPage}}
+    <div class="houston">
+        {{#if loggingIn}}
+        {{> spinner}}
+        {{else}}
+        {{> _houston_navbar}}
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-sm-3 col-md-2 sidebar">
+                    {{> _houston_sidenav}}
+                </div>
+                <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
+                    {{> yield}}
+                </div>
+            </div>
+        </div>
+        {{/if}}
     </div>
-  {{/if}}
-</body>
+
+</template>

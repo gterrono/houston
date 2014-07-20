@@ -1,101 +1,106 @@
 <template name="_houston_collection_view">
-    <div class="houston">
-        {{#if loggingIn}}
-        {{> spinner}}
-        {{else}}
-        {{> _houston_navbar}}
-        <div class="container-fluid content">
-            <ul class="breadcrumb">
-                <li><a href="{{pathFor 'houston_home'}}" class="houston-home">Home</a> <span class="divider">/</span></li>
-                <li class="active">{{col_name}}</li>
-            </ul>
-            {{! hide for bootstrap 2, hidden for 3 }}
-            <div class="row hidden hide" id="houston-create-document">
-                <div class="span12" style="overflow-x: auto">
-                    <h3>Add more {{col_name}}</h3>
-                    <table class="table table-bordered table-striped">
-                        <thead>
-                        <tr>
-                            {{# each nonid_headers }}
-                            <th><a href="#" class="sort">{{name}} ({{type}})</a></th>
-                            {{/each}}
-                            <th>Action</th>
-                        </tr>
-                        </thead>
-                        <tbody>
-                        <tr id="houston-create-row">
-                            {{# each nonid_headers }}
-                            <th>
-                                <input name="{{name}}" class="input-small" type="text" />
-                            </th>
-                            {{/each}}
-                            <td><div class="btn btn-primary houston-create-doc">Create</div></td>
-                        </tr>
-                        </tbody>
-                    </table>
-                </div>
+    <ul class="breadcrumb">
+        <li><a href="{{pathFor 'houston_home'}}" class="houston-home">Home</a></li>
+        <li class="active">{{col_name}}</li>
+    </ul>
+    <div class="row hidden" id="houston-create-document">
+        <div class="span12" style="overflow-x: auto">
+            <h3>Add more {{col_name}}</h3>
+            <table class="table table-bordered table-striped">
+                <thead>
+                <tr>
+                    {{# each nonid_headers }}
+                    <th><a href="#" class="sort">{{name}} ({{type}})</a></th>
+                    {{/each}}
+                    <th></th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr id="houston-create-row">
+                    {{# each nonid_headers }}
+                    <th>
+                        <input name="{{name}}" class="input-small" type="text"/>
+                    </th>
+                    {{/each}}
+                    <td>
+                        <div class="btn btn-success houston-create-doc">Create</div>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <div class="page-header">
+                <button id="houston-create-btn" class="btn btn-success pull-right">Add {{col_name}}</button>
+                <button id="houston-sortable" class="btn pull-right houston-activate-sort">Activate Sort
+                </button>
+                <h1>{{col_name}}
+                    <small>({{num_of_records}} record{{pluralize}})</small>
+                </h1>
             </div>
-            <div class="row">
-                <div class="col-md-12">
-                    <div class="page-header">
-                        <button id="houston-create-btn" class="btn btn-primary pull-right">Add {{col_name}}</button>
-                        <h1>{{col_name}} ({{num_of_records}} record{{pluralize}})</h1>
-                    </div>
-                </div>
-            </div>
-            <div class='row'>
-              <div class="col-md-12">
-                <div class="panel-group" id="accordion">
-                  <div class="panel">
+        </div>
+    </div>
+    <div class='row'>
+        <div class="col-md-12">
+            <div class="panel-group" id="accordion">
+                <div class="panel">
                     <form class="form-inline">
                         <div class="panel-heading">
-                          <h4 class="panel-title">
-                            <a data-toggle="collapse" data-parent="#accordion" href="#collapseOne">
-                              <legend>Filter <span class="caret"></span></legend>
-                            </a>
-                          </h4>
+                            <h4 class="panel-title">
+                                <a data-toggle="collapse" data-parent="#accordion" href="#collapseOne">
+                                    <legend>Filter <span class="caret"></span></legend>
+                                </a>
+                            </h4>
                         </div>
-                        <div id="collapseOne" class="panel-collapse collapse">
-                          <div>
-                            {{# each nonid_headers }}
-                            <div class="form-group col-md-2">
-                              <label>{{name}} ({{type}})</label>
-                              <input name="{{name}}" class="form-control houston-column-filter input-sm" type="text" value="{{filter_value}}"/>
+                        <div id="collapseOne" class="panel-collapse ">
+                            <div>
+                                {{# each nonid_headers }}
+                                <div class="form-group col-md-2">
+                                    <label>{{name}} ({{type}})</label>
+                                    <input name="{{name}}" class="form-control houston-column-filter input-sm"
+                                           type="text" value="{{filter_value}}"/>
+                                </div>
+                                {{/each}}
                             </div>
-                            {{/each}}
-                          </div>
                         </div>
                     </form>
-                  </div>
                 </div>
-              </div>
             </div>
-            <div class="row">
-                <div class="col-md-12" style="overflow-x: auto">
-                    <table class="table table-condensed table-striped table-hover">
-                        <thead>
-                        <tr>
-                            {{# each headers }}
-                            <th><a href="#" class="houston-sort">{{name}}</a></th>
-                            {{/each}}
-                            <th>Action</th>
-                        </tr>
-                        </thead>
-                        <tbody>
-                        {{#each rows }}
-                        <tr>
-                            <td><a href="{{pathFor 'houston_document'}}">{{_id}}</a></td>
-                            {{#each values_in_order}}
-                            <td data-field='{{ field_name }}' class='houston-collection-field'>{{ field_value }}</td>
-                            {{/each}}
-                            <td><div data-id="{{_id}}" class="btn houston-delete-doc btn-danger">Delete</div></td>
-                        </tr>
-                        {{/each}}
-                        </tbody>
-                    </table>
-                </div>
-          </div>
         </div>
-        {{/if}}
     </div>
+    <div class="row">
+
+        <div class="col-md-12" style="overflow-x: auto">
+            <table id="data-table" class="table table-condensed table-striped table-hover">
+                <thead>
+                <tr>
+                    {{# each headers }}
+                    <th><a href="#" class="houston-sort">{{name}}</a></th>
+                    {{/each}}
+                    <th></th>
+                </tr>
+                </thead>
+                <tbody>
+                {{#each rows }}
+                <tr id="ID_{{sort_order}}">
+                    <td><a href="{{pathFor 'houston_document'}}">{{_id}}</a></td>
+                    {{#each values_in_order}}
+                    <td data-field='{{ field_name }}' class='houston-collection-field'>{{#if is_image field_value}}<img
+                            src="{{field_value}}" alt="" width="150" height="150">{{else}}{{ field_value }}{{/if}}
+                    </td>
+                    {{/each}}
+                    <td>
+                        <div data-id="{{_id}}" class="btn btn-xs houston-delete-doc btn-danger pull-right">
+                            Delete
+                        </div>
+                    </td>
+                </tr>
+                {{/each}}
+                </tbody>
+            </table>
+        </div>
+    </div>
+
 </template>
