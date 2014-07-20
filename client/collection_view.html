@@ -33,11 +33,11 @@
     <div class="row">
         <div class="col-md-12">
             <div class="page-header">
-                <button id="houston-create-btn" class="btn btn-success pull-right">Add {{col_name}}</button>
-                <button id="houston-sortable" class="btn pull-right houston-activate-sort">Activate Sort
+                <button id="houston-create-btn" class="btn btn-sm btn-success pull-right">Add {{col_name}}</button>
+                <button id="houston-sortable" class="btn btn-sm pull-right houston-activate-sort">Activate Sort
                 </button>
                 <h1>{{col_name}}
-                    <small>({{num_of_records}} record{{pluralize}})</small>
+                    <small>{{num_of_records}} record{{pluralize}}</small>
                 </h1>
             </div>
         </div>
@@ -46,26 +46,26 @@
         <div class="col-md-12">
             <div class="panel-group" id="accordion">
                 <div class="panel">
-                    <form class="form-inline">
-                        <div class="panel-heading">
-                            <h4 class="panel-title">
-                                <a data-toggle="collapse" data-parent="#accordion" href="#collapseOne">
-                                    <legend>Filter <span class="caret"></span></legend>
-                                </a>
-                            </h4>
-                        </div>
-                        <div id="collapseOne" class="panel-collapse ">
-                            <div>
-                                {{# each nonid_headers }}
-                                <div class="form-group col-md-2">
-                                    <label>{{name}} ({{type}})</label>
-                                    <input name="{{name}}" class="form-control houston-column-filter input-sm"
-                                           type="text" value="{{filter_value}}"/>
+                    <div class="panel-heading">
+                        <h4 class="panel-title">
+                            <a data-toggle="collapse" data-parent="#accordion" href="#collapseOne">
+                                <legend>Filter <span class="caret"></span></legend>
+                            </a>
+                        </h4>
+                    </div>
+                    <div id="collapseOne" class="panel-collapse ">
+                        <form class="form-inline" role="form">
+                            {{# each nonid_headers }}
+                            <div class="form-group col-xs-12 col-sm-6 col-md-4 col-lg-3">
+                                <div class="input-group">
+                                    <div class="input-sm input-group-addon">{{name}}</div>
+                                    <input class="form-control houston-column-filter input-sm" type="text"
+                                           placeholder="{{type}}" value="{{filter_value}}">
                                 </div>
-                                {{/each}}
                             </div>
-                        </div>
-                    </form>
+                            {{/each}}
+                        </form>
+                    </div>
                 </div>
             </div>
         </div>

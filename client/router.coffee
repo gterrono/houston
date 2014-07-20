@@ -49,17 +49,15 @@ Router.map ->
   houston_route 'login',
     path: '/admin/login',
     template: 'login',
-    layoutTemplate: ''
-
 
   houston_route 'custom_template',
     path: '/admin/:template'
     template: 'custom_template_view'
     data: -> this.params
 
-  houston_route 'change_password',
+  houston_route 'password',
     path: '/admin/password',
-    template: 'change_password'
+    template: 'password'
 
 
   houston_route 'collection',
@@ -107,11 +105,12 @@ remove_host_css = ->
 
 
 Router.onBeforeAction mustBeAdmin,
-  only: (Houston._houstonize_route(name) for name in ['home', 'collection', 'document', 'change_password'])
+  only: (Houston._houstonize_route(name) for name in ['home', 'collection', 'document', 'password'])
 Router.onAfterAction hide_non_admin_stuff,
-  only: (Houston._houstonize_route(name) for name in ['home', 'collection', 'document', 'login', 'custom_template'])
+  only: (Houston._houstonize_route(name) for name in ['home', 'collection', 'document', 'login', 'password',
+                                                      'custom_template'])
 Router.onBeforeAction remove_host_css,
-  only: (Houston._houstonize_route(name) for name in ['home', 'collection', 'document', 'login'])
+  only: (Houston._houstonize_route(name) for name in ['home', 'collection', 'document', 'login', 'password'])
 
 onRouteNotFound = Router.onRouteNotFound
 Router.onRouteNotFound = (args...) ->
