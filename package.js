@@ -15,17 +15,17 @@ Package.on_use(function(api) {
       'client/bootstrap.html', 'client/style.html',
       'client/admin_login.html', 'client/admin_password.html', 'client/db_view.html',
       'client/collection_view.html', 'client/document_view.html',
-      'client/admin_navbar.html', 'client/admin_sidenav.html', 'client/master_layout.html',
-      , 'client/custom_template_view.html'],
+      'client/admin_nav.html', 'client/main.html',
+      'client/custom_template_view.html'],
     'client');
 
   api.add_files([
       'lib/jquery.min.js', 'lib/jqueryui.min.js',
       'client/custom_template_view.coffee',
       'client/router.coffee', 'client/admin_login.coffee', 'client/admin_password.coffee',
-      'client/collection_view.coffee', 'client/sortable.js', 'client/document_view.coffee',
+      'client/collection_view.coffee', 'client/bootstrap.js', 'client/sortable.js', 'client/document_view.coffee',
       'client/zma_helpers.coffee',
-      'client/admin_navbar.coffee', 'client/admin_sidenav.coffee', 'client/db_view.coffee'],
+      'client/admin_nav.coffee', 'client/db_view.coffee'],
     'client');
 
   api.add_files(['lib/collections.coffee', 'lib/shared.coffee', 'lib/menu.coffee'], ['client', 'server']);

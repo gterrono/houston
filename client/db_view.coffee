@@ -22,5 +22,6 @@ Template._houston_db_view.events
 
 Template._houston_db_view.rendered = ->
   $("#search").val("")
+  Houston._session('collection_name', '')
   Houston._session('field_selectors', {})
   $(window).unbind('scroll')

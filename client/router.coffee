@@ -87,7 +87,7 @@ mustBeAdmin = ->
       Houston._go 'login'
 
 # If the host app doesn't have a router, their html may show up
-hide_non_admin_stuff = ->
+hideNonAdminStuff = ->
   $('body').hide()
   func = ->
     $('body').show()
@@ -97,7 +97,7 @@ hide_non_admin_stuff = ->
     $('body>.houston').css('visibility', 'visible')
   setTimeout func, 0
 
-remove_host_css = ->
+resetCSS = ->
   $links = $('link[rel="stylesheet"]')
   for link in $links
     $link = $(link)
@@ -106,10 +106,10 @@ remove_host_css = ->
 
 Router.onBeforeAction mustBeAdmin,
   only: (Houston._houstonize_route(name) for name in ['home', 'collection', 'document', 'password'])
-Router.onAfterAction hide_non_admin_stuff,
+Router.onAfterAction hideNonAdminStuff,
   only: (Houston._houstonize_route(name) for name in ['home', 'collection', 'document', 'login', 'password',
                                                       'custom_template'])
-Router.onBeforeAction remove_host_css,
+Router.onBeforeAction resetCSS,
   only: (Houston._houstonize_route(name) for name in ['home', 'collection', 'document', 'login', 'password'])
 
 onRouteNotFound = Router.onRouteNotFound

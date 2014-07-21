@@ -1,3 +1,4 @@
+# Top Nav
 Template._houston_navbar.events
   'click .houston-logout': (e) ->
     e.preventDefault()
@@ -16,3 +17,12 @@ Thanks!
   'menu_items': ->
     return Houston.menu._get_menu_items()
   'isActive' : -> 'active' if Router.current()?.path == @path
+
+# Side Nav
+Template._houston_sidenav.helpers
+  collections: ->
+    Houston._session('collections')
+  num_of_records: ->
+    Houston._collections.collections.findOne({name: @name}).count
+  is_active: (name) ->
+    name is Houston._session('collection_name')
