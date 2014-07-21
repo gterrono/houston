@@ -1,5 +1,15 @@
-# TODO filter not working
-# TODO understand Activate sort
+# TODO make sort work sort
+
+schemaToInputType = (type) ->
+  d = {
+    number: 'number'
+    string: 'text'
+    boolean: 'checkbox'
+  }
+  if type of d
+    d[type]
+  else
+    'text'
 
 FindReplace = (order_id, index) ->
   data = Products.findOne({sort_order: order_id})
@@ -125,8 +135,11 @@ Template._houston_collection_view.events
 
   'dblclick .houston-collection-field': (e) ->
     $this = $(e.currentTarget)
+    field_name = $this.data('field')
+    type = Houston._get_type(field_name, get_current_collection())
+    input = 'text' #TODO schemaToInputType type fix on blur bug
     $this.removeClass('houston-collection-field')
-    $this.html "<input type='text' value='#{$this.text()}'>"
+    $this.html "<input type='#{input}' class='input-sm form-control' placeholder='#{type}' value='#{$this.text().trim()}'>"
     $this.find('input').select()
     $this.find('input').on 'blur', ->
       updated_val = $this.find('input').val()
@@ -150,7 +163,7 @@ Template._houston_collection_view.events
     resubscribe()
 
   'click #houston-create-btn': ->
-    $('#houston-create-document').removeClass('hide hidden')
+    $('#houston-create-document').removeClass('hidden')
     $('#houston-create-btn').hide()
 
   'click .houston-delete-doc': (e) ->
@@ -158,12 +171,21 @@ Template._houston_collection_view.events
     id = $(e.currentTarget).data('id')
     if confirm("Are you sure you want to delete the document with _id #{id}?")
       Houston._call("#{Houston._session('collection_name')}_delete", id)
+  'click #houston-cancel': ->
+    $('#houston-create-document').addClass('hidden')
+    $('#houston-create-btn').show()
+    $create_row = $('#houston-create-row')
 
-  'click .houston-create-doc': (e) ->
+    for field in $create_row.find('input')
+      field.value = ''
+
+  'click #houston-add': (e) ->
+    # TODO fix and make sure it works
     e.preventDefault()
     $create_row = $('#houston-create-row')
     new_doc = {}
-    for field in $create_row.find('input[type="text"]')
+
+    for field in $create_row.find('input')
       # Unflatten the field names (e.g. foods.app -> {foods: {app:}})
       keys = field.name.split('.')
       final_key = keys.pop()
@@ -180,5 +202,13 @@ Template._houston_collection_view.events
       field.value = ''
     Houston._call("#{Houston._session('collection_name')}_insert", new_doc)
 
-  'submit form.houston-filter-form': (e) ->
+  'submit .houston-filter-form': (e) ->
     e.preventDefault()
+
+Template._houston_new_document_field.helpers
+  has_type: ->
+    @type is 'string' ||
+      @type is 'number' ||
+      @type is 'checkbox'
+  input_type: ->
+    schemaToInputType @type
