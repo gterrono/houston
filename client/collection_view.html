@@ -4,31 +4,21 @@
         <li class="active">{{col_name}}</li>
     </ul>
     <div class="row hidden" id="houston-create-document">
-        <div class="span12" style="overflow-x: auto">
             <h3>Add more {{col_name}}</h3>
-            <table class="table table-bordered table-striped">
-                <thead>
-                <tr>
-                    {{# each nonid_headers }}
-                    <th><a href="#" class="sort">{{name}} ({{type}})</a></th>
-                    {{/each}}
-                    <th></th>
-                </tr>
-                </thead>
-                <tbody>
-                <tr id="houston-create-row">
-                    {{# each nonid_headers }}
-                    <th>
-                        <input name="{{name}}" class="input-small" type="text"/>
-                    </th>
-                    {{/each}}
-                    <td>
-                        <div class="btn btn-success houston-create-doc">Create</div>
-                    </td>
-                </tr>
-                </tbody>
-            </table>
-        </div>
+
+        <form id="houston-create-row" class="form-horizontal" role="form">
+            {{# each nonid_headers }}
+            {{> _houston_new_document_field}}
+            {{/each}}
+
+            <div class="form-group">
+                <div class="col-sm-12">
+                    <button type="button" id="houston-cancel" class="btn btn-primary">Cancel</button>
+                    <button type="button" id="houston-add" class="btn btn-success pull-right">Add</button>
+                </div>
+            </div>
+        </form>
+        <hr>
     </div>
     <div class="row">
         <div class="col-md-12">
@@ -45,11 +35,11 @@
     <div class='row'>
         <div class="col-md-12">
             <div class="panel-group" id="accordion">
-                <div class="panel">
+                <div class="">
                     <div class="panel-heading">
                         <h4 class="panel-title">
                             <a data-toggle="collapse" data-parent="#accordion" href="#collapseOne">
-                                <legend>Filter <span class="caret"></span></legend>
+                                <h3>Filter <span class="caret"></span></h3>
                             </a>
                         </h4>
                     </div>
@@ -71,8 +61,11 @@
         </div>
     </div>
     <div class="row">
-
         <div class="col-md-12" style="overflow-x: auto">
+
+            <h4>
+                <small>Double click any cell to edit its value.</small>
+            </h4>
             <table id="data-table" class="table table-condensed table-striped table-hover">
                 <thead>
                 <tr>
@@ -103,4 +96,21 @@
         </div>
     </div>
 
+</template>
+
+<template name="_houston_new_document_field">
+    <div class="form-group">
+        <label for="{{ name }}" class="col-sm-4 control-label">{{ name }}</label>
+
+        <div class="col-sm-8">
+            {{#if has_type}}
+            <input type="{{ input_type }}" class="input-sm houston-field form-control" name="{{ name }}"
+                   placeholder="{{type}}" value="{{ value }}"/>
+            {{else}}
+            <textarea class="input-sm houston-field form-control" placeholder="{{type}}" name="{{ name }}">{{ value
+                }}</textarea>
+            {{/if}}
+        </div>
+
+    </div>
 </template>
