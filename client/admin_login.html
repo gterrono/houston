@@ -5,11 +5,17 @@
         <h1 class="form-heading">You are currently logged in.</h1>
 
         <div>
-            <a href="/admin" class="btn btn-lg btn-primary btn-block">Back to Home</a>
+            <a href="/admin" class="btn btn-lg btn-primary btn-block">
+                <i class="fa fa-home"></i>Back to Home
+            </a>
             {{#unless admin_user_exists}}
-            <button id="become-houston-admin" class="btn btn-lg btn-success btn-block">Claim Admin</button>
+            <button id="become-houston-admin" class="btn btn-lg btn-success btn-block">
+                <i class="fa fa-pencil"></i>Claim Admin
+            </button>
             {{/unless}}
-            <button id="houston-logout" class="btn btn-lg btn-warning btn-block">Log out</button>
+            <button id="houston-logout" class="btn btn-lg btn-warning btn-block">
+                <i class="fa fa-sign-out"></i>Log out
+            </button>
         </div>
         {{else}}
         <form id="houston-sign-in-form" role="form">
@@ -25,7 +31,10 @@
             <div>
                 <button class="btn btn-lg {{#if admin_user_exists}}btn-primary{{else}}btn-success{{/if}} btn-block"
                         type="submit">
-                    {{#if admin_user_exists}}Log In{{else}}Create account {{/if}}
+                    {{#if admin_user_exists}}
+                    <i class="fa fa-sign-in"></i>Log In
+                    {{else}}
+                    <i class="fa fa-user"></i>Create account {{/if}}
                 </button>
             </div>
         </form>

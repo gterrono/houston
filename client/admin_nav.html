@@ -21,14 +21,16 @@
                     </li>
                     {{/each}}
                     <li>
-                        <a id="houston-report-bug" href="{{bugreport_url}}" target="_blank">Report a Bug</a>
+                        <a id="houston-report-bug" href="{{bugreport_url}}" target="_blank">
+                            <i class="fa fa-bug"></i>Report a Bug
+                        </a>
                     </li>
                     {{#if currentUser}}
                     <li>
-                        <a class="houston-logout" href="#">Log out</a>
+                        <a href="{{pathFor 'houston_password'}}"><i class="fa fa-pencil"></i>Change password</a>
                     </li>
                     <li>
-                        <a href="{{pathFor 'houston_password'}}">Change password</a>
+                        <a class="houston-logout" href="#">Log out&nbsp;<i class="fa fa-sign-out"></i></a>
                     </li>
                     {{/if}}
                 </ul>
@@ -40,7 +42,7 @@
 </template>
 
 <template name="_houston_sidenav">
-    <h6>Collections</h6>
+    <h6><i class="fa fa-database"></i>Collections</h6>
     <ul class="nav nav-sidebar">
         {{#each collections}}
         <li class="{{#if is_active name}}active{{/if}}">
@@ -53,8 +55,7 @@
 
     <hr>
 
-    <h6>Other links</h6>
     <ul class="nav nav-sidebar">
-        <li><a href="/" class="small">Back to Site</a></li>
+        <li><a href="/"><i class="fa fa-reply"></i>Back to Root</a></li>
     </ul>
 </template>
