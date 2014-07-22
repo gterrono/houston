@@ -3,8 +3,6 @@ Houston._HIDDEN_COLLECTIONS = {'users': Meteor.users, 'meteor_accounts_loginServ
 ADDED_COLLECTIONS = {}
 # TODO: describe what this is, exactly, and how it differs from Houston._collections.
 
-Dummy = new Meteor.Collection("system.dummy")  # hack.
-
 Houston._publish = (name, func) ->
   Meteor.publish Houston._houstonize(name), func
 
@@ -68,7 +66,7 @@ Houston._setup_collection = (collection) ->
   ADDED_COLLECTIONS[name] = collection
 
 sync_collections = ->
-  Dummy.findOne()  # hack. TODO: verify this is still necessary
+  Houston._admins.findOne()
 
   _sync_collections = (meh, collections_db) ->
     collection_names = (col.collectionName for col in collections_db \
