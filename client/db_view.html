@@ -1,31 +1,32 @@
 <template name='_houston_db_view'>
-    <ul class="breadcrumb">
-        <li class="active"><i class="fa fa-home"></i>Home</li>
-    </ul>
-    <h1>Houston
-        <small>Meteor Admin Panel</small>
-    </h1>
+  <ul class="breadcrumb">
+    <li class="active"><i class="fa fa-home"></i>Home</li>
+  </ul>
+  <h1>Houston
+    <small>Meteor Admin Panel</small>
+  </h1>
 
-    <input name="name" id="search" placeholder="Search"
-           class="form-control houston-column-filter input-lg"
-           type="text" autofocus/>
-    {{# unless collections }}
-    <p class="lead">If this is your first time using Houston, you may need to <a id="refresh"
-                                                                                 class="btn btn-large btn-warning">Refresh
-        this page</a></p>
-    {{/unless}}
-    {{# unless filtered_collections }}
-    <p class="lead">Your search returned no results.</p>
-    {{/unless}}
-    {{#each filtered_collections}}
-    <a href="{{pathFor 'houston_collection'}}">
-        <div class="col-sm-6 col-md-4 col-lg-3">
-            <h4 class="well well-sm houston-collection">
-                <i class="fa fa-database"></i>{{name}}
-                <span class="badge pull-right">{{ num_of_records }}</span>
-            </h4>
+  <input name="name" id="search" placeholder="Search"
+         class="form-control houston-column-filter input-lg"
+         type="text" autofocus/>
+  {{# unless collections }}
+  <p class="lead">If this is your first time using Houston, you may need to <a
+      id="refresh"
+      class="btn btn-large btn-warning">Refresh
+    this page</a></p>
+  {{/unless}}
+  {{# unless filtered_collections }}
+  <p class="lead">Your search returned no results.</p>
+  {{/unless}}
+  {{#each filtered_collections}}
+  <a href="{{pathFor 'houston_collection'}}">
+    <div class="col-sm-6 col-md-4 col-lg-3">
+      <h4 class="well well-sm houston-collection">
+        <i class="fa fa-database"></i>{{name}}
+        <span class="badge pull-right">{{ num_of_records }}</span>
+      </h4>
 
-        </div>
-    </a>
-    {{/each}}
+    </div>
+  </a>
+  {{/each}}
 </template>

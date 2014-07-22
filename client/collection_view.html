@@ -1,120 +1,136 @@
 <template name="_houston_collection_view">
-    <ul class="breadcrumb">
-        <li><a href="{{pathFor 'houston_home'}}" class="houston-home"><i class="fa fa-home"></i>Home</a></li>
-        <li class="active"><i class="fa fa-database"></i>{{col_name}}</li>
-    </ul>
-    <div class="row hidden" id="houston-create-document">
-        <h3>Add more {{col_name}}</h3>
+  <ul class="breadcrumb">
+    <li><a href="{{pathFor 'houston_home'}}" class="houston-home"><i
+        class="fa fa-home"></i>Home</a></li>
+    <li class="active"><i class="fa fa-database"></i>{{col_name}}</li>
+  </ul>
+  <div class="row hidden" id="houston-create-document">
+    <h3>Add more {{col_name}}</h3>
 
-        <form id="houston-create-row" class="form-horizontal" role="form">
+    <form id="houston-create-row" class="form-horizontal" role="form">
+      {{# each nonid_headers }}
+      {{> _houston_new_document_field}}
+      {{/each}}
+
+      <div class="form-group">
+        <div class="col-sm-12">
+          <button type="button" id="houston-cancel" class="btn btn-primary"><i
+              class="fa fa-times"></i>Cancel
+          </button>
+          <button type="button" id="houston-add"
+                  class="btn btn-success pull-right"><i class="fa fa-plus"></i>Add
+          </button>
+        </div>
+      </div>
+    </form>
+    <hr>
+  </div>
+  <div class="row">
+    <div class="col-md-12">
+      <div class="page-header">
+
+        <button id="houston-create-btn"
+                class="btn btn-sm btn-success pull-right"><i
+            class="fa fa-plus"></i>New
+          {{col_name}}
+        </button>
+        <button id="houston-sortable"
+                class="btn btn-sm pull-right houston-activate-sort"><i
+            class="fa fa-sort"></i>Sort
+        </button>
+        <h1>{{col_name}}
+          <small>{{num_of_records}} record{{pluralize}}</small>
+        </h1>
+      </div>
+    </div>
+  </div>
+  <div class='row'>
+    <div class="col-md-12">
+      <div class="panel-group" id="accordion">
+        <div class="panel-heading">
+          <div class="panel-title">
+            <a data-toggle="collapse" data-parent="#accordion"
+               href="#collapseOne">
+              <h4><i class="fa fa-filter"></i>Filter&nbsp;<i
+                  class="fa fa-caret-down"></i></h4>
+            </a>
+          </div>
+        </div>
+        <div id="collapseOne" class="panel-collapse collapse">
+          <form class="form-inline" role="form">
             {{# each nonid_headers }}
-            {{> _houston_new_document_field}}
+            <div class="form-group col-xs-12 col-sm-6 col-md-4 col-lg-3">
+              <div class="input-group">
+                <div class="input-sm input-group-addon">{{name}}</div>
+                <input class="form-control houston-column-filter input-sm"
+                       type="text"
+                       placeholder="{{type}}" value="{{filter_value}}">
+              </div>
+            </div>
             {{/each}}
-
-            <div class="form-group">
-                <div class="col-sm-12">
-                    <button type="button" id="houston-cancel" class="btn btn-primary"><i class="fa fa-times"></i>Cancel
-                    </button>
-                    <button type="button" id="houston-add" class="btn btn-success pull-right"><i class="fa fa-plus"></i>Add
-                    </button>
-                </div>
-            </div>
-        </form>
-        <hr>
-    </div>
-    <div class="row">
-        <div class="col-md-12">
-            <div class="page-header">
-
-                <button id="houston-create-btn" class="btn btn-sm btn-success pull-right"><i class="fa fa-plus"></i>New
-                    {{col_name}}
-                </button>
-                <button id="houston-sortable" class="btn btn-sm pull-right houston-activate-sort"><i
-                        class="fa fa-sort"></i>Sort
-                </button>
-                <h1>{{col_name}}
-                    <small>{{num_of_records}} record{{pluralize}}</small>
-                </h1>
-            </div>
+          </form>
         </div>
+      </div>
     </div>
-    <div class='row'>
-        <div class="col-md-12">
-            <div class="panel-group" id="accordion">
-                <div class="panel-heading">
-                    <div class="panel-title">
-                        <a data-toggle="collapse" data-parent="#accordion" href="#collapseOne">
-                            <h4><i class="fa fa-filter"></i>Filter&nbsp;<i class="fa fa-caret-down"></i></h4>
-                        </a>
-                    </div>
-                </div>
-                <div id="collapseOne" class="panel-collapse collapse">
-                    <form class="form-inline" role="form">
-                        {{# each nonid_headers }}
-                        <div class="form-group col-xs-12 col-sm-6 col-md-4 col-lg-3">
-                            <div class="input-group">
-                                <div class="input-sm input-group-addon">{{name}}</div>
-                                <input class="form-control houston-column-filter input-sm" type="text"
-                                       placeholder="{{type}}" value="{{filter_value}}">
-                            </div>
-                        </div>
-                        {{/each}}
-                    </form>
-                </div>
-            </div>
-        </div>
-    </div>
-    <div class="row">
-        <div class="col-md-12" style="overflow-x: auto">
+  </div>
+  <div class="row">
+    <div class="col-md-12" style="overflow-x: auto">
 
-            <h4>
-                <small>Double click any cell to edit its value.</small>
-            </h4>
-            <table id="data-table" class="table table-condensed table-striped table-hover">
-                <thead>
-                <tr>
-                    {{# each headers }}
-                    <th><a href="#" class="houston-sort">{{name}}</a></th>
-                    {{/each}}
-                    <th></th>
-                </tr>
-                </thead>
-                <tbody>
-                {{#each rows }}
-                <tr id="ID_{{sort_order}}">
-                    <td><a href="{{pathFor 'houston_document'}}"><i class="fa fa-file"></i>{{_id}}</a></td>
-                    {{#each values_in_order}}
-                    <td data-field='{{ field_name }}' class='houston-collection-field'>{{#if is_image field_value}}<img
-                            src="{{field_value}}" alt="" width="150" height="150">{{else}}{{ field_value }}{{/if}}
-                    </td>
-                    {{/each}}
-                    <td>
-                        <div data-id="{{_id}}" class="btn btn-xs houston-delete-doc btn-danger pull-right">
-                            <i class="fa fa-trash-o"></i>Delete
-                        </div>
-                    </td>
-                </tr>
-                {{/each}}
-                </tbody>
-            </table>
-        </div>
+      <h4>
+        <small>Double click any cell to edit its value.</small>
+      </h4>
+      <table id="data-table"
+             class="table table-condensed table-striped table-hover">
+        <thead>
+        <tr>
+          {{# each headers }}
+          <th><a href="#" class="houston-sort">{{name}}</a></th>
+          {{/each}}
+          <th></th>
+        </tr>
+        </thead>
+        <tbody>
+        {{#each rows }}
+        <tr id="ID_{{sort_order}}">
+          <td><a href="{{pathFor 'houston_document'}}"><i
+              class="fa fa-file"></i>{{_id}}</a></td>
+          {{#each values_in_order}}
+          <td data-field='{{ field_name }}' class='houston-collection-field'>
+            {{#if is_image field_value}}<img
+              src="{{field_value}}" alt="" width="150" height="150">{{else}}{{
+            field_value }}{{/if}}
+          </td>
+          {{/each}}
+          <td>
+            <div data-id="{{_id}}"
+                 class="btn btn-xs houston-delete-doc btn-danger pull-right">
+              <i class="fa fa-trash-o"></i>Delete
+            </div>
+          </td>
+        </tr>
+        {{/each}}
+        </tbody>
+      </table>
     </div>
+  </div>
 
 </template>
 
 <template name="_houston_new_document_field">
-    <div class="form-group">
-        <label for="{{ name }}" class="col-sm-4 control-label">{{ name }}</label>
+  <div class="form-group">
+    <label for="{{ name }}" class="col-sm-4 control-label">{{ name }}</label>
 
-        <div class="col-sm-8">
-            {{#if has_type}}
-            <input type="{{ input_type }}" class="input-sm houston-field form-control" name="{{ name }}"
-                   placeholder="{{type}}" value="{{ value }}"/>
-            {{else}}
-            <textarea class="input-sm houston-field form-control" placeholder="{{type}}" name="{{ name }}">{{ value
-                }}</textarea>
-            {{/if}}
-        </div>
-
+    <div class="col-sm-8">
+      {{#if has_type}}
+      <input type="{{ input_type }}" class="input-sm houston-field form-control"
+             name="{{ name }}"
+             placeholder="{{type}}" value="{{ value }}"/>
+      {{else}}
+      <textarea class="input-sm houston-field form-control"
+                placeholder="{{type}}" name="{{ name }}">{{ value
+        }}</textarea>
+      {{/if}}
     </div>
+
+  </div>
 </template>

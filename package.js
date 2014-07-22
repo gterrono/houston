@@ -12,7 +12,7 @@ Package.on_use(function(api) {
 
   // load html first, https://github.com/meteor/meteor/issues/282
   api.add_files([
-      'client/bootstrap.html', 'client/style.html',
+      'client/third-party/bootstrap.html', 'client/style.html',
       'client/admin_login.html', 'client/admin_password.html', 'client/db_view.html',
       'client/collection_view.html', 'client/document_view.html',
       'client/admin_nav.html', 'client/main.html',
@@ -23,7 +23,7 @@ Package.on_use(function(api) {
       'lib/jquery.min.js', 'lib/jqueryui.min.js',
       'client/custom_template_view.coffee',
       'client/router.coffee', 'client/admin_login.coffee', 'client/admin_password.coffee',
-      'client/collection_view.coffee', 'client/bootstrap.js', 'client/sortable.js', 'client/document_view.coffee',
+      'client/collection_view.coffee', 'client/third-party/bootstrap.min.js', 'client/sortable.js', 'client/document_view.coffee',
       'client/zma_helpers.coffee',
       'client/admin_nav.coffee', 'client/db_view.coffee'],
     'client');
