@@ -36,7 +36,7 @@ Features
 #### /admin: Get a list of available collections
 ![Home View](https://raw.github.com/gterrono/houston/master/doc/home.png)
 
-#### /admin/collection: View all items in collection
+#### /admin/collection: View or add items in collection
 ![Collection View](https://raw.github.com/gterrono/houston/master/doc/collection.png)
 
 Collection view includes support for
@@ -45,6 +45,9 @@ Collection view includes support for
 - filtering and sorting by names
 - support for nested objects
 - (limited, mostly read-only) support for arrays
+
+#### /admin/collection: Edit any field by double clicking
+![Collection View - Inline](https://raw.github.com/gterrono/houston/master/doc/inline.png)
 
 #### /admin/collection/document_id: Edit a particular document
 ![Document View](https://raw.github.com/gterrono/houston/master/doc/document.png)
