@@ -1,6 +1,3 @@
-#TODO icons
-#TODO side navigation
-
 Houston
 ===============
 Houston (formerly Z-Mongo-Admin) is a zero-config Meteor Admin, modeled after [Django Admin](https://docs.djangoproject.com/en/dev/ref/contrib/admin/), intended as a simple way for developers to give end-users (or themselves) an easy way to view and manipulate their app's data.
@@ -54,6 +51,41 @@ Collection view includes support for
 
 #### /admin/login: User-defined Admin based on Meteor Accounts
 ![Login](https://raw.github.com/gterrono/houston/master/doc/login.png)
+
+
+Customizing Houston
+========
+
+### Adding undiscovered collections to Houston
+If Houston didn't find your collection automatically, you can always add it manually on the server via
+```javascript
+Houston.add_collection(collection);
+```
+
+The users collection is hidden by default. If you want to access your users in Houston and/or be able to add houston admins just:
+```javascript
+Houston.add_collection(Meteor.users);
+Houston.add_collection(Houston._admins);
+```
+
+You can also `Houston.hide_collection(collection)`, though this is not as well-tested.
+
+### Changing the root path of Houston from `/admin`
+By default, Houston is hosted on `/admin`, but you're welcome to change this using `Meteor.settings` [(see the docs)](http://docs.meteor.com/#meteor_settings).
+
+Don't want to read the settings docs? Here's your TL;DR:
+
+####Setup
+Add a settings.json file to your project. Something like:
+```bash
+echo {\"public\": {\"houston_root_route\": \"/your_fancy_route\"}} > settings.json
+```
+
+####Run locally
+`mrt --settings=settings.json`
+
+####Run on meteor.com hosting
+`meteor deploy <site> --settings settings.json`
 
 ### Defining Custom Menu Items
 ![Custom Menu](https://raw.github.com/gterrono/houston/master/doc/menu.png)

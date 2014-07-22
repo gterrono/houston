@@ -1,15 +1,15 @@
 {
-    "name": "houston",
-    "description": "A zero-config Meteor Admin",
-    "homepage": "https://github.com/gterrono/houston",
-    "author": "Greg Terrono, Alexey Komissarouk, Geoff Vedernikoff",
-    "version": "1.0.6",
-    "git": "https://github.com/blabassi/houston.git",
-    "packages": {
-        "paginated-subscription": {},
-        "spin": {},
-        "iron-router": {},
-        "autoform": {},
-        "sortable": {}
-    }
+  "name": "houston",
+  "description": "A zero-config Meteor Admin",
+  "homepage": "https://github.com/gterrono/houston",
+  "author": "Greg Terrono, Alexey Komissarouk, Geoff Vedernikoff",
+  "version": "1.0.7",
+  "git": "https://github.com/gterrono/houston.git",
+  "packages": {
+    "paginated-subscription": {},
+    "spin": {},
+    "iron-router": {},
+    "autoform": {},
+    "sortable": {}
+  }
 }
