@@ -1,55 +1,68 @@
 <template name="_houston_document_view">
 
-    <ul class="breadcrumb">
-        <li>
-            <a href="{{pathFor 'houston_home'}}" class="houston-home"><i class="fa fa-home"></i>Home</a>
-        </li>
-        <li>
-            <a href="{{pathFor 'houston_collection'}}" class="houston-collection"><i class="fa fa-database"></i>{{name}}</a>
-        </li>
-        <li class="active"><i class="fa fa-file"></i>{{document_id}}</li>
-    </ul>
-    <h1>{{name}}
-        <small>{{document_id}}</small>
-    </h1>
+  <ul class="breadcrumb">
+    <li>
+      <a href="{{pathFor 'houston_home'}}" class="houston-home"><i
+          class="fa fa-home"></i>Home</a>
+    </li>
+    <li>
+      <a href="{{pathFor 'houston_collection'}}" class="houston-collection"><i
+          class="fa fa-database"></i>{{name}}</a>
+    </li>
+    <li class="active"><i class="fa fa-file"></i>{{document_id}}</li>
+  </ul>
+  <h1>{{name}}
+    <small>{{document_id}}</small>
+  </h1>
 
-    <div id="doc-saved" class="alert alert-success {{adminHide}}">Your document was saved!</div>
+  <div id="doc-saved" class="alert alert-success {{adminHide}}">Your document
+    was saved!
+  </div>
 
-    <form class="form-horizontal" role="form">
-        {{# each fields }}
-        {{> _houston_document_field}}
-        {{/each}}
+  <form class="form-horizontal" role="form">
+    {{# each fields }}
+    {{> _houston_document_field}}
+    {{/each}}
 
-        <div class="form-group">
-            <div class="col-sm-offset-3 col-sm-9">
-                <button type="button" id="houston-back" class="btn btn-primary"><i class="fa fa-reply"></i>Back</button>
-                <button type="button" id="houston-save" class="btn btn-success"><i class="fa fa-save"></i>Save</button>
-                <button type="button" id="houston-delete" class="btn btn-danger pull-right"><i
-                        class="fa fa-trash-o"></i>Delete
-                </button>
-            </div>
-        </div>
-    </form>
+    <div class="form-group">
+      <div class="col-sm-offset-3 col-sm-9">
+        <button type="button" id="houston-back" class="btn btn-primary"><i
+            class="fa fa-reply"></i>Back
+        </button>
+        <button type="button" id="houston-save" class="btn btn-success"><i
+            class="fa fa-save"></i>Save
+        </button>
+        <button type="button" id="houston-delete"
+                class="btn btn-danger pull-right"><i
+            class="fa fa-trash-o"></i>Delete
+        </button>
+      </div>
+    </div>
+  </form>
 
 </template>
 
 <template name="_houston_document_field">
-    <div class="form-group">
+  <div class="form-group">
 
-        <label for="{{ name_id }}" class="col-sm-3 control-label">{{ name_id }}</label>
+    <label for="{{ name_id }}" class="col-sm-3 control-label">{{ name_id
+      }}</label>
 
-        <div class="col-sm-9">
-        {{#if field_is_id }}
-            <input type="text" class="houston-field form-control" id="{{ name_id }}" value="{{ value }}" readonly>
-            {{else}}
-            {{#if has_type}}
-            <input type="{{ input_type }}" class="houston-field form-control" name="{{ name_id }}" value="{{ value }}"/>
-            {{else}}
-            <textarea class="houston-field form-control" name="{{ name_id }}">{{ value }}</textarea>
-            {{/if}}
-            <p class="help-block">Please enter a {{ type }}</p>
-            {{/if}}
-        </div>
-
+    <div class="col-sm-9">
+      {{#if field_is_id }}
+      <input type="text" class="houston-field form-control" id="{{ name_id }}"
+             value="{{ value }}" readonly>
+      {{else}}
+      {{#if has_type}}
+      <input type="{{ input_type }}" class="houston-field form-control"
+             name="{{ name_id }}" value="{{ value }}"/>
+      {{else}}
+      <textarea class="houston-field form-control" name="{{ name_id }}">{{ value
+        }}</textarea>
+      {{/if}}
+      <p class="help-block">Please enter a {{ type }}</p>
+      {{/if}}
     </div>
+
+  </div>
 </template>
