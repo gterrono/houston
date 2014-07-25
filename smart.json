@@ -8,6 +8,11 @@
   "packages": {
     "paginated-subscription": {},
     "spin": {},
-    "iron-router": {}
+    "iron-router": {},
+    "autoform": {},
+    "bootstrap-flatly": {
+      "git": "https://github.com/grokbot/meteor-bootstrap-flatly",
+      "branch": "font-awesome"
+    }
   }
 }

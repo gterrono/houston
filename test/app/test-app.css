@@ -1,1 +1,7 @@
-/* CSS declarations go here */
+/*
+ This rule is a visual check to make sure
+ Houston does not use the main site's CSS
+*/
+html {
+    background: #f0f;
+}

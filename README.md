@@ -16,7 +16,16 @@ mrt add houston
 Once installed, navigate to `/admin` to set up your admin account. You can either create a new user to act as Houston's Admin, or upgrade an existing user into an admin.
 
 #### Auto-discovery
-Houston will auto-discover your collections by exploring the top-level (root) namespace on the server for collections.  If your collections are not on the global namespace, see [Customizing Houston](#customizing-houston)
+Houston will auto-discover your collections by exploring the top-level (root) namespace on the server for collections.  If your collections are not on the global namespace, add them to Houston via
+```javascript
+Houston.add_collection(collection);
+```
+
+The users collection is hidden by default. If you want to access your users in Houston and/or be able to add houston admins just:
+```javascript
+Houston.add_collection(Meteor.users);
+Houston.add_collection(Houston._admins);
+```
 
 Features
 ========
@@ -24,7 +33,7 @@ Features
 #### /admin: Get a list of available collections
 ![Home View](https://raw.github.com/gterrono/houston/master/doc/home.png)
 
-#### /admin/collection: View all items in collection
+#### /admin/collection: View or add items in collection
 ![Collection View](https://raw.github.com/gterrono/houston/master/doc/collection.png)
 
 Collection view includes support for
@@ -33,6 +42,9 @@ Collection view includes support for
 - filtering and sorting by names
 - support for nested objects
 - (limited, mostly read-only) support for arrays
+
+#### /admin/collection: Edit any field by double clicking
+![Collection View - Inline](https://raw.github.com/gterrono/houston/master/doc/inline.png)
 
 #### /admin/collection/document_id: Edit a particular document
 ![Document View](https://raw.github.com/gterrono/houston/master/doc/document.png)
@@ -105,11 +117,6 @@ Houston.menu({
 });
 ```
 
-Running Tests
------
-Requires Casper.js
-run with ./run-tests.sh
-
 Dependencies
 -----
 
@@ -120,7 +127,6 @@ Dependencies
 
 ###Current State
 We've put a fair bit of work into the 1.0 release and will be actively supporting it. Please send in feature requests, bug reports, and contribute.
-
 
 Wishlist
 -------
