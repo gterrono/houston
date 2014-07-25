@@ -45,17 +45,18 @@
 </template>
 
 <template name="_houston_sidenav">
+  {{#if collections}}
   <h6><i class="fa fa-database"></i>Collections</h6>
   <ul class="nav nav-sidebar">
     {{#each collections}}
     <li class="{{#if is_active name}}active{{/if}}">
       <a href="{{pathFor 'houston_collection'}}">{{name}} <span
-          class="badge pull-right">{{ num_of_records }}</span></a>
+          class="badge pull-right">{{ count }}</span></a>
 
     </li>
     {{/each}}
   </ul>
-
+  {{/if}}
   <hr>
 
   <ul class="nav nav-sidebar">
