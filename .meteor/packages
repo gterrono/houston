@@ -3,8 +3,6 @@
 # 'meteor add' and 'meteor remove' will edit this file for you,
 # but you can also edit it by hand.
 
-preserve-inputs
-router
 coffeescript
 accounts-password
 spin

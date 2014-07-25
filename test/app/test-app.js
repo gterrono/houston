@@ -46,7 +46,6 @@ if (Meteor.isServer) {
     globalCollection.remove({});
     Meteor.users.remove({});
     Houston._admins.remove({});
-    Houston._collections.collections.remove({});
     hiddenCollection.remove({});
     Books.remove({});
 
