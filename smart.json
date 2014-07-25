@@ -10,6 +10,9 @@
     "spin": {},
     "iron-router": {},
     "autoform": {},
-    "sortable": {}
+    "bootstrap-flatly": {
+      "git": "https://github.com/grokbot/meteor-bootstrap-flatly",
+      "branch": "font-awesome"
+    }
   }
 }

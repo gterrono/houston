@@ -1,4 +1,4 @@
-# TODO make sort work sort
+# TODO this should be refactored
 
 schemaToInputType = (type) ->
   d = {
@@ -10,39 +10,6 @@ schemaToInputType = (type) ->
     d[type]
   else
     'text'
-
-FindReplace = (order_id, index) ->
-  data = Products.findOne({sort_order: order_id})
-  Products.update
-    _id: data._id
-  ,
-    $set:
-      sort_order: index
-
-fixHelper = (e, ui) ->
-  ui.children().each ->
-    $(this).width $(this).width()
-    return
-
-  ui
-
-initSortable = ->
-  $("#data-table tbody").sortable(
-    opacity: 0.6
-    cursor: "move"
-    helper: fixHelper
-    scrollSensitivity: 40
-    update: ->
-      sort = $(this).sortable("toArray")
-      jQuery.map sort, (order, i) ->
-        order_id = order.match(/\d/g)
-        order_id = order_id.join("")
-        FindReplace parseFloat(order_id), i
-        return
-
-      return
-  ).disableSelection()
-  return
 
 get_sort_by = ->
   sort_by = {}
@@ -57,7 +24,8 @@ get_filter_query = ->
     return unless Houston._session(session_key)?
     for key, val of Houston._session(session_key)
       # From http://stackoverflow.com/questions/3115150/how-to-escape-regular-expression-special-characters-using-javascript#answer-9310752
-      query[key] = $regex: val.replace(/[-[\]{}()*+?.,\\^$|#\s]/g, "\\$&")
+      query[key] =
+        $regex: val.replace(/[-[\]{}()*+?.,\\^$|#\s]/g, "\\$&")
   fill_query_with_regex('field_selectors')
   return query
 
@@ -92,46 +60,34 @@ Template._houston_collection_view.helpers
   values_in_order: ->
     fields_in_order = get_collection_view_fields()
     names_in_order = _.clone fields_in_order
-    values = (Houston._nested_field_lookup(@, field.name) for field in fields_in_order[1..])  # skip _id
-    ({field_value, field_name} for [field_value, {name:field_name}] in _.zip values, names_in_order[1..])
-    #is_image = Houston.get_fields('*').match(/([a-z\-_0-9\/\:\.]*\.(jpg|jpeg|png|gif))/i)
+    values = (Houston._nested_field_lookup(@, field.name) for field in fields_in_order[1..]) # skip _id
+    ({field_value, field_name} for [field_value, {name: field_name}] in _.zip values, names_in_order[1..])
   filter_value: ->
     if Houston._session('field_selectors') and Houston._session('field_selectors')[@]
       Houston._session('field_selectors')[@]
     else
       ''
-  is_image: (my_string) ->
-    #console.log my_string
-    #console.log my_string.match /http/i
-    #true unless my_string.match(/http/i) is `undefined`
-    if typeof my_string is 'string'
-      pattern = /([placehold][a-z\-_0-9\/\:\.]*\.(jpg|jpeg|png|gif|))/i
-     # console.log my_string
-      my_string.match pattern
+
 Template._houston_collection_view.rendered = ->
   $win = $(window)
   $win.scroll ->
     if $win.scrollTop() + 300 > $(document).height() - $win.height() and
       Houston._paginated_subscription.limit() < collection_count()
-        Houston._paginated_subscription.loadNextPage()
-  Meteor.defer ->
-    initSortable()
+      Houston._paginated_subscription.loadNextPage()
 
 get_current_collection = -> Houston._get_collection(Houston._session('collection_name'))
 get_collection_view_fields = -> collection_info()?.fields or []
 
 Template._houston_collection_view.events
   "click a.houston-sort": (e) ->
-      e.preventDefault()
-      sort_key = this.name
-      if (Houston._session('sort_key') == sort_key)
-        Houston._session('sort_order', Houston._session('sort_order') * - 1)
-      else
-        Houston._session('sort_key', sort_key)
-        Houston._session('sort_order', 1)
-      resubscribe()
-  'click .houston-activate-sort': (e) ->
-    initSortable()
+    e.preventDefault()
+    sort_key = this.name
+    if (Houston._session('sort_key') == sort_key)
+      Houston._session('sort_order', Houston._session('sort_order') * -1)
+    else
+      Houston._session('sort_key', sort_key)
+      Houston._session('sort_order', 1)
+    resubscribe()
 
   'dblclick .houston-collection-field': (e) ->
     $this = $(e.currentTarget)

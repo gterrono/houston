@@ -34,10 +34,6 @@
             class="fa fa-plus"></i>New
           {{col_name}}
         </button>
-        <button id="houston-sortable"
-                class="btn btn-sm pull-right houston-activate-sort"><i
-            class="fa fa-sort"></i>Sort
-        </button>
         <h1>{{col_name}}
           <small>{{num_of_records}} record{{pluralize}}</small>
         </h1>
@@ -96,9 +92,7 @@
               class="fa fa-file"></i>{{_id}}</a></td>
           {{#each values_in_order}}
           <td data-field='{{ field_name }}' class='houston-collection-field'>
-            {{#if is_image field_value}}<img
-              src="{{field_value}}" alt="" width="150" height="150">{{else}}{{
-            field_value }}{{/if}}
+            {{field_value }}
           </td>
           {{/each}}
           <td>

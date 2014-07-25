@@ -3,18 +3,6 @@
 # 'meteor add' and 'meteor remove' will edit this file for you,
 # but you can also edit it by hand.
 
-router
 coffeescript
 accounts-password
 spin
-standard-app-packages
-autoform
-blaze-layout
-collection2
-houston
-iron-router
-moment
-paginated-subscription
-simple-schema
-sortable
-font-awesome

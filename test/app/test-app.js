@@ -38,7 +38,7 @@ if (Meteor.isClient) {
   });
 }
 
-if (Meteor.isServer && false ) {
+if (Meteor.isServer) {
   Meteor.startup(function () {
     // Local variable so it needs to be added to Houston manually
     var hiddenCollection = new Meteor.Collection("HiddenCollection");
