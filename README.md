@@ -120,6 +120,11 @@ Houston.menu({
 });
 ```
 
+Running Tests
+-----
+Requires Casper.js
+run with ./run-tests.sh
+
 Dependencies
 -----
 
