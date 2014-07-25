@@ -88,20 +88,11 @@ mustBeAdmin = ->
 
 # If the host app doesn't have a router, their html may show up
 hideNonAdminStuff = ->
-  $('body').hide()
-  func = ->
-    $('body').show()
-    $('body').children().hide()
-    $('body>.houston').show()
-    $('body').css('visibility','hidden')
-    $('body>.houston').css('visibility', 'visible')
-  setTimeout func, 0
+  $('body').css('visibility', 'hidden').children().hide()
+  $('body>.houston').show()
 
 resetCSS = ->
-  $links = $('link[rel="stylesheet"]')
-  for link in $links
-    $link = $(link)
-    $link.remove()
+  $('link[rel="stylesheet"]').remove()
 
 
 Router.onBeforeAction mustBeAdmin,
@@ -110,6 +101,7 @@ Router.onAfterAction hideNonAdminStuff,
   only: (Houston._houstonize_route(name) for name in ['home', 'collection', 'document', 'login', 'password',
                                                       'custom_template'])
 Router.onBeforeAction resetCSS,
+  # TODO this should be default
   only: (Houston._houstonize_route(name) for name in ['home', 'collection', 'document', 'login', 'password'])
 
 onRouteNotFound = Router.onRouteNotFound

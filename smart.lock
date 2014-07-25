@@ -17,8 +17,8 @@
       },
       "spin": {
         "git": "https://github.com/SachaG/meteor-spin.git",
-        "tag": "v0.2.2",
-        "commit": "3f655f0016228e4195acc784c45d3e3a247dc39f"
+        "tag": "v2.0.3",
+        "commit": "23c1145472a710d5c93fa4beaca4e576caeb2f24"
       },
       "iron-router": {
         "git": "https://github.com/EventedMind/iron-router.git",
@@ -27,13 +27,13 @@
       },
       "autoform": {
         "git": "https://github.com/aldeed/meteor-autoform.git",
-        "tag": "v0.15.1",
-        "commit": "723aed684ef9d16e94424cde6389b8e4a03d546e"
+        "tag": "v0.15.3",
+        "commit": "b0574c71d33ea8ecff397b3bf054601fb979e0b8"
       },
-      "sortable": {
-        "git": "https://github.com/fishdude/meteor-sortable.git",
-        "tag": "v0.0.4",
-        "commit": "4e5106793e523d110bd3d11b5bedecc277225e39"
+      "bootstrap-flatly": {
+        "git": "https://github.com/grokbot/meteor-bootstrap-flatly",
+        "branch": "font-awesome",
+        "commit": "791b69510a4527e72ca00631050ce3a8eaf117f5"
       },
       "blaze-layout": {
         "git": "https://github.com/EventedMind/blaze-layout.git",
@@ -54,6 +54,11 @@
         "git": "https://github.com/acreeger/meteor-moment.git",
         "tag": "v2.6.0",
         "commit": "26156df681750fd6e6ed77043eef32b6653ebbdf"
+      },
+      "font-awesome": {
+        "git": "https://github.com/nate-strauser/meteor-font-awesome.git",
+        "tag": "v4.0.3",
+        "commit": "61e9361384347547ae144f8228faa4deffda23db"
       }
     }
   }

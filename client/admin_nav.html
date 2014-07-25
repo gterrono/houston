@@ -59,6 +59,7 @@
   <hr>
 
   <ul class="nav nav-sidebar">
-    <li><a href="/"><i class="fa fa-reply"></i>Back to Root</a></li>
+    <!-- Hack because iron router is not letting us link to root -->
+    <li onclick="window.location = '/';"><a href="/"><i class="fa fa-reply"></i>Back to Root</a></li>
   </ul>
 </template>

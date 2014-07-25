@@ -2,7 +2,7 @@ Package.describe({
   summary: "A zero-config Meteor Admin"
 });
 
-Package.on_use(function(api) {
+Package.on_use(function (api) {
   api.use('deps', ['client', 'server']);
   api.use('coffeescript', ['client', 'server']);
   api.use('accounts-base', ['client', 'server']);
@@ -20,10 +20,9 @@ Package.on_use(function(api) {
     'client');
 
   api.add_files([
-      'lib/jquery.min.js', 'lib/jqueryui.min.js',
       'client/custom_template_view.coffee',
       'client/router.coffee', 'client/admin_login.coffee', 'client/admin_change_password.coffee',
-      'client/collection_view.coffee', 'client/third-party/bootstrap.min.js', 'client/sortable.js', 'client/document_view.coffee',
+      'client/collection_view.coffee', 'client/third-party/bootstrap.min.js', 'client/document_view.coffee',
       'client/zma_helpers.coffee',
       'client/admin_nav.coffee', 'client/db_view.coffee'],
     'client');
