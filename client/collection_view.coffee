@@ -33,6 +33,7 @@ resubscribe = ->
   # Stop the old subscription and resubscribe with the new filter/sort
   subscription_name = "_houston_#{Houston._session('collection_name')}"
   Houston._paginated_subscription.stop()
+  console.dir get_filter_query()
   Houston._paginated_subscription =
     Meteor.subscribeWithPagination subscription_name,
       get_sort_by(), get_filter_query(),
@@ -71,8 +72,7 @@ Template._houston_collection_view.helpers
 Template._houston_collection_view.rendered = ->
   $win = $(window)
   $win.scroll ->
-    if $win.scrollTop() + 300 > $(document).height() - $win.height() and
-      Houston._paginated_subscription.limit() < collection_count()
+    if $win.scrollTop() + 300 > $(document).height() - $win.height() and Houston._paginated_subscription.limit() < collection_count()
       Houston._paginated_subscription.loadNextPage()
 
 get_current_collection = -> Houston._get_collection(Houston._session('collection_name'))
@@ -112,11 +112,12 @@ Template._houston_collection_view.events
 
   'keyup .houston-column-filter': (e) ->
     field_selectors = {}
-    $('.houston-column-filter').each (idx, item) ->
-      if item.value
-        field_selectors[item.name] = item.value
+    $('.houston-column-filter').each () ->
+      if @value
+        field_selectors[@dataset.id] = @value
     Houston._session 'field_selectors', field_selectors
     resubscribe()
+
 
   'click #houston-create-btn': ->
     $('#houston-create-document').removeClass('hidden')
