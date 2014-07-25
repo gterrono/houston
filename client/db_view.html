@@ -12,7 +12,7 @@
   {{# unless collections }}
   <p class="lead">If this is your first time using Houston, you may need to <a
       id="refresh"
-      class="btn btn-large btn-warning">Refresh
+      class="btn btn-large btn btn-block btn-warning">Refresh
     this page</a></p>
   {{/unless}}
   {{# unless filtered_collections }}
@@ -23,7 +23,7 @@
     <div class="col-sm-6 col-md-4 col-lg-3">
       <h4 class="well well-sm houston-collection">
         <i class="fa fa-database"></i>{{name}}
-        <span class="badge pull-right">{{ num_of_records }}</span>
+        <span class="badge pull-right">{{ count }}</span>
       </h4>
 
     </div>
