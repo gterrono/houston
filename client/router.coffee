@@ -34,7 +34,7 @@ Router.map ->
   houston_route = (route_name, options) =>
     # Append _houston_ to template and route names to avoid clobbering parent route namespace
     options.template = Houston._houstonize(options.template)
-    options.layoutTemplate = null
+    options.layoutTemplate = 'masterLayout'
     options.path = "#{Houston._ROOT_ROUTE}#{options.houston_path}"
     options.waitOn = ->
       ready: -> !Meteor.loggingIn() and Houston._subscribe('admin_user').ready()
@@ -89,20 +89,10 @@ mustBeAdmin = ->
 
 # If the host app doesn't have a router, their html may show up
 hide_non_admin_stuff = ->
-  $('body').hide()
-  func = ->
-    $('body').show()
-    $('body').children().hide()
-    $('body>.houston').show()
-    $('body').css('visibility','hidden')
-    $('body>.houston').css('visibility', 'visible')
-  setTimeout func, 0
-
+  $('body').css('visibility', 'hidden').children().hide()
+  $('body>.houston').show()
 remove_host_css = ->
-  $links = $('link[rel="stylesheet"]')
-  for link in $links
-    $link = $(link)
-    $link.remove()
+  $('link[rel="stylesheet"]').remove()
 
 
 Router.onBeforeAction mustBeAdmin,

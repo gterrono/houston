@@ -58,3 +58,10 @@ Houston._convert_to_correct_type = (field, val, collection) ->
     new constructor(val)
   else
     constructor(val)
+
+Houston._get_type = (field, collection) ->
+  find_obj = {}
+  find_obj[field] =
+    $exists: true
+  sample_val = Houston._nested_field_lookup(collection.findOne(find_obj), field)
+  typeof sample_val
