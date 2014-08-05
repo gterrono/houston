@@ -53,13 +53,8 @@ Router.map ->
     houston_path: "/login"
     template: 'login'
 
-  houston_route 'custom_template',
-    houston_path: "/:template"
-    template: 'custom_template_view'
-    data: -> this.params
-
   houston_route 'change_password',
-    houston_path: "/password",
+    houston_path: "/password"
     template: 'change_password'
 
   houston_route 'collection',
@@ -78,6 +73,11 @@ Router.map ->
         @params.collection, @params._id)
       {collection, name: @params.collection}
     template: 'document_view'
+
+  houston_route 'custom_template',
+    houston_path: "/:template"
+    template: 'custom_template_view'
+    data: -> this.params
 
 # ########
 # filters
