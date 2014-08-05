@@ -1,7 +1,11 @@
 <template name="_houston_login">
   <div class="container houston-form">
     {{#if logged_in }}
-    <h1 class="form-heading">You are currently logged in.</h1>
+    {{#if current_user_is_admin}}
+    <h1 class="form-heading">You are currently logged in as an Admin.</h1>
+    {{else}}
+    <h1 class="form-heading">You are not an Admin. If you need to use the Houston Admin, please ask your Admin to grant you access.</h1>
+    {{/if}}
 
     <div>
       {{#unless admin_user_exists}}

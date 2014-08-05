@@ -3,6 +3,7 @@ admin_user_exists = () -> Houston._admins.find().count() > 0
 Template._houston_login.helpers(
   logged_in: -> Meteor.user()
   admin_user_exists: -> admin_user_exists()
+  current_user_is_admin: -> Houston._user_is_admin(Meteor.userId())
 )
 
 Template._houston_login.events(
