@@ -1,13 +1,3 @@
-schemaToInputType = (type) ->
-  dict = {
-    number: 'number'
-    string: 'text'
-    boolean: 'checkbox'
-  }
-  if type of dict
-    dict[type]
-  else 'text'
-
 get_sort_by = ->
   sort_by = {}
   sort_by[Houston._session('sort_key')] = Houston._session('sort_order')
@@ -190,13 +180,5 @@ Template._houston_collection_view.events
 Template._houston_new_document_field.helpers
   field_is_id: -> @name is '_id'
   document_id: -> Houston._session('document_id')
-  has_type: ->
-    @type is 'string' ||
-      @type is 'number' ||
-      @type is 'checkbox'
-  input_type: ->
-    {
-    number: 'number'
-    string: 'text'
-    boolean: 'checkbox'
-    }[@type]
+  has_type: -> Houston._INPUT_TYPES[@type]?
+  input_type: -> Houston._INPUT_TYPES[@type]

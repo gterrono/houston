@@ -19,16 +19,8 @@ Template._houston_document_view.helpers
 Template._houston_document_field.helpers
   field_is_id: -> @name is '_id'
   document_id: -> Houston._session('document_id')
-  has_type: ->
-    @type is 'string' ||
-    @type is 'number' ||
-    @type is 'checkbox'
-  input_type: ->
-    {
-      number: 'number'
-      string: 'text'
-      boolean: 'checkbox'
-    }[@type]
+  has_type: -> Houston._INPUT_TYPES[@type]?
+  input_type: -> Houston._INPUT_TYPES[@type]
 
 get_collection = -> Houston._get_collection(Houston._session('collection_name'))
 
