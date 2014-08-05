@@ -9,15 +9,14 @@
               class="btn btn-lg btn-success btn-block">
         <i class="fa fa-pencil"></i>Claim Admin
       </button>
+      <br>
       {{/unless}}
-      <div class="row">
-        <a href="/admin" class="btn btn-primary col-xs-6">
-          <i class="fa fa-home"></i>Back to Home
-        </a>
-        <button id="houston-logout" class="btn btn-warning col-xs-6">
-          <i class="fa fa-sign-out"></i>Log out
-        </button>
-      </div>
+      <a href="/admin" class="btn btn-primary col-xs-6">
+        <i class="fa fa-home"></i>Back to Home
+      </a>
+      <button id="houston-logout" class="btn btn-warning col-xs-6">
+        <i class="fa fa-sign-out"></i>Log out
+      </button>
     </div>
     {{else}}
     <form id="houston-sign-in-form" role="form">
