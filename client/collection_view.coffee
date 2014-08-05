@@ -94,7 +94,7 @@ Template._houston_collection_view.events
     $this.find('input').select()
     $this.find('input').on 'blur', ->
       updated_val = $this.find('input').val()
-      $this.html updated_val
+      $this.html ""
       $this.addClass('houston-collection-field')
       id = $this[0].parentNode.dataset.id
       field_name = $this.data('field')

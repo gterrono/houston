@@ -1,8 +1,5 @@
-admin_user_exists = () -> Houston._admins.find().count() > 0
-
 Template._houston_login.helpers(
   logged_in: -> Meteor.user()
-  admin_user_exists: -> admin_user_exists()
 )
 
 Template._houston_login.events(

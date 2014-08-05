@@ -53,13 +53,8 @@ Router.map ->
     houston_path: "/login"
     template: 'login'
 
-  houston_route 'custom_template',
-    houston_path: "/:template"
-    template: 'custom_template_view'
-    data: -> this.params
-
   houston_route 'change_password',
-    houston_path: "/password",
+    houston_path: "/password"
     template: 'change_password'
 
   houston_route 'collection',
@@ -79,12 +74,17 @@ Router.map ->
       {collection, name: @params.collection}
     template: 'document_view'
 
+  houston_route 'custom_template',
+    houston_path: "/:template"
+    template: 'custom_template_view'
+    data: -> this.params
+
 # ########
 # filters
 # ########
-mustBeAdmin = ->
+mustBeAdmin = (pause) ->
   if @ready() and not Houston._user_is_admin Meteor.userId()
-    @stop()
+    pause()
     Houston._go 'login'
 
 # If the host app doesn't have a router, their html may show up
@@ -94,13 +94,14 @@ hide_non_admin_stuff = ->
 remove_host_css = ->
   $('link[rel="stylesheet"]').remove()
 
-
+BASE_HOUSTON_ROUTES = ['home', 'collection', 'document', 'change_password', 'custom_template']
+ALL_HOUSTON_ROUTES = BASE_HOUSTON_ROUTES.concat(['login'])
 Router.onBeforeAction mustBeAdmin,
-  only: (Houston._houstonize_route(name) for name in ['home', 'collection', 'document', 'change_password'])
+  only: (Houston._houstonize_route(name) for name in BASE_HOUSTON_ROUTES)
 Router.onBeforeAction hide_non_admin_stuff,
-  only: (Houston._houstonize_route(name) for name in ['home', 'collection', 'document', 'login', 'custom_template'])
+  only: (Houston._houstonize_route(name) for name in ALL_HOUSTON_ROUTES)
 Router.onBeforeAction remove_host_css,
-  only: (Houston._houstonize_route(name) for name in ['home', 'collection', 'document', 'login'])
+  only: (Houston._houstonize_route(name) for name in ALL_HOUSTON_ROUTES)
 
 onRouteNotFound = Router.onRouteNotFound
 Router.onRouteNotFound = (args...) ->
