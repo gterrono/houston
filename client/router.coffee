@@ -34,7 +34,7 @@ Router.map ->
   houston_route = (route_name, options) =>
     # Append _houston_ to template and route names to avoid clobbering parent route namespace
     options.template = Houston._houstonize(options.template)
-    options.layoutTemplate = 'masterLayout'
+    options.layoutTemplate = '_houston_master_layout'
     options.path = "#{Houston._ROOT_ROUTE}#{options.houston_path}"
     options.waitOn = ->
       ready: -> !Meteor.loggingIn() and Houston._subscribe('admin_user').ready()

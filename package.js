@@ -15,7 +15,7 @@ Package.on_use(function(api) {
     'client/third-party/bootstrap.html', 'client/style.html',
     'client/admin_login.html', 'client/db_view.html',
     'client/collection_view.html', 'client/document_view.html',
-    'client/admin_nav.html', 'client/main.html',
+    'client/admin_nav.html', 'client/master_layout.html',
     'client/admin_change_password.html', 'client/custom_template_view.html'],
   'client');
 
