@@ -151,5 +151,26 @@
 .houston .main .page-header {
   margin-top: 0;
 }
+
+/*
+ * Document view
+ */
+#doc-saved {
+  position: fixed;
+  z-index: 1000;
+  width: 100%;
+  bottom: -80px;
+  padding: 20px;
+  left: 0;
+  transition: bottom .3s ease;
+  -moz-transition: bottom .3s ease;
+  -webkit-transition: bottom .3s ease;
+}
+#doc-saved.up {
+  bottom: 0;
+}
+#houston-doc-actions {
+  margin-bottom: 80px;
+}
 </style>
 </template>

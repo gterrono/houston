@@ -1,6 +1,6 @@
 Template._houston_document_view.helpers
   collection_name: -> Houston._session('collection_name')
-  adminHide: -> if Houston._session('should_show') then '' else 'hide'
+  showSaved: -> Houston._session('show_saved')
   fields: ->
     document = get_collection().findOne _id: Houston._session('document_id')
     unless document
@@ -35,10 +35,10 @@ Template._houston_document_view.events
           get_collection())
     Houston._call("#{Houston._session('collection_name')}_update",
       Houston._session('document_id'), $set: update_dict)
-    Houston._session('should_show', true)
+    Houston._session('show_saved', true)
     setTimeout (->
-      Houston._session('should_show', false)
-    ), 1500
+      Houston._session('show_saved', false)
+    ), 2000
 
   'click #houston-delete': (e) ->
     e.preventDefault()

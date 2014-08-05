@@ -14,16 +14,12 @@
     <small>{{document_id}}</small>
   </h1>
 
-  <div id="doc-saved" class="alert alert-success {{adminHide}}">Your document
-    was saved!
-  </div>
-
   <form class="form-horizontal" role="form">
     {{# each fields }}
     {{> _houston_document_field}}
     {{/each}}
 
-    <div class="form-group">
+    <div id="houston-doc-actions" class="form-group">
       <div class="col-sm-offset-3 col-sm-9">
         <a href="{{pathFor 'houston_collection'}}" id="houston-back" class="btn btn-primary"><i
             class="fa fa-reply"></i>Back
@@ -38,6 +34,10 @@
       </div>
     </div>
   </form>
+
+  <div id="doc-saved" class="alert-success {{#if showSaved}}up{{/if}}">Your document
+    was saved!
+  </div>
 </template>
 
 <template name="_houston_document_field">
