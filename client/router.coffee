@@ -94,13 +94,14 @@ hide_non_admin_stuff = ->
 remove_host_css = ->
   $('link[rel="stylesheet"]').remove()
 
-
+BASE_HOUSTON_ROUTES = ['home', 'collection', 'document', 'change_password', 'custom_template']
+ALL_HOUSTON_ROUTES = BASE_HOUSTON_ROUTES.concat(['login'])
 Router.onBeforeAction mustBeAdmin,
-  only: (Houston._houstonize_route(name) for name in ['home', 'collection', 'document', 'change_password'])
+  only: (Houston._houstonize_route(name) for name in BASE_HOUSTON_ROUTES)
 Router.onBeforeAction hide_non_admin_stuff,
-  only: (Houston._houstonize_route(name) for name in ['home', 'collection', 'document', 'login', 'custom_template'])
+  only: (Houston._houstonize_route(name) for name in ALL_HOUSTON_ROUTES)
 Router.onBeforeAction remove_host_css,
-  only: (Houston._houstonize_route(name) for name in ['home', 'collection', 'document', 'login'])
+  only: (Houston._houstonize_route(name) for name in ALL_HOUSTON_ROUTES)
 
 onRouteNotFound = Router.onRouteNotFound
 Router.onRouteNotFound = (args...) ->
