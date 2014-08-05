@@ -1,14 +1,14 @@
 <template name="_houston_login">
   <div class="container houston-form">
     {{#if logged_in }}
-    {{#if current_user_is_admin}}
+    {{#if currentUserIsAdmin}}
     <h1 class="form-heading">You are currently logged in as an Admin.</h1>
     {{else}}
     <h1 class="form-heading">You are not an Admin. If you need to use the Houston Admin, please ask your Admin to grant you access.</h1>
     {{/if}}
 
     <div>
-      {{#unless admin_user_exists}}
+      {{#unless adminUserExists}}
       <button id="become-houston-admin"
               class="btn btn-lg btn-success btn-block">
         <i class="fa fa-pencil"></i>Claim Admin
@@ -27,7 +27,7 @@
     <form id="houston-sign-in-form" role="form">
       {{! nobody is logged in - sign in or sign up}}
       <h1 class="form-heading">
-        {{#if admin_user_exists}} Log In {{else}} Create an admin account
+        {{#if adminUserExists}} Log In {{else}} Create an admin account
         {{/if}}
       </h1>
       <input type="email" class="form-control" placeholder="Email address"
@@ -39,9 +39,9 @@
 
       <div>
         <button
-            class="btn btn-lg {{#if admin_user_exists}}btn-primary{{else}}btn-success{{/if}} btn-block"
+            class="btn btn-lg {{#if adminUserExists}}btn-primary{{else}}btn-success{{/if}} btn-block"
             type="submit">
-          {{#if admin_user_exists}}
+          {{#if adminUserExists}}
           <i class="fa fa-sign-in"></i>Log In
           {{else}}
           <i class="fa fa-user"></i>Create account {{/if}}
