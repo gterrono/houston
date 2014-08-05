@@ -4,18 +4,20 @@
     <h1 class="form-heading">You are currently logged in.</h1>
 
     <div>
-      <a href="/admin" class="btn btn-lg btn-primary btn-block">
-        <i class="fa fa-home"></i>Back to Home
-      </a>
       {{#unless admin_user_exists}}
       <button id="become-houston-admin"
               class="btn btn-lg btn-success btn-block">
         <i class="fa fa-pencil"></i>Claim Admin
       </button>
       {{/unless}}
-      <button id="houston-logout" class="btn btn-lg btn-warning btn-block">
-        <i class="fa fa-sign-out"></i>Log out
-      </button>
+      <div class="row">
+        <a href="/admin" class="btn btn-primary col-xs-6">
+          <i class="fa fa-home"></i>Back to Home
+        </a>
+        <button id="houston-logout" class="btn btn-warning col-xs-6">
+          <i class="fa fa-sign-out"></i>Log out
+        </button>
+      </div>
     </div>
     {{else}}
     <form id="houston-sign-in-form" role="form">
