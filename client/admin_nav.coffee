@@ -1,5 +1,6 @@
+# Top Nav
 Template._houston_navbar.events
-  'click .houston-logout': (e) ->
+  'click #houston-logout': (e) ->
     e.preventDefault()
     Meteor.logout()
 
@@ -16,3 +17,10 @@ Thanks!
   'menu_items': ->
     return Houston.menu._get_menu_items()
   'isActive' : -> 'active' if Router.current()?.path == @path
+
+# Side Nav
+Template._houston_sidenav.helpers
+  collections: ->
+    Houston._session 'collections'
+  is_active: (name) ->
+    name is Houston._session('collection_name')

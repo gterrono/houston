@@ -63,6 +63,7 @@ Template._houston_collection_view.helpers
       ''
 
 Template._houston_collection_view.rendered = ->
+
   $win = $(window)
   $win.scroll ->
     if $win.scrollTop() + 300 > $(document).height() - $win.height() and
@@ -85,14 +86,17 @@ Template._houston_collection_view.events
 
   'dblclick .houston-collection-field': (e) ->
     $this = $(e.currentTarget)
+    field_name = $this.data('field')
+    type = Houston._get_type(field_name, get_current_collection())
+    input = 'text' #TODO schemaToInputType type fix on blur bug
     $this.removeClass('houston-collection-field')
-    $this.html "<input type='text' value='#{$this.text()}'>"
+    $this.html "<input type='#{input}' class='input-sm form-control' placeholder='#{type}' value='#{$this.text().trim()}'>"
     $this.find('input').select()
     $this.find('input').on 'blur', ->
       updated_val = $this.find('input').val()
-      $this.html updated_val
+      $this.html ""
       $this.addClass('houston-collection-field')
-      id = $('td:first-child a', $this.parents('tr')).html()
+      id = $this[0].parentNode.dataset.id
       field_name = $this.data('field')
       updated_val = Houston._convert_to_correct_type(field_name, updated_val,
         get_current_collection())
@@ -103,9 +107,9 @@ Template._houston_collection_view.events
 
   'keyup .houston-column-filter': (e) ->
     field_selectors = {}
-    $('.houston-column-filter').each (idx, item) ->
-      if item.value
-        field_selectors[item.name] = item.value
+    $('.houston-column-filter').each () ->
+      if @value
+        field_selectors[@dataset.id] = @value
     Houston._session 'field_selectors', field_selectors
     resubscribe()
 
@@ -134,7 +138,7 @@ Template._houston_collection_view.events
     resubscribe()
 
   'click #houston-create-btn': ->
-    $('#houston-create-document').removeClass('hide hidden')
+    $('#houston-create-document').removeClass('hidden')
     $('#houston-create-btn').hide()
 
   'click .houston-delete-doc': (e) ->
@@ -143,11 +147,17 @@ Template._houston_collection_view.events
     if confirm("Are you sure you want to delete the document with _id #{id}?")
       Houston._call("#{Houston._session('collection_name')}_delete", id)
 
-  'click .houston-create-doc': (e) ->
+  'click #houston-cancel': ->
+    $('#houston-create-document').addClass('hidden')
+    $('#houston-create-btn').show()
+    $('#houston-create-row .houston-field').each () ->
+      $(this).val('')
+
+  'click #houston-add': (e) ->
     e.preventDefault()
     $create_row = $('#houston-create-row')
     new_doc = {}
-    for field in $create_row.find('input[type="text"]')
+    for field in $create_row.find('.houston-field')
       # Unflatten the field names (e.g. foods.app -> {foods: {app:}})
       keys = field.name.split('.')
       final_key = keys.pop()
@@ -166,3 +176,9 @@ Template._houston_collection_view.events
 
   'submit form.houston-filter-form': (e) ->
     e.preventDefault()
+
+Template._houston_new_document_field.helpers
+  field_is_id: -> @name is '_id'
+  document_id: -> Houston._session('document_id')
+  has_type: -> Houston._INPUT_TYPES[@type]?
+  input_type: -> Houston._INPUT_TYPES[@type]

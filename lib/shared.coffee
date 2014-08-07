@@ -37,3 +37,9 @@ Houston._get_fields = (documents) ->
 
 Houston._get_field_names = (documents) ->
   _.pluck(Houston._get_fields(documents), 'name')
+
+Houston._INPUT_TYPES = {
+  number: 'number'
+  string: 'text'
+  boolean: 'checkbox'
+}

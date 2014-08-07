@@ -1,6 +1,6 @@
 Template._houston_document_view.helpers
   collection_name: -> Houston._session('collection_name')
-  adminHide: -> if Houston._session('should_show') then '' else 'hide'
+  showSaved: -> Houston._session('show_saved')
   fields: ->
     document = get_collection().findOne _id: Houston._session('document_id')
     unless document
@@ -12,18 +12,20 @@ Template._houston_document_view.helpers
     result = []
     for field in fields
       value = Houston._nested_field_lookup(document, field.name)
-      result.push(name: "#{field.name} (#{typeof value})", value: value)
+      result.push(name: "#{field.name} (#{typeof value})", name_id: field.name, type: typeof value, value: value)
     return result
   document_id: -> Houston._session('document_id')
 
 Template._houston_document_field.helpers
   field_is_id: -> @name is '_id'
   document_id: -> Houston._session('document_id')
+  has_type: -> Houston._INPUT_TYPES[@type]?
+  input_type: -> Houston._INPUT_TYPES[@type]
 
 get_collection = -> Houston._get_collection(Houston._session('collection_name'))
 
 Template._houston_document_view.events
-  'click .houston-save': (e) ->
+  'click #houston-save': (e) ->
     e.preventDefault()
     update_dict = {}
     for field in $('.houston-field')
@@ -33,12 +35,12 @@ Template._houston_document_view.events
           get_collection())
     Houston._call("#{Houston._session('collection_name')}_update",
       Houston._session('document_id'), $set: update_dict)
-    Houston._session('should_show', true)
+    Houston._session('show_saved', true)
     setTimeout (->
-      Houston._session('should_show', false)
-    ), 1500
+      Houston._session('show_saved', false)
+    ), 2000
 
-  'click .houston-delete': (e) ->
+  'click #houston-delete': (e) ->
     e.preventDefault()
     id = Houston._session('document_id')
     if confirm("Are you sure you want to delete the document with _id #{id}?")

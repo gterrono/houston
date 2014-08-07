@@ -1,0 +1,21 @@
+<template name="_houston_master_layout">
+  <div class="houston">
+    {{> bootstrap}}
+    {{> style}}
+    {{> _houston_navbar}}
+    <div class="container-fluid">
+      <div class="row">
+        <div class="col-sm-3 col-md-2 sidebar">
+          {{> _houston_sidenav}}
+        </div>
+        <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
+          {{#if loggingIn}}
+          {{> spinner}}
+          {{else}}
+          {{> yield}}
+          {{/if}}
+        </div>
+      </div>
+    </div>
+  </div>
+</template>
