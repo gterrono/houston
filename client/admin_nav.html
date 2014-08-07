@@ -52,8 +52,10 @@
   <ul class="nav nav-sidebar">
     {{#each collections}}
     <li class="{{#if is_active name}}active{{/if}}">
-      <a href="{{pathFor 'houston_collection'}}">{{name}} <span
-          class="badge pull-right">{{ count }}</span></a>
+      <a href="{{pathFor 'houston_collection'}}">
+        {{name}}
+        <span class="badge pull-right">{{ count }}</span>
+      </a>
 
     </li>
     {{/each}}

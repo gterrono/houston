@@ -1,9 +1,9 @@
-admin_user_exists = () -> Houston._admins.find().count() > 0
+Houston._admin_user_exists = -> Houston._admins.find().count() > 0
 
 Handlebars.registerHelper 'currentUserIsAdmin', ->
   Houston._user_is_admin(Meteor.userId())
 
-Handlebars.registerHelper 'adminUserExists', admin_user_exists
+Handlebars.registerHelper 'adminUserExists', Houston._admin_user_exists
 
 Houston._collections ?= {}
 

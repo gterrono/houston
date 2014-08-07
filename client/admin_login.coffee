@@ -15,7 +15,7 @@ Template._houston_login.events(
       else
         Houston._go 'home'
 
-    if admin_user_exists()
+    if Houston._admin_user_exists()
       Meteor.loginWithPassword email, password, afterLogin
     else
       Accounts.createUser {
