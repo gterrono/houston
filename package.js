@@ -3,13 +3,27 @@ Package.describe({
 });
 
 Package.on_use(function(api) {
-  api.use('deps', ['client', 'server']);
-  api.use('coffeescript', ['client', 'server']);
-  api.use('accounts-base', ['client', 'server']);
-  api.use('accounts-password', ['client', 'server']);
+  //////////////////////////////////////////////////////////////////
+  // Meteor-provided packages
+  //////////////////////////////////////////////////////////////////
+  api.use('deps@1.0.0', ['client', 'server']);
+  api.use('coffeescript@1.0.0', ['client', 'server']);
+  api.use('accounts-base@1.0.0', ['client', 'server']);  // ?optional
+  api.use('accounts-password@1.0.0', ['client', 'server']);
+  api.use('templating@1.0.0', 'client');  // ?optional
 
-  api.use(['templating', 'check',  'iron-router', 'spin', 'handlebars', 'paginated-subscription'], 'client');
+  api.use('check@1.0.0', 'client');
+  api.use('spacebars@1.0.0', 'client');  // ?used to be handlebars - hopefully works cleanly
 
+  //////////////////////////////////////////////////////////////////
+  // Third-party package dependencies
+  //////////////////////////////////////////////////////////////////
+  api.use('iron:router@0.9.0', 'client');
+  api.use('tmeasday:paginated-subscription@0.2.0', 'client');
+
+  //////////////////////////////////////////////////////////////////
+  // internal files
+  //////////////////////////////////////////////////////////////////
   // load html first, https://github.com/meteor/meteor/issues/282
   api.add_files([
     'client/third-party/bootstrap.html', 'client/style.html',
