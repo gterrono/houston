@@ -1,6 +1,6 @@
-Houston
+Houston 
 ===============
-Houston (formerly Z-Mongo-Admin) is a zero-config Meteor Admin, modeled after [Django Admin](https://docs.djangoproject.com/en/dev/ref/contrib/admin/), intended as a simple way for developers to give end-users (or themselves) an easy way to view and manipulate their app's data.
+Houston is a zero-config Meteor Admin, modeled after [Django Admin](https://docs.djangoproject.com/en/dev/ref/contrib/admin/), intended as a simple way for developers to give end-users (or themselves) an easy way to view and manipulate their app's data.
 
 #### [Video presentation](https://www.youtube.com/watch?v=vXeWxbJQr5o)
 
@@ -9,9 +9,11 @@ Houston is available through the [Atmosphere](https://atmospherejs.com/package/h
 Play around with the demo [here](http://houston-test.meteor.com/admin). The email is `ad@min.com`, and the password is `admin`.
 
 ### Getting Started
+
 ```
-mrt add houston
+meteor add houston:admin
 ```
+
 
 Once installed, navigate to `/admin` to set up your admin account. You can either create a new user to act as Houston's Admin, or upgrade an existing user into an admin.
 
