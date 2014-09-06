@@ -1,10 +1,12 @@
 Package.describe({
   summary: "A zero-config Meteor Admin",
   version: "1.0.8",
-  name: "dotansimha:houston"
+  name: "houston:admin"
 });
 
 Package.on_use(function(api) {
+  api.versionsFrom('METEOR@0.9.0');
+
   //////////////////////////////////////////////////////////////////
   // Meteor-provided packages
   //////////////////////////////////////////////////////////////////
