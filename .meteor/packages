@@ -4,7 +4,7 @@
 # but you can also edit it by hand.
 
 preserve-inputs
-router
+iron:router
 coffeescript
 accounts-password
-spin
+sacha:spin

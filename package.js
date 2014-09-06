@@ -1,5 +1,7 @@
 Package.describe({
-  summary: "A zero-config Meteor Admin"
+  summary: "A zero-config Meteor Admin",
+  version: "1.0.8",
+  name: "dotansimha:houston"
 });
 
 Package.on_use(function(api) {
