@@ -96,14 +96,14 @@ Template._houston_collection_view.events
       updated_val = $this.find('input').val()
       $this.html updated_val
       $this.addClass('houston-collection-field')
-      id = $this[0].parentNode.dataset.id
+      document_id = $this[0].parentNode.dataset.id
       field_name = $this.data('field')
       updated_val = Houston._convert_to_correct_type(field_name, updated_val,
         get_current_collection())
       update_dict = {}
       update_dict[field_name] = updated_val
       Houston._call("#{Houston._session('collection_name')}_update",
-        id, $set: update_dict)
+        document_id, $set: update_dict)
 
   'keyup .houston-column-filter': (e) ->
     field_selectors = {}
