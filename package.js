@@ -1,7 +1,8 @@
 Package.describe({
+  name: "houston:admin",
   summary: "A zero-config Meteor Admin",
-  version: "1.0.8",
-  name: "houston:admin"
+  version: "1.1.0",
+  git: "https://github.com/gterrono/houston.git"
 });
 
 Package.on_use(function(api) {
