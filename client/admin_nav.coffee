@@ -21,8 +21,6 @@ Thanks!
 # Side Nav
 Template._houston_sidenav.helpers
   collections: ->
-    unless Houston._session 'collections'
-      Houston._session 'collections', Houston._collections.collections.find().fetch()
-    Houston._session 'collections'
+    Houston._collections.collections.find().fetch()
   is_active: (name) ->
     name is Houston._session('collection_name')

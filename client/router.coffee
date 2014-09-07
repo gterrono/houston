@@ -44,9 +44,6 @@ Router.map ->
 
   houston_route 'home',
     houston_path: "/",
-    onBeforeAction: ->
-      # TODO use wait
-      Houston._session 'collections', Houston._collections.collections.find().fetch()
     template: 'db_view'
 
   houston_route 'login',
