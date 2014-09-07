@@ -7,7 +7,8 @@ Houston._publish = (name, func) ->
   Meteor.publish Houston._houstonize(name), func
 
 Houston._setup_collection = (collection) ->
-  return if collection._name of ADDED_COLLECTIONS
+  name = collection._name
+  return if name of ADDED_COLLECTIONS
 
   Houston._setup_collection_methods(collection)
 
