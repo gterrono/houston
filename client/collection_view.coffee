@@ -88,10 +88,12 @@ Template._houston_collection_view.events
     $this = $(e.currentTarget)
     field_name = $this.data('field')
     type = Houston._get_type(field_name, get_current_collection())
-    input = 'text' #TODO schemaToInputType type fix on blur bug
+    input = 'text' # TODO schemaToInputType type fix on blur bug
     $this.removeClass('houston-collection-field')
     $this.html "<input type='#{input}' class='input-sm form-control' placeholder='#{type}' value='#{$this.text().trim()}'>"
     $this.find('input').select()
+    $this.find('input').on 'keydown', (event) ->
+      event.currentTarget.blur() if event.keyCode == 13
     $this.find('input').on 'blur', ->
       updated_val = $this.find('input').val()
       $this.html ""
