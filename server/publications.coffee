@@ -111,7 +111,9 @@ Meteor.methods
 
 # publish our analysis of the app's collections
 Houston._publish 'collections', ->
-  return unless Houston._user_is_admin @userId
+  unless Houston._user_is_admin @userId
+    @ready()
+    return
   Houston._collections.collections.find()
 
 # TODO address inherent security issue
