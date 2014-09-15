@@ -20,6 +20,7 @@ Template._houston_document_field.helpers
   field_is_id: -> @name is '_id'
   document_id: -> Houston._session('document_id')
   has_type: -> Houston._INPUT_TYPES[@type]?
+  is_checkbox: -> Houston._INPUT_TYPES[@type] == 'checkbox'
   input_type: -> Houston._INPUT_TYPES[@type]
 
 get_collection = -> Houston._get_collection(Houston._session('collection_name'))
@@ -31,7 +32,9 @@ Template._houston_document_view.events
     for field in $('.houston-field')
       field_name = field.name.split(' ')[0]
       unless field_name is '_id'
-        update_dict[field_name] = Houston._convert_to_correct_type(field_name, field.value,
+        val = field.value
+        val = field.checked if field.type is 'checkbox'
+        update_dict[field_name] = Houston._convert_to_correct_type(field_name, val,
           get_collection())
     Houston._call("#{Houston._session('collection_name')}_update",
       Houston._session('document_id'), $set: update_dict)
