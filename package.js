@@ -38,7 +38,11 @@ Package.on_use(function(api) {
     'client/admin_change_password.html', 'client/custom_template_view.html'],
   'client');
 
-  api.add_files(['lib/collections.coffee', 'lib/shared.coffee', 'lib/menu.coffee'], ['client', 'server']);
+  api.add_files(['lib/collections.coffee',
+                 'lib/shared.coffee',
+                 'lib/menu.coffee',
+                 'lib/methods.coffee'],
+                ['client', 'server']);
 
   api.add_files([
     'client/lib/shared.coffee',
