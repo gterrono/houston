@@ -21,6 +21,7 @@ setup_collection = (collection_name, document_id) ->
   Houston._paginated_subscription =
     Meteor.subscribeWithPagination subscription_name, {}, filter,
       Houston._page_length
+  Houston._setup_collection_methods(collection)
   Houston._session('collection_name', collection_name)
   return [collection, Houston._paginated_subscription]
 
