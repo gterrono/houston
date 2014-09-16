@@ -41,7 +41,6 @@ Package.on_use(function(api) {
   api.add_files(['lib/collections.coffee', 'lib/shared.coffee', 'lib/menu.coffee'], ['client', 'server']);
 
   api.add_files([
-    'client/third-party/bootstrap.min.js',
     'client/lib/shared.coffee',
     'client/custom_template_view.coffee',
     'client/router.coffee', 'client/admin_login.coffee',
