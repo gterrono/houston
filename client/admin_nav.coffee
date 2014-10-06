@@ -3,6 +3,10 @@ Template._houston_navbar.events
   'click #houston-logout': (e) ->
     e.preventDefault()
     Meteor.logout()
+  'click #download-db': ->
+    download_db_link = """curl -sSL https://raw.githubusercontent.com/AlexeyMK/meteor-download/master/download.sh | bash -s #{window.location.host}"""
+    alert "Run the following in your terminal: \n\n#{download_db_link}"
+
 
 Template._houston_navbar.helpers
   'bugreport_url': ->
