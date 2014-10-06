@@ -52,8 +52,13 @@
              value="{{ value }}" readonly>
       {{else}}
       {{#if has_type}}
-      <input type="{{ input_type }}" class="houston-field form-control"
-             name="{{ name_id }}" value="{{ value }}"/>
+        {{#if is_checkbox}}
+        <input type="{{ input_type }}" class="houston-field form-control"
+               name="{{ name_id }}" checked="{{ value }}"/>
+        {{else}}
+        <input type="{{ input_type }}" class="houston-field form-control"
+               name="{{ name_id }}" value="{{ value }}"/>
+        {{/if}}
       {{else}}
       <textarea class="houston-field form-control" name="{{ name_id }}">{{ value
         }}</textarea>
