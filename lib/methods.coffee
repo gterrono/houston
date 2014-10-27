@@ -1,5 +1,6 @@
 # shared meteor methods
 Houston._setup_collection_methods = (collection) ->
+  return  unless Meteor.isServer
   name = collection._name
   methods = {}
   methods[Houston._houstonize "#{name}_insert"] = (doc) ->
