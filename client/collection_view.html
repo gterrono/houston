@@ -2,10 +2,10 @@
   <ul class="breadcrumb">
     <li><a href="{{pathFor 'houston_home'}}" class="houston-home"><i
         class="fa fa-home"></i>Home</a></li>
-    <li class="active"><i class="fa fa-database"></i>{{col_name}}</li>
+    <li class="active"><i class="fa fa-database"></i>{{name}}</li>
   </ul>
   <div class="row hidden" id="houston-create-document">
-    <h3>Add more {{col_name}}</h3>
+    <h3>Add more {{name}}</h3>
 
     <form id="houston-create-row" class="form-horizontal" role="form">
       {{# each nonid_headers }}
@@ -32,9 +32,9 @@
         <button id="houston-create-btn"
                 class="btn btn-sm btn-success pull-right"><i
             class="fa fa-plus"></i>New
-          {{col_name}}
+          {{name}}
         </button>
-        <h1>{{col_name}}
+        <h1>{{name}}
           <small>{{num_of_records}} record{{pluralize}}</small>
         </h1>
       </div>

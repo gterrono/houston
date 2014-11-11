@@ -39,7 +39,6 @@ Template._houston_collection_view.helpers
   field_filter_disabled: -> if Houston._session("custom_selector") then "disabled" else ""
   headers: -> get_collection_view_fields()
   nonid_headers: -> get_collection_view_fields()[1..]
-  col_name: -> Houston._session('collection_name')
   document_id: -> @_id + ""
   num_of_records: ->
     collection_count() or "no"

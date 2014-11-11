@@ -8,7 +8,6 @@ Houston._subscribe 'collections'
 setup_collection = (collection_name, document_id) ->
   Houston._page_length = 20
   subscription_name = Houston._houstonize collection_name
-  collection = Houston._get_collection(collection_name)
   filter = if document_id
     # Sometimes you can lookup with _id being a string, sometimes not
     # When id can be wrapped in an ObjectID, it should
@@ -18,12 +17,8 @@ setup_collection = (collection_name, document_id) ->
     {_id: document_id}
   else
     {}
-  Houston._paginated_subscription =
-    Meteor.subscribeWithPagination subscription_name, {}, filter,
-      Houston._page_length
-  Houston._setup_collection_methods(collection)
-  #Houston._session('collection_name', collection_name)
-  return [collection, Houston._paginated_subscription]
+  Meteor.subscribeWithPagination subscription_name, {}, filter,
+    Houston._page_length
 
 Houston._houstonize_route = (name) ->
   Houston._houstonize(name)[1..]
@@ -34,14 +29,14 @@ Houston._go = (route_name, options) ->
 
 houston_route = (route_name, options) =>
   # Append _houston_ to template and route names to avoid clobbering parent route namespace
-  Router.route "#{Houston._ROOT_ROUTE}#{options.houston_path}",
-    name: Houston._houstonize_route(route_name)
-    waitOn: -> Houston._subscribe('admin_user')
-    layoutTemplate: '_houston_master_layout'
-    template: Houston._houstonize(options.template)
+  options.layoutTemplate = '_houston_master_layout'
+  options.name = Houston._houstonize_route(route_name)
+  options.template = Houston._houstonize(options.template)
+  options.waitOn = -> Houston._subscribe('admin_user')
+  Router.route "#{Houston._ROOT_ROUTE}#{options.houston_path}", options
 
 houston_route 'home',
-  houston_path: "/",
+  houston_path: '/',
   template: 'db_view'
 
 houston_route 'login',
@@ -56,7 +51,7 @@ houston_route 'collection',
   houston_path: "/collection/:name"
   data: ->
     [collection, @subscription] = setup_collection(@params.name)
-    {collection}
+    Houston._get_collection(@params.name)
   waitOn: -> @subscription
   template: 'collection_view'
 
