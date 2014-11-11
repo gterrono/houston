@@ -1,6 +1,10 @@
 <template name="_houston_master_layout">
   <div class="houston">
+    <!-- Meteor makes all CSS and JS global to the app.
+       To avoid polluting the user's namespace, we inject third-party JS and CSS through templates.
+       Ugly? Yes. Effective? Enough. -->
     {{> bootstrap}}
+    {{> collapsejs}}
     {{> style}}
     {{> _houston_navbar}}
     <div class="container-fluid">
