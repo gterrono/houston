@@ -1,9 +1,0 @@
-{
-  "meteor": {},
-  "packages": {
-    "houston": {
-      "path": "../.."
-    },
-    "collection2": {}
-  }
-}

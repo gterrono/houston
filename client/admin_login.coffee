@@ -23,8 +23,7 @@ Template._houston_login.events(
         password: password
       }, (error) ->
         return afterLogin(error) if error
-        # else - user got created
-        Houston._call('make_admin', Meteor.userId(), afterLogin)
+        Houston.becomeAdmin()
 
   'click #houston-logout': (e) ->
     e.preventDefault()
@@ -34,8 +33,7 @@ Template._houston_login.events(
 
   'click #become-houston-admin': (e) ->
     e.preventDefault()
-    Houston._call('make_admin', Meteor.userId())
-    Houston._go 'home'
+    Houston.becomeAdmin()
 )
 
 Template._houston_login.rendered = ->

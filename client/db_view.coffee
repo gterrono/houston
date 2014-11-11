@@ -1,6 +1,5 @@
 # TODO make it server side so filtering can scale
-filterCollections = (query) ->
-  collections = Houston._session('collections')
+filterCollections = (query, collections) ->
   if query
     _.filter(collections, (c) ->
       (c.name).indexOf(query) > -1
@@ -9,8 +8,9 @@ filterCollections = (query) ->
     collections
 
 Template._houston_db_view.helpers
-  collections: -> Houston._session('collections')
-  filtered_collections: -> filterCollections Houston._session('search')
+  collections: -> @collections
+  filtered_collections: ->
+    filterCollections(Houston._session('search'), @collections.find().fetch())
 
 Template._houston_db_view.events
   # trigger meteor session invalidation, definitely a hack
@@ -19,8 +19,5 @@ Template._houston_db_view.events
     Houston._session 'search', $("#search").val()
 
 Template._houston_db_view.rendered = ->
-  alert 'hey ther'
   $("#search").val("")
-  Houston._session('collection_name', '')
-  Houston._session('field_selectors', {})
   $(window).unbind('scroll')
