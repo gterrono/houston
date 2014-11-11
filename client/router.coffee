@@ -3,7 +3,7 @@ window.Houston ?= {}
 Houston._ROOT_ROUTE = Meteor.settings?.public?.houston_root_route or "/admin"
 Houston._subscribe = (name) -> Meteor.subscribe Houston._houstonize name
 
-Houston._subscribe 'collections'
+Houston._subscribe_to_collections()
 
 setup_collection = (collection_name, document_id) ->
   Houston._page_length = 20
@@ -39,6 +39,7 @@ houston_route 'home',
   houston_path: '/'
   template: 'db_view'
   data: -> collections: Houston._collections.collections
+  waitOn: -> Houston._collections
 
 houston_route 'login',
   houston_path: "/login"

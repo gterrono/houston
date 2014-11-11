@@ -1,5 +1,14 @@
 Houston._admin_user_exists = -> Houston._admins.find().count() > 0
 
+Houston.becomeAdmin = ->
+  Houston._call 'make_admin', Meteor.userId(), ->
+    Houston._subscribe_to_collections() # resubscribe so you get them
+    Houston._go 'home'
+
+Houston._subscribe_to_collections = ->
+  Houston._collections_sub.stop() if Houston._collections_sub?
+  Houston._collections_sub = Houston._subscribe 'collections'
+
 Handlebars.registerHelper 'currentUserIsAdmin', ->
   Houston._user_is_admin(Meteor.userId())
 
