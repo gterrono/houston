@@ -17,8 +17,9 @@ setup_collection = (collection_name, document_id) ->
     {_id: document_id}
   else
     {}
-  Meteor.subscribeWithPagination subscription_name, {}, filter,
-    Houston._page_length
+  Houston._paginated_subscription =
+    Meteor.subscribeWithPagination subscription_name, {}, filter,
+      Houston._page_length
 
 Houston._houstonize_route = (name) ->
   Houston._houstonize(name)[1..]
@@ -32,7 +33,10 @@ houston_route = (route_name, options) =>
   options.layoutTemplate = '_houston_master_layout'
   options.name = Houston._houstonize_route(route_name)
   options.template = Houston._houstonize(options.template)
-  options.waitOn = -> Houston._subscribe('admin_user')
+  options.waitOn = ->
+    subscriptions = if options.subs then options.subs(this.params) else []
+    subscriptions.push Houston._subscribe('admin_user')
+    subscriptions
   Router.route "#{Houston._ROOT_ROUTE}#{options.houston_path}", options
 
 houston_route 'home',
@@ -49,10 +53,9 @@ houston_route 'change_password',
 
 houston_route 'collection',
   houston_path: "/collection/:name"
-  data: ->
-    [collection, @subscription] = setup_collection(@params.name)
-    Houston._get_collection(@params.name)
-  waitOn: -> @subscription
+  data: -> Houston._get_collection(@params.name)
+  subs: (params) ->
+    [setup_collection(params.name)]
   template: 'collection_view'
 
 houston_route 'document',

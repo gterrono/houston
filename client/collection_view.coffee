@@ -20,38 +20,37 @@ get_filter_query = ->
 
   return query
 
-resubscribe = ->
+resubscribe = (name) ->
   # Stop the old subscription and resubscribe with the new filter/sort
-  subscription_name = "_houston_#{Houston._session('collection_name')}"
+  subscription_name = "_houston_#{name}"
   Houston._paginated_subscription.stop()
   Houston._paginated_subscription =
     Meteor.subscribeWithPagination subscription_name,
       get_sort_by(), get_filter_query(),
       Houston._page_length
 
-collection_info = -> Houston._collections.collections.findOne(name: Houston._session('collection_name'))
+collection_info = (name) -> Houston._collections.collections.findOne {name}
 
-collection_count = -> collection_info()?.count
+collection_count = (name) -> collection_info(name)?.count
 
 Template._houston_collection_view.helpers
   custom_selector_error_class: -> if Houston._session("custom_selector_error") then "error" else ""
   custom_selector_error: -> Houston._session("custom_selector_error")
   field_filter_disabled: -> if Houston._session("custom_selector") then "disabled" else ""
-  headers: -> get_collection_view_fields()
-  nonid_headers: -> get_collection_view_fields()[1..]
+  headers: -> get_collection_view_fields(@name)
+  nonid_headers: -> get_collection_view_fields(@name)[1..]
   document_id: -> @_id + ""
-  num_of_records: ->
-    collection_count() or "no"
-  pluralize: -> 's' unless collection_count() == 1
+  num_of_records: -> collection_count(@name) or "no"
+  pluralize: -> 's' unless collection_count(@name) == 1
   rows: ->
-    collection = Houston._session('collection_name')
-    documents = get_current_collection()?.find(get_filter_query(), {sort: get_sort_by()}).fetch()
+    collection = @name
+    documents = this?.find(get_filter_query(), {sort: get_sort_by()}).fetch()
     _.map documents, (d) ->
       d.collection = collection
       d._id = d._id._str or d._id
       return d
   values_in_order: ->
-    fields_in_order = get_collection_view_fields()
+    fields_in_order = get_collection_view_fields(@collection)
     names_in_order = _.clone fields_in_order
     values = (Houston._nested_field_lookup(@, field.name) for field in fields_in_order[1..])  # skip _id
     ({field_value, field_name} for [field_value, {name:field_name}] in _.zip values, names_in_order[1..])
@@ -62,7 +61,6 @@ Template._houston_collection_view.helpers
       ''
 
 Template._houston_collection_view.rendered = ->
-
   $win = $(window)
   $win.scroll ->
     if $win.scrollTop() + 300 > $(document).height() - $win.height() and
@@ -70,7 +68,10 @@ Template._houston_collection_view.rendered = ->
         Houston._paginated_subscription.loadNextPage()
 
 get_current_collection = -> Houston._get_collection(Houston._session('collection_name'))
-get_collection_view_fields = -> collection_info()?.fields or []
+get_collection_view_fields = (name) ->
+  _.map(collection_info(name)?.fields, (obj) ->
+    obj.collection_name = name
+    obj) or []
 
 Template._houston_collection_view.events
   "click a.houston-sort": (e) ->
@@ -81,7 +82,7 @@ Template._houston_collection_view.events
       else
         Houston._session('sort_key', sort_key)
         Houston._session('sort_order', 1)
-      resubscribe()
+      resubscribe(@collection_name)
 
   'dblclick .houston-collection-field': (e) ->
     $this = $(e.currentTarget)
@@ -112,7 +113,7 @@ Template._houston_collection_view.events
       if @value
         field_selectors[@dataset.id] = @value
     Houston._session 'field_selectors', field_selectors
-    resubscribe()
+    resubscribe(@collection_name)
 
   'click #houston-custom-filter-btn, keydown #houston-custom-filter': (event) ->
     # apply custom filter both on button click and on 'enter' in textarea
@@ -136,7 +137,7 @@ Template._houston_collection_view.events
     catch e
       Houston._session 'custom_selector_error', e.toString()
       Houston._session 'custom_selector', null
-    resubscribe()
+    resubscribe(@collection_name)
 
   'click #houston-create-btn': ->
     $('#houston-create-document').removeClass('hidden')
