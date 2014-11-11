@@ -147,7 +147,7 @@ Template._houston_collection_view.events
     e.preventDefault()
     id = $(e.currentTarget).data('id')
     if confirm("Are you sure you want to delete the document with _id #{id}?")
-      Houston._call("#{Houston._session('collection_name')}_delete", id)
+      Houston._call("#{@collection}_delete", id)
 
   'click #houston-cancel': ->
     $('#houston-create-document').addClass('hidden')
@@ -174,7 +174,7 @@ Template._houston_collection_view.events
       doc_iter[final_key] = value
 
       field.value = ''
-    Houston._call("#{Houston._session('collection_name')}_insert", new_doc)
+    Houston._call("#{@name}_insert", new_doc)
 
   'submit form.houston-filter-form': (e) ->
     e.preventDefault()
