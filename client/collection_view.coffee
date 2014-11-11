@@ -53,7 +53,7 @@ Template._houston_collection_view.helpers
     fields_in_order = get_collection_view_fields(@collection)
     names_in_order = _.clone fields_in_order
     values = (Houston._nested_field_lookup(@, field.name) for field in fields_in_order[1..])  # skip _id
-    ({field_value, field_name} for [field_value, {name:field_name}] in _.zip values, names_in_order[1..])
+    ({field_value, field_name, collection: @collection} for [field_value, {name:field_name}] in _.zip values, names_in_order[1..])
   filter_value: ->
     if Houston._session('field_selectors') and Houston._session('field_selectors')[@]
       Houston._session('field_selectors')[@]
@@ -86,6 +86,7 @@ Template._houston_collection_view.events
 
   'dblclick .houston-collection-field': (e) ->
     $this = $(e.currentTarget)
+    collection = @collection
     field_name = $this.data('field')
     type = Houston._get_type(field_name, get_current_collection())
     input = 'text' # TODO schemaToInputType type fix on blur bug
@@ -104,7 +105,7 @@ Template._houston_collection_view.events
         get_current_collection())
       update_dict = {}
       update_dict[field_name] = updated_val
-      Houston._call("#{Houston._session('collection_name')}_update",
+      Houston._call("#{collection}_update",
         document_id, $set: update_dict)
 
   'keyup .houston-column-filter': (e) ->
