@@ -22,7 +22,7 @@ setup_collection = (collection_name, document_id) ->
     Meteor.subscribeWithPagination subscription_name, {}, filter,
       Houston._page_length
   Houston._setup_collection_methods(collection)
-  Houston._session('collection_name', collection_name)
+  #Houston._session('collection_name', collection_name)
   return [collection, Houston._paginated_subscription]
 
 Houston._houstonize_route = (name) ->
@@ -31,66 +31,72 @@ Houston._houstonize_route = (name) ->
 Houston._go = (route_name, options) ->
   Router.go Houston._houstonize_route(route_name), options
 
-Router.map ->
-  houston_route = (route_name, options) =>
-    # Append _houston_ to template and route names to avoid clobbering parent route namespace
-    options.template = Houston._houstonize(options.template)
-    options.layoutTemplate = '_houston_master_layout'
-    options.path = "#{Houston._ROOT_ROUTE}#{options.houston_path}"
-    options.waitOn = ->
-      ready: -> !Meteor.loggingIn() and Houston._subscribe('admin_user').ready()
-    options.action = -> if @ready() then @render()
-    options.path = "#{Houston._ROOT_ROUTE}#{options.houston_path}"
-    @route Houston._houstonize_route(route_name), options
 
-  houston_route 'home',
-    houston_path: "/",
-    template: 'db_view'
+houston_route = (route_name, options) =>
+  # Append _houston_ to template and route names to avoid clobbering parent route namespace
+  Router.route "#{Houston._ROOT_ROUTE}#{options.houston_path}",
+    name: Houston._houstonize_route(route_name)
+    waitOn: -> Houston._subscribe('admin_user')
+    layoutTemplate: '_houston_master_layout'
+    template: Houston._houstonize(options.template)
 
-  houston_route 'login',
-    houston_path: "/login"
-    template: 'login'
+houston_route 'home',
+  houston_path: "/",
+  template: 'db_view'
 
-  houston_route 'change_password',
-    houston_path: "/password"
-    template: 'change_password'
+houston_route 'login',
+  houston_path: "/login"
+  template: 'login'
 
-  houston_route 'collection',
-    houston_path: "/collection/:name"
-    data: ->
-      [collection, @subscription] = setup_collection(@params.name)
-      {collection}
-    waitOn: -> @subscription
-    template: 'collection_view'
+houston_route 'change_password',
+  houston_path: "/password"
+  template: 'change_password'
 
-  houston_route 'document',
-    houston_path: "/:collection/:_id"
-    data: ->
-      Houston._session('document_id', @params._id)
-      [collection, @subscription] = setup_collection(
-        @params.collection, @params._id)
-      {collection, name: @params.collection}
-    template: 'document_view'
+houston_route 'collection',
+  houston_path: "/collection/:name"
+  data: ->
+    [collection, @subscription] = setup_collection(@params.name)
+    {collection}
+  waitOn: -> @subscription
+  template: 'collection_view'
 
-  houston_route 'custom_template',
-    houston_path: "/:template"
-    template: 'custom_template_view'
-    data: -> this.params
+houston_route 'document',
+  houston_path: "/:collection/:_id"
+  data: ->
+    Houston._session('document_id', @params._id)
+    [collection, @subscription] = setup_collection(
+      @params.collection, @params._id)
+    {collection, name: @params.collection}
+  template: 'document_view'
+
+houston_route 'custom_template',
+  houston_path: "/:template"
+  template: 'custom_template_view'
+  data: -> this.params
 
 # ########
 # filters
 # ########
-mustBeAdmin = (pause) ->
-  if @ready() and not Houston._user_is_admin Meteor.userId()
-    pause()
-    Houston._go 'login'
+mustBeAdmin = ->
+  if !Meteor.user()
+    if Meteor.loggingIn()
+      @render 'houstonLoading'
+    else
+      Houston._go 'login'
+  else
+    if @ready() and not Houston._user_is_admin Meteor.userId()
+      Houston._go 'login'
+    else
+      @next()
 
 # If the host app doesn't have a router, their html may show up
 hide_non_admin_stuff = ->
   $('body').css('visibility', 'hidden').children().hide()
   $('body>.houston').show()
+  @next()
 remove_host_css = ->
   $('link[rel="stylesheet"]').remove()
+  @next()
 
 BASE_HOUSTON_ROUTES = ['home', 'collection', 'document', 'change_password', 'custom_template']
 ALL_HOUSTON_ROUTES = BASE_HOUSTON_ROUTES.concat(['login'])

@@ -19,6 +19,7 @@ Template._houston_db_view.events
     Houston._session 'search', $("#search").val()
 
 Template._houston_db_view.rendered = ->
+  alert 'hey ther'
   $("#search").val("")
   Houston._session('collection_name', '')
   Houston._session('field_selectors', {})

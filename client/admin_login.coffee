@@ -39,4 +39,5 @@ Template._houston_login.events(
 )
 
 Template._houston_login.rendered = ->
+  debugger
   $(window).unbind('scroll')
