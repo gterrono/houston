@@ -36,8 +36,9 @@ houston_route = (route_name, options) =>
   Router.route "#{Houston._ROOT_ROUTE}#{options.houston_path}", options
 
 houston_route 'home',
-  houston_path: '/',
+  houston_path: '/'
   template: 'db_view'
+  data: -> collections: Houston._collections.collections
 
 houston_route 'login',
   houston_path: "/login"
