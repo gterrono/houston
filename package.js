@@ -1,12 +1,12 @@
 Package.describe({
   name: "houston:admin",
   summary: "A zero-config Meteor Admin",
-  version: "1.1.1",
+  version: "1.2.0",
   git: "https://github.com/gterrono/houston.git"
 });
 
 Package.on_use(function(api) {
-  api.versionsFrom('METEOR@0.9.0');
+  api.versionsFrom('METEOR@1.0.0');
 
   //////////////////////////////////////////////////////////////////
   // Meteor-provided packages
@@ -16,9 +16,8 @@ Package.on_use(function(api) {
   api.use('accounts-base@1.0.0', ['client', 'server']);  // ?optional
   api.use('accounts-password@1.0.0', ['client', 'server']);
   api.use('templating@1.0.0', 'client');  // ?optional
-
   api.use('check@1.0.0', 'client');
-  api.use('spacebars@1.0.0', 'client');  // ?used to be handlebars - hopefully works cleanly
+  api.use('spacebars@1.0.0', 'client');
 
   //////////////////////////////////////////////////////////////////
   // Third-party package dependencies
