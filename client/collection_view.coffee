@@ -116,6 +116,11 @@ Template._houston_collection_view.events
     Houston._session 'field_selectors', field_selectors
     resubscribe(@collection_name)
 
+  'click #expand-filter': (e) ->
+    e.preventDefault()
+    # let the expand/collapse happen first
+    setTimeout((-> $('.houston-column-filter').first().focus()), 0)
+
   'click #houston-custom-filter-btn, keydown #houston-custom-filter': (event) ->
     # apply custom filter both on button click and on 'enter' in textarea
     if event.type == "keydown"
