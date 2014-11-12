@@ -54,10 +54,10 @@ houston_route 'change_password',
   template: 'change_password'
 
 houston_route 'collection',
-  houston_path: "/collection/:name"
-  data: -> Houston._get_collection(@params.name)
+  houston_path: "/:collection_name"
+  data: -> Houston._get_collection(@params.collection_name)
   subs: (params) ->
-    [setup_collection(params.name)]
+    [setup_collection(params.collection_name)]
   template: 'collection_view'
 
 houston_route 'document',
