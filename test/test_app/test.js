@@ -42,21 +42,21 @@ if (Meteor.isClient) {
 if (Meteor.isServer) {
   Meteor.startup(function () {
     // Local variable so it needs to be added to Houston manually
-    var hiddenCollection = new Meteor.Collection("HiddenCollection");
+    // var hiddenCollection = new Meteor.Collection("HiddenCollection");
 
     globalCollection.remove({});
     Meteor.users.remove({});
     Houston._admins.remove({});
     Houston._collections.collections.remove({});
-    hiddenCollection.remove({});
+    // hiddenCollection.remove({});
     Books.remove({});
 
-    Houston.add_collection(hiddenCollection);
+    //Houston.add_collection(hiddenCollection);
 
     Books.insert({title:"Title", author: "Author", copies: 5, lastCheckedOut: new Date()});
     // code to run on server at startup
     if (!globalCollection.findOne()) {
-      hiddenCollection.insert({str: "hidden test", bool: true});
+      //hiddenCollection.insert({str: "hidden test", bool: true});
       _.range(1000).forEach(function(number) {
         globalCollection.insert({
           str: "test" + number,
