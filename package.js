@@ -41,8 +41,7 @@ Package.on_use(function(api) {
 
   api.add_files(['lib/collections.coffee',
                  'lib/shared.coffee',
-                 'lib/menu.coffee',
-                 'lib/methods.coffee'],
+                 'lib/menu.coffee'],
                 ['client', 'server']);
 
   api.add_files([
@@ -54,5 +53,5 @@ Package.on_use(function(api) {
     'client/admin_nav.coffee', 'client/db_view.coffee'],
   'client');
 
-  api.add_files(['server/publications.coffee', 'server/exports.coffee'], 'server');
+  api.add_files(['server/publications.coffee', 'server/exports.coffee', 'server/methods.coffee'], 'server');
 });
