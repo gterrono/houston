@@ -1,7 +1,7 @@
 Template._houston_document_view.helpers
   showSaved: -> Houston._session('show_saved')
   fields: ->
-    fields = Houston._get_fields([@document])
+    fields = Houston._get_fields([@document], exclude_id: true)
     result = []
     for field in fields
       value = Houston._nested_field_lookup(@document, field.name)
@@ -11,7 +11,6 @@ Template._houston_document_view.helpers
     @document._id
 
 Template._houston_document_field.helpers
-  field_is_id: -> @name is '_id'
   has_type: -> Houston._INPUT_TYPES[@type]?
   input_type: -> Houston._INPUT_TYPES[@type]
 

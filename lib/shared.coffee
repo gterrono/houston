@@ -11,8 +11,8 @@ Houston._get_fields_from_collection = (collection) ->
   # TODO(AMK) randomly sample the documents in question
   Houston._get_fields(collection.find().fetch())
 
-Houston._get_fields = (documents) ->
-  key_to_type = {_id: 'ObjectId'}
+Houston._get_fields = (documents, options={}) ->
+  key_to_type = if options.exclude_id? then {} else {_id: 'ObjectId'}
 
   find_fields = (document, prefix='') ->
     for key, value of _.omit(document, '_id')
