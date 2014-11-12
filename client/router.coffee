@@ -63,10 +63,10 @@ houston_route 'collection',
 houston_route 'document',
   houston_path: "/:collection/:_id"
   data: ->
-    Houston._session('document_id', @params._id)
-    [collection, @subscription] = setup_collection(
-      @params.collection, @params._id)
-    {collection, name: @params.collection}
+    @subscription = setup_collection(@params.collection, @params._id)
+    collection = Houston._get_collection(@params.collection)
+    document = collection.findOne _id: @params._id
+    {document, collection, name: @params.collection}
   template: 'document_view'
 
 houston_route 'custom_template',
