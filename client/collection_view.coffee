@@ -3,7 +3,7 @@ get_sort_by = ->
   sort_by[Houston._session('sort_key')] = Houston._session('sort_order')
   return sort_by
 
-get_filter_query = ->
+get_filter_query = (collection) ->
   # Make find query using the filter stored in the session. The regexes are
   # escaped, but $regex is used so it can match anywhere in the string.
   query = if Houston._session('custom_selector')
@@ -14,7 +14,11 @@ get_filter_query = ->
       return unless Houston._session(session_key)?
       for key, val of Houston._session(session_key)
         # From http://stackoverflow.com/questions/3115150/how-to-escape-regular-expression-special-characters-using-javascript#answer-9310752
-        field_query[key] = $regex: val.replace(/[-[\]{}()*+?.,\\^$|#\s]/g, "\\$&")
+        val = Houston._convert_to_correct_type(key, val, collection)
+        if typeof(val) == 'string'
+          field_query[key] = $regex: val.replace(/[-[\]{}()*+?.,\\^$|#\s]/g, "\\$&")
+        else
+          field_query[key] = val
     fill_query_with_regex('field_selectors')
     field_query
 
@@ -26,7 +30,7 @@ resubscribe = (name) ->
   Houston._paginated_subscription.stop()
   Houston._paginated_subscription =
     Meteor.subscribeWithPagination subscription_name,
-      get_sort_by(), get_filter_query(),
+      get_sort_by(), get_filter_query(Houston._get_collection(name)),
       Houston._page_length
 
 collection_info = (name) -> Houston._collections.collections.findOne {name}
@@ -44,7 +48,7 @@ Template._houston_collection_view.helpers
   pluralize: -> 's' unless collection_count(@name) == 1
   rows: ->
     collection = @name
-    documents = this?.find(get_filter_query(), {sort: get_sort_by()}).fetch()
+    documents = this?.find(get_filter_query(Houston._get_collection(collection)), {sort: get_sort_by()}).fetch()
     _.map documents, (d) ->
       d.collection = collection
       d._id = d._id._str or d._id
@@ -67,7 +71,6 @@ Template._houston_collection_view.rendered = ->
       Houston._paginated_subscription.limit() < collection_count()
         Houston._paginated_subscription.loadNextPage()
 
-get_current_collection = -> Houston._get_collection(Houston._session('collection_name'))
 get_collection_view_fields = (name) ->
   _.map(collection_info(name)?.fields, (obj) ->
     obj.collection_name = name
@@ -86,27 +89,34 @@ Template._houston_collection_view.events
 
   'dblclick .houston-collection-field': (e) ->
     $this = $(e.currentTarget)
-    collection = @collection
+    collection_name = @collection
+    collection = Houston._get_collection(collection_name)
     field_name = $this.data('field')
-    type = Houston._get_type(field_name, get_current_collection())
+    type = Houston._get_type(field_name, collection)
     input = 'text' # TODO schemaToInputType type fix on blur bug
+    old_val = $this.text().trim()
     $this.removeClass('houston-collection-field')
-    $this.html "<input type='#{input}' class='input-sm form-control' placeholder='#{type}' value='#{$this.text().trim()}'>"
+    $this.html "<input type='#{input}' class='input-sm form-control' placeholder='#{type}' value='#{old_val}'>"
+    old_val = Houston._convert_to_correct_type(field_name, old_val,
+        collection)
     $this.find('input').select()
     $this.find('input').on 'keydown', (event) ->
       event.currentTarget.blur() if event.keyCode == 13
     $this.find('input').on 'blur', ->
       updated_val = $this.find('input').val()
-      $this.html ""
       $this.addClass('houston-collection-field')
       document_id = $this[0].parentNode.dataset.id
       field_name = $this.data('field')
       updated_val = Houston._convert_to_correct_type(field_name, updated_val,
-        get_current_collection())
+        collection)
       update_dict = {}
       update_dict[field_name] = updated_val
-      Houston._call("#{collection}_update",
-        document_id, $set: update_dict)
+      if updated_val == old_val
+        $this.html updated_val
+      else
+        $this.html ''
+        Houston._call("#{collection_name}_update",
+          document_id, $set: update_dict)
 
   'keyup .houston-column-filter': (e) ->
     field_selectors = {}
@@ -163,6 +173,7 @@ Template._houston_collection_view.events
 
   'click #houston-add': (e) ->
     e.preventDefault()
+    collection = Houston._get_collection(@name)
     $create_row = $('#houston-create-row')
     new_doc = {}
     for field in $create_row.find('.houston-field')
@@ -171,7 +182,7 @@ Template._houston_collection_view.events
       final_key = keys.pop()
 
       value = Houston._convert_to_correct_type(field.name, field.value,
-        get_current_collection())
+        collection)
       doc_iter = new_doc
       for key in keys
         doc_iter[key] = {} unless doc_iter[key]

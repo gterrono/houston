@@ -24,7 +24,7 @@ Houston._get_collection = (collection_name) ->
     new Meteor.Collection(collection_name)
   return Houston._collections[collection_name]
 
-Houston._session = () ->
+Houston._session = ->
   key = Houston._houstonize(arguments[0])
   if arguments.length == 1
     return Session.get(key)
