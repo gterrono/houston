@@ -6,7 +6,7 @@ Package.describe({
 });
 
 Package.on_use(function(api) {
-  api.versionsFrom('METEOR@1.0.0');
+  api.versionsFrom('METEOR@1.0');
 
   //////////////////////////////////////////////////////////////////
   // Meteor-provided packages
