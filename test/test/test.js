@@ -56,7 +56,7 @@ if (Meteor.isServer) {
     Books.insert({title:"Title", author: "Author", copies: 5, lastCheckedOut: new Date()});
     // code to run on server at startup
     if (!globalCollection.findOne()) {
-      hiddenCollection.insert({str: "hidden test"});
+      hiddenCollection.insert({str: "hidden test", bool: true});
       _.range(1000).forEach(function(number) {
         globalCollection.insert({
           str: "test" + number,

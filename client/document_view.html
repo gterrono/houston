@@ -47,13 +47,7 @@
       }}</label>
 
     <div class="col-sm-9">
-      {{#if has_type}}
-      <input type="{{ input_type }}" class="houston-field form-control"
-             name="{{ name_id }}" value="{{ value }}"/>
-      {{else}}
-      <textarea class="houston-field form-control" name="{{ name_id }}">{{ value
-        }}</textarea>
-      {{/if}}
+      <textarea class="houston-field form-control" name="{{ name_id }}">{{ value }}</textarea>
       <p class="help-block">Please enter a {{ type }}</p>
     </div>
 

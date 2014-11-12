@@ -56,6 +56,8 @@ Houston._convert_to_correct_type = (field, val, collection) ->
   constructor = sample_val.constructor
   if typeof sample_val == 'object'
     new constructor(val)
+  else if typeof sample_val == 'boolean'
+    val == 'true'
   else
     constructor(val)
 
