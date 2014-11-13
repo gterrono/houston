@@ -73,3 +73,8 @@ describe "Can't access Meteor unless logged in", ->
           expect($('#become-houston-admin').length).toEqual(0)
           expect($('.form-heading').first().html()).toMatch(/You are not an Admin./)
           done()
+
+  it "logged in as admin? come see the page", ->
+      setup {logged_in: true, as_admin: true, other_admin: false}, ->
+        Houston._go "home"
+        expect($('.houston').html()).toMatch(/Meteor Admin Panel/)
