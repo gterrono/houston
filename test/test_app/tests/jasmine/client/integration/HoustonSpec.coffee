@@ -7,12 +7,14 @@ eventually = (condition, cb) ->
 
 setup = ({logged_in, as_admin, other_admin}, cb) ->
   run_actual_test = cb
-  Meteor.call "test/clear_users", ->
+  Meteor.call "test/clear_users", (err) ->
+    expect(err).toBeUndefined()
     _setup_user = ->
       if logged_in
-        userId = Accounts.createUser email: "you@example.com", password: "bob", ->
+        Accounts.createUser email: "you@example.com", password: "bob", ->
           if as_admin
-            Houston._call 'make_admin', userId, ->
+            Houston._call 'make_admin', Meteor.userId(), (err) ->
+              expect(err).toBeUndefined()
               run_actual_test()
           else
             run_actual_test()
@@ -21,7 +23,11 @@ setup = ({logged_in, as_admin, other_admin}, cb) ->
 
     if other_admin
       Accounts.createUser email: "other@example.com", password: "bob", ->
-        Meteor.logout -> _setup_user()
+        Houston._call 'make_admin', Meteor.userId(), (err) ->
+          expect(err).toBeUndefined()
+          Meteor.logout (err) ->
+            expect(err).toBeUndefined()
+            _setup_user()
     else
       _setup_user()
 
@@ -44,4 +50,14 @@ describe "Can't access Meteor unless logged in", ->
         url_changed = -> window.location.pathname is "/admin/login"
         eventually url_changed, ->
           expect($('#become-houston-admin')[0]).not.toBeUndefined()
+          done()
+
+  it "tells you to go away if an admin exists",
+    (done) ->
+      setup {logged_in: true, as_admin: false, other_admin: true}, ->
+        Houston._go "home"
+        url_changed = -> window.location.pathname is "/admin/login"
+        eventually url_changed, ->
+          expect($('#become-houston-admin').length).toEqual(0)
+          expect($('.form-heading').first().html()).toMatch(/You are not an Admin./)
           done()

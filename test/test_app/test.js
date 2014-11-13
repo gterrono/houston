@@ -43,6 +43,7 @@ if (Meteor.isServer) {
   Meteor.methods({
     "test/clear_users": function() {
       Meteor.users.remove({});
+      Houston._admins.remove({});
     }
   });
   Meteor.startup(function () {
