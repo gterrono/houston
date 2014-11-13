@@ -32,7 +32,7 @@ setup = ({logged_in, as_admin, other_admin}, cb) ->
       _setup_user()
 
 describe "Can't access Meteor unless logged in", ->
-  it "should send to login page",
+  it "not logged in, no admin? offer to crete admin",
     (done) ->
       setup {logged_in: false, as_admin: false, other_admin: false}, ->
         Houston._go "home"
@@ -43,13 +43,25 @@ describe "Can't access Meteor unless logged in", ->
           expect($signin_form.html()).toMatch(/Create an admin account/)
           done()
 
-  it "should offer to Claim Admin if logged in",
+  it "not logged in, and there's an admin? You should log in to admin!",
+    (done) ->
+      setup {logged_in: false, as_admin: false, other_admin: true}, ->
+        Houston._go "home"
+        url_changed = -> window.location.pathname is "/admin/login"
+        eventually url_changed, ->
+          $signin_form = $('#houston-sign-in-form')
+          expect($signin_form[0]).not.toBeUndefined()
+          expect($signin_form.html()).toMatch(/Log In/)
+          done()
+
+  it "logged in, no admin? should offer to Claim Admin",
     (done) ->
       setup {logged_in: true, as_admin: false, other_admin: false}, ->
         Houston._go "home"
         url_changed = -> window.location.pathname is "/admin/login"
         eventually url_changed, ->
-          expect($('#become-houston-admin')[0]).not.toBeUndefined()
+          expect($('#become-houston-admin').length).toEqual(1)
+          expect($('.form-heading').first().html()).toMatch(/You are not an Admin./)
           done()
 
   it "tells you to go away if an admin exists",
