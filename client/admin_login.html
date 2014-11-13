@@ -1,52 +1,51 @@
 <template name="_houston_login">
   <div class="container houston-form">
     {{#if logged_in }}
-    {{#if currentUserIsAdmin}}
-    <h1 class="form-heading">You are currently logged in as an Admin.</h1>
-    {{else}}
-    <h1 class="form-heading">You are not an Admin. If you need to use the Houston Admin, please ask your Admin to grant you access.</h1>
-    {{/if}}
-
-    <div>
-      {{#unless adminUserExists}}
-      <button id="become-houston-admin"
-              class="btn btn-lg btn-success btn-block">
-        <i class="fa fa-pencil"></i>Claim Admin
-      </button>
-      <br>
-      {{/unless}}
-      <a href="/admin" class="btn btn-primary col-xs-6">
-        <i class="fa fa-home"></i>Back to Home
-      </a>
-      <button id="houston-logout" class="btn btn-warning col-xs-6">
-        <i class="fa fa-sign-out"></i>Log out
-      </button>
-    </div>
-    {{else}}
-    <form id="houston-sign-in-form" role="form">
-      {{! nobody is logged in - sign in or sign up}}
-      <h1 class="form-heading">
-        {{#if adminUserExists}} Log In {{else}} Create an admin account
-        {{/if}}
-      </h1>
-      <input type="email" class="form-control" placeholder="Email address"
-             name="houston-email"
-             id='houston-email' required autofocus>
-      <input type="password" class="form-control" placeholder="Password"
-             name="houston-password"
-             id='houston-password' required>
+      {{#if currentUserIsAdmin}}
+        <h1 class="form-heading">You are currently logged in as an Admin.</h1>
+      {{else}}
+        <h1 class="form-heading">You are not an Admin. If you need to use the Houston Admin, please ask your Admin to grant you access.</h1>
+      {{/if}}
 
       <div>
-        <button
-            class="btn btn-lg {{#if adminUserExists}}btn-primary{{else}}btn-success{{/if}} btn-block"
-            type="submit">
-          {{#if adminUserExists}}
-          <i class="fa fa-sign-in"></i>Log In
-          {{else}}
-          <i class="fa fa-user"></i>Create account {{/if}}
+        {{#unless adminUserExists}}
+          <button id="become-houston-admin"
+                  class="btn btn-lg btn-success btn-block">
+            <i class="fa fa-pencil"></i>Claim Admin
+          </button>
+          <br>
+        {{/unless}}
+        <a href="/admin" class="btn btn-primary col-xs-6">
+          <i class="fa fa-home"></i>Back to Home
+        </a>
+        <button id="houston-logout" class="btn btn-warning col-xs-6">
+          <i class="fa fa-sign-out"></i>Log out
         </button>
       </div>
-    </form>
+    {{else}} {{! nobody is logged in - sign in or sign up}}
+      <form id="houston-sign-in-form" role="form">
+        <h1 class="form-heading">
+          {{#if adminUserExists}} Log In {{else}} Create an admin account
+          {{/if}}
+        </h1>
+        <input type="email" class="form-control" placeholder="Email address"
+               name="houston-email"
+               id='houston-email' required autofocus>
+        <input type="password" class="form-control" placeholder="Password"
+               name="houston-password"
+               id='houston-password' required>
+
+        <div>
+          <button
+              class="btn btn-lg {{#if adminUserExists}}btn-primary{{else}}btn-success{{/if}} btn-block"
+              type="submit">
+            {{#if adminUserExists}}
+            <i class="fa fa-sign-in"></i>Log In
+            {{else}}
+            <i class="fa fa-user"></i>Create account {{/if}}
+          </button>
+        </div>
+      </form>
     {{/if}}
   </div>
 </template>
