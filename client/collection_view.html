@@ -114,15 +114,8 @@
     <label for="{{ name }}" class="col-sm-4 control-label">{{ name }}</label>
 
     <div class="col-sm-8">
-      {{#if has_type}}
-      <input type="{{input_type}}" class="input-sm houston-field form-control"
-             name="{{ name }}"
-             placeholder="{{type}}" value="{{ value }}"/>
-      {{else}}
       <textarea class="input-sm houston-field form-control"
-                placeholder="{{type}}" name="{{ name }}">{{ value
-        }}</textarea>
-      {{/if}}
+                placeholder="{{type}}" name="{{ name }}">{{ value }}</textarea>
     </div>
 
   </div>

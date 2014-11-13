@@ -57,7 +57,7 @@ Template._houston_collection_view.helpers
     fields_in_order = get_collection_view_fields(@collection)
     names_in_order = _.clone fields_in_order
     values = (Houston._nested_field_lookup(@, field.name) for field in fields_in_order[1..])  # skip _id
-    ({field_value, field_name, collection: @collection} for [field_value, {name:field_name}] in _.zip values, names_in_order[1..])
+    ({field_value: field_value.toString(), field_name, collection: @collection} for [field_value, {name:field_name}] in _.zip values, names_in_order[1..])
   filter_value: ->
     if Houston._session('field_selectors') and Houston._session('field_selectors')[@]
       Houston._session('field_selectors')[@]
@@ -112,7 +112,7 @@ Template._houston_collection_view.events
       update_dict = {}
       update_dict[field_name] = updated_val
       if updated_val == old_val
-        $this.html updated_val
+        $this.html updated_val.toString()
       else
         $this.html ''
         Houston._call("#{collection_name}_update",

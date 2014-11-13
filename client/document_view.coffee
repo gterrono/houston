@@ -5,7 +5,7 @@ Template._houston_document_view.helpers
     result = []
     for field in fields
       value = Houston._nested_field_lookup(@document, field.name)
-      result.push(name: "#{field.name} (#{typeof value})", name_id: field.name, type: typeof value, value: value)
+      result.push(name: "#{field.name} (#{typeof value})", name_id: field.name, type: typeof value, value: value.toString())
     return result
   document_id: ->
     @document._id
