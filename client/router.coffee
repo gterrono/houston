@@ -56,8 +56,7 @@ houston_route 'change_password',
 houston_route 'collection',
   houston_path: "/:collection_name"
   data: -> Houston._get_collection(@params.collection_name)
-  subs: (params) ->
-    [setup_collection(params.collection_name)]
+  subs: (params) -> [setup_collection(params.collection_name)]
   template: 'collection_view'
 
 houston_route 'document',
@@ -98,14 +97,11 @@ remove_host_css = ->
   $('link[rel="stylesheet"]').remove()
   @next()
 
-BASE_HOUSTON_ROUTES = ['home', 'collection', 'document', 'change_password', 'custom_template']
-ALL_HOUSTON_ROUTES = BASE_HOUSTON_ROUTES.concat(['login'])
-Router.onBeforeAction mustBeAdmin,
-  only: (Houston._houstonize_route(name) for name in BASE_HOUSTON_ROUTES)
-Router.onBeforeAction hide_non_admin_stuff,
-  only: (Houston._houstonize_route(name) for name in ALL_HOUSTON_ROUTES)
-Router.onBeforeAction remove_host_css,
-  only: (Houston._houstonize_route(name) for name in ALL_HOUSTON_ROUTES)
+BASE_HOUSTON_ROUTES = (Houston._houstonize_route(name) for name in ['home', 'collection', 'document', 'change_password', 'custom_template'])
+ALL_HOUSTON_ROUTES = BASE_HOUSTON_ROUTES.concat([Houston._houstonize_route('login')])
+Router.onBeforeAction mustBeAdmin, only: BASE_HOUSTON_ROUTES
+Router.onBeforeAction hide_non_admin_stuff, only: ALL_HOUSTON_ROUTES
+Router.onBeforeAction remove_host_css, only: ALL_HOUSTON_ROUTES
 
 onRouteNotFound = Router.onRouteNotFound
 Router.onRouteNotFound = (args...) ->

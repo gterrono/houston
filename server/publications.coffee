@@ -17,7 +17,9 @@ Houston._setup_collection = (collection) ->
     check filter, Match.Optional(Object)
     check limit, Match.Optional(Number)
     check unknown_arg, Match.Any
-    return unless Houston._user_is_admin @userId
+    unless Houston._user_is_admin @userId
+      @ready()
+      return
     try
       collection.find(filter, sort: sort, limit: limit)
     catch e
