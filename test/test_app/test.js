@@ -20,7 +20,7 @@ globalCollection = new Meteor.Collection("GlobalCollection");
   });
   */
 
-Books = new Meteor.Collection("books");
+Posts = new Meteor.Collection("posts");
 
 //Books.attachSchema(Schemas.Book);
 
@@ -56,18 +56,19 @@ if (Meteor.isServer) {
     Houston._admins.remove({});
     //Houston._collections.collections.remove({});
     // hiddenCollection.remove({});
-    Books.remove({});
-    Houston.methods("GlobalCollection", {
-      Read: function (book) {
-        globalCollection.update(book._id, {$set: {read: true}});
-        return "Yay I updated it";
+    Posts.remove({});
+    Houston.methods(Posts, {
+      "Publish": function (post) {
+        Posts.update(post._id, {$set: {published: true}});
+        return post.title + " has been published.";
       }
     });
 
 
     //Houston.add_collection(hiddenCollection);
 
-    Books.insert({title:"Title", author: "Author", copies: 5, lastCheckedOut: new Date()});
+    Posts.insert({title:"First Post", author: "Rocketman", body: "So excited"});
+    Posts.insert({title:"Welcome to Houston", author: "Rocketman", body: "Great to be here"});
     // code to run on server at startup
     if (!globalCollection.findOne()) {
       //hiddenCollection.insert({str: "hidden test", bool: true});

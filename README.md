@@ -43,7 +43,7 @@ Collection view includes support for
 ![Login](https://raw.github.com/gterrono/houston/master/doc/login.png)
 
 #### Custom actions
-TODO(AMK): buttons
+![Login](https://raw.github.com/gterrono/houston/master/doc/custom-actions.png)
 
 Declare custom actions for specific collections using something like `Meteor.methods`.
 
