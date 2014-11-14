@@ -1,24 +1,24 @@
 globalCollection = new Meteor.Collection("GlobalCollection");
 
 /*// collection2 schema
-var Schemas = {};
-Schemas.Book = new SimpleSchema({
-    title: {
-        type: String,
-        max: 200
-    },
-    author: {
-        type: String,
-    },
-    copies: {
-        type: Number,
-        min: 0
-    },
-    lastCheckedOut: {
-        type: Date
-    }
-});
-*/
+  var Schemas = {};
+  Schemas.Book = new SimpleSchema({
+  title: {
+  type: String,
+  max: 200
+  },
+  author: {
+  type: String,
+  },
+  copies: {
+  type: Number,
+  min: 0
+  },
+  lastCheckedOut: {
+  type: Date
+  }
+  });
+  */
 
 Books = new Meteor.Collection("books");
 
@@ -34,7 +34,7 @@ if (Meteor.isClient) {
     'click input' : function () {
       // template data, if any, is available in 'this'
       if (typeof console !== 'undefined')
-        console.log("You pressed the button");
+    console.log("You pressed the button");
     }
   });
 }
@@ -46,6 +46,7 @@ if (Meteor.isServer) {
       Houston._admins.remove({});
     }
   });
+
   Meteor.startup(function () {
     // Local variable so it needs to be added to Houston manually
     // var hiddenCollection = new Meteor.Collection("HiddenCollection");
@@ -53,9 +54,16 @@ if (Meteor.isServer) {
     globalCollection.remove({});
     Meteor.users.remove({});
     Houston._admins.remove({});
-    Houston._collections.collections.remove({});
+    //Houston._collections.collections.remove({});
     // hiddenCollection.remove({});
     Books.remove({});
+    Houston.methods("GlobalCollection", {
+      Read: function (book) {
+        console.log("got called with" + book);
+        Books.update(book._id, {read: true});
+      }
+    });
+
 
     //Houston.add_collection(hiddenCollection);
 

@@ -1,4 +1,18 @@
 # shared meteor methods
+
+Houston.methods = (collection, raw_methods) ->
+  collection_name = collection.name or collection._name or collection
+  method_names = _(raw_methods).keys()
+  console.log "updating, so help me god"
+  console.log collection_name
+  Houston._collections.collections.update({name: collection_name}, {$set: {method_names: method_names}})
+
+  methods = {}
+  for func_name, func of raw_methods
+    methods[Houston._custom_method_name(collection_name, func_name)] = func
+
+  Meteor.methods methods
+
 Houston._setup_collection_methods = (collection) ->
   name = collection._name
   methods = {}

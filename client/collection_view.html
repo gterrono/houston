@@ -95,9 +95,15 @@
             {{ field_value }}
           </td>
           {{/each}}
-          <td>
+          <td class="action-cell" >
+            {{#each custom_actions }}
             <div data-id="{{_id}}"
-                 class="btn btn-xs houston-delete-doc btn-danger pull-right">
+                 class="btn btn-xs btn-default custom-houston-action" >
+              {{this}}
+            </div>
+            {{/each}}
+            <div data-id="{{_id}}"
+                 class="btn btn-xs houston-delete-doc btn-danger">
               <i class="fa fa-trash-o"></i>Delete
             </div>
           </td>

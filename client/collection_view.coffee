@@ -38,6 +38,8 @@ collection_info = (name) -> Houston._collections.collections.findOne {name}
 collection_count = (name) -> collection_info(name)?.count
 
 Template._houston_collection_view.helpers
+  custom_actions: ->
+    collection_info(@collection)?.method_names or []
   custom_selector_error_class: -> if Houston._session("custom_selector_error") then "error" else ""
   custom_selector_error: -> Houston._session("custom_selector_error")
   field_filter_disabled: -> if Houston._session("custom_selector") then "disabled" else ""
