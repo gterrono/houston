@@ -59,8 +59,7 @@ if (Meteor.isServer) {
     Books.remove({});
     Houston.methods("GlobalCollection", {
       Read: function (book) {
-        console.log("got called with" + book);
-        Books.update(book._id, {read: true});
+        globalCollection.update(book._id, {$set: {read: true}});
       }
     });
 
