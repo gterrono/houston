@@ -60,7 +60,6 @@ if (Meteor.isServer) {
     Houston.methods("GlobalCollection", {
       Read: function (book) {
         globalCollection.update(book._id, {$set: {read: true}});
-        throw "sadness"
         return "Yay I updated it";
       }
     });
