@@ -3,9 +3,7 @@
 Houston.methods = (collection, raw_methods) ->
   collection_name = collection.name or collection._name or collection
   method_names = _(raw_methods).keys()
-  console.log "updating, so help me god"
-  console.log collection_name
-  Houston._collections.collections.update({name: collection_name}, {$set: {method_names: method_names}})
+  Houston._collections.collections.update({name: collection_name}, {$set: {method_names}})
 
   methods = {}
   for func_name, func of raw_methods
@@ -30,6 +28,8 @@ Houston._setup_collection_methods = (collection) ->
     else
       id = collection.findOne(new Meteor.Collection.ObjectID(id))
       collection.update(id, update_dict)
+
+    "#{collection._name} #{id} saved successfully"
 
   methods[Houston._houstonize "#{name}_delete"] = (id) ->
     check id, Match.Any

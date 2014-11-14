@@ -169,7 +169,7 @@ Template._houston_collection_view.events
 
   'click .custom-houston-action': (e) ->
     e.preventDefault()
-    Meteor.call(Houston._custom_method_name(@document.collection, @action), @document)
+    Meteor.call Houston._custom_method_name(@document.collection, @action), @document, Houston._show_flash
 
   'click #houston-cancel': ->
     $('#houston-create-document').addClass('hidden')
