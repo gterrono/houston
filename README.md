@@ -2,7 +2,7 @@ Houston
 ===============
 Houston is a zero-config Meteor Admin, modeled after [Django Admin](https://docs.djangoproject.com/en/dev/ref/contrib/admin/), intended as a simple way for developers to give end-users (or themselves) an easy way to view and manipulate their app's data.
 
-**Latest News** We just added Custom Actions for collections, which map cleanly to meteor Methods.  Try them out!
+**Latest News** We just added Custom Actions for collections, which map cleanly to Meteor.methods.  Try them out!
 
 #### [Video presentation](https://www.youtube.com/watch?v=vXeWxbJQr5o)
 
@@ -45,22 +45,25 @@ Collection view includes support for
 ![Login](https://raw.github.com/gterrono/houston/master/doc/login.png)
 
 #### Custom actions
-![Login](https://raw.github.com/gterrono/houston/master/doc/custom-actions.png)
+![Custom Actions](https://raw.github.com/gterrono/houston/master/doc/custom-actions.png)
 
-Declare custom actions for specific collections using something like `Meteor.methods`.
+Declare custom actions for specific collections using a `Meteor.methods`-like syntax.
 
 #####On the server
 ```javascript
 Houston.methods("Posts", {
   "Publish": function (post) {
-    Post.update(post._id, {$set: {published: true}});
+    Posts.update(post._id, {$set: {published: true}});
     return post.name + " published successfully.";
   }
 });
 
 ```
+Call `Houston.methods` for every collection you want to add custom actions for. The first argument is the collection name (or the `Mongo.Collection itself`), and the second argument is a {method_name: function} dictionary, as in `Meteor.methods`.
 
-The actions will be visible as buttons in both the collection and document view
+Each `Houston.methods` method should `return` a string, which will be display to the user as the success message. If you `throw` an exception, the `exception.message` will be shown to the user (`Internal Server Error` by default).
+
+The actions will be visible as buttons in both the collection and document view.
 
 #### Custom Menu Items
 ![Custom Menu](https://raw.github.com/gterrono/houston/master/doc/menu.png)
