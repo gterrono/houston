@@ -16,7 +16,6 @@ Play around with the demo [here](http://houston-test.meteor.com/admin). The emai
 meteor add houston:admin
 ```
 
-
 Once installed, navigate to `/admin` to set up your admin account. You can either create a new user to act as Houston's Admin, or upgrade an existing user into an admin.
 
 #### Auto-discovery
@@ -59,7 +58,7 @@ Houston.methods("Posts", {
 });
 
 ```
-Call `Houston.methods` for every collection you want to add custom actions for. The first argument is the collection name (or the `Mongo.Collection itself`), and the second argument is a {method_name: function} dictionary, as in `Meteor.methods`.
+Call `Houston.methods` for every collection you want to add custom actions for. The first argument is the collection name (or the `Mongo.Collection` itself), and the second argument is a `{method_name: function}` dictionary, as in `Meteor.methods`.
 
 Each `Houston.methods` method should `return` a string, which will be display to the user as the success message. If you `throw` an exception, the `exception.message` will be shown to the user (`Internal Server Error` by default).
 
@@ -94,9 +93,6 @@ Houston.menu({
   'target': 'blank'
 });
 ```
-
-
-
 
 Customizing Houston
 ========
