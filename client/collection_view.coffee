@@ -38,8 +38,7 @@ collection_info = (name) -> Houston._collections.collections.findOne {name}
 collection_count = (name) -> collection_info(name)?.count
 
 Template._houston_collection_view.helpers
-  custom_actions: ->
-    ({document: @, action} for action in (collection_info(@collection).method_names or []))
+  collection_info: -> collection_info(@collection)
   custom_selector_error_class: -> if Houston._session("custom_selector_error") then "error" else ""
   custom_selector_error: -> Houston._session("custom_selector_error")
   field_filter_disabled: -> if Houston._session("custom_selector") then "disabled" else ""
@@ -166,10 +165,6 @@ Template._houston_collection_view.events
     id = $(e.currentTarget).data('id')
     if confirm("Are you sure you want to delete the document with _id #{id}?")
       Houston._call("#{@collection}_delete", id)
-
-  'click .custom-houston-action': (e) ->
-    e.preventDefault()
-    Meteor.call Houston._custom_method_name(@document.collection, @action), @document, Houston._show_flash
 
   'click #houston-cancel': ->
     $('#houston-create-document').addClass('hidden')

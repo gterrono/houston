@@ -35,7 +35,9 @@ Package.on_use(function(api) {
     'client/collection_view.html', 'client/document_view.html',
     'client/admin_change_password.html', 'client/custom_template_view.html',
     // partials
-    'client/partials/admin_nav.html', 'client/partials/flash_message.html',
+    'client/partials/admin_nav.html',
+    'client/partials/flash_message.html',
+    'client/partials/custom_actions.html',
     // layout
     'client/master_layout.html',
     'client/third-party/collapse.js.html',
@@ -53,7 +55,9 @@ Package.on_use(function(api) {
     // shared
     'client/lib/shared.coffee',
     // shared partials
-    'client/partials/admin_nav.coffee', 'client/partials/flash_message.coffee',
+    'client/partials/admin_nav.coffee',
+    'client/partials/flash_message.coffee',
+    'client/partials/custom_actions.coffee',
     // view logic
     'client/custom_template_view.coffee', 'client/admin_login.coffee',
     'client/collection_view.coffee', 'client/document_view.coffee',

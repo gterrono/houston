@@ -2,7 +2,7 @@
   <ul class="breadcrumb">
     <li><a href="{{pathFor 'houston_home'}}" class="houston-home"><i
         class="fa fa-home"></i>Home</a></li>
-    <li class="active"><i class="fa fa-database"></i>{{name}}</li>
+   <li class="active"><i class="fa fa-database"></i>{{name}}</li>
   </ul>
   <div class="row hidden" id="houston-create-document">
     <h3>Add more {{name}}</h3>
@@ -96,11 +96,7 @@
           </td>
           {{/each}}
           <td class="action-cell" >
-            {{#each custom_actions }}
-            <div class="btn btn-xs btn-default custom-houston-action" >
-              {{action}}
-            </div>
-            {{/each}}
+            {{> _houston_custom_actions collection_info=collection_info document=this size="xs" }}
             <div data-id="{{_id}}"
                  class="btn btn-xs houston-delete-doc btn-danger">
               <i class="fa fa-trash-o"></i>Delete
