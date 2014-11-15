@@ -31,11 +31,9 @@
                 class="btn btn-danger pull-right"><i
             class="fa fa-trash-o"></i>Delete
         </button>
-        {{#each custom_actions }}
-          <button type="button" class="btn btn-default custom-houston-action pull-right" >
-            {{action}}
-          </button>
-        {{/each}}
+        <div class="pull-right">
+          {{> _houston_custom_actions document=document collection_info=collection_info size="md" }}
+        </div>
       </div>
     </div>
   </form>

@@ -1,7 +1,5 @@
 Template._houston_document_view.helpers
-  custom_actions: ->
-    collection_info = Houston._collections.collections.findOne {@name}
-    {@document, collection: @name, action} for action in (collection_info.method_names or [])
+  collection_info: -> Houston._collections.collections.findOne {@name}
   showSaved: -> Houston._session('show_saved')
   fields: ->
     fields = Houston._get_fields([@document], exclude_id: true)
@@ -18,11 +16,8 @@ Template._houston_document_field.helpers
   input_type: -> Houston._INPUT_TYPES[@type]
 
 Template._houston_document_view.events
-  'click .custom-houston-action': (e) ->
-    e.preventDefault()
   'click #houston-save': (e) ->
     e.preventDefault()
-    Meteor.call Houston._custom_method_name(@collection, @action), @document, Houston._show_flash
     update_dict = {}
     for field in $('.houston-field')
       field_name = field.name.split(' ')[0]
