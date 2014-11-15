@@ -1,7 +1,7 @@
 Package.describe({
   name: "houston:admin",
   summary: "A zero-config Meteor Admin",
-  version: "1.2.0",
+  version: "1.3.0",
   git: "https://github.com/gterrono/houston.git"
 });
 
