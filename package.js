@@ -30,12 +30,20 @@ Package.on_use(function(api) {
   //////////////////////////////////////////////////////////////////
   // load html first, https://github.com/meteor/meteor/issues/282
   api.add_files([
-    'client/third-party/collapse.js.html',
-    'client/third-party/bootstrap.html', 'client/style.html',
+    // views
     'client/admin_login.html', 'client/db_view.html',
     'client/collection_view.html', 'client/document_view.html',
-    'client/admin_nav.html', 'client/master_layout.html',
-    'client/admin_change_password.html', 'client/custom_template_view.html'],
+    'client/admin_change_password.html', 'client/custom_template_view.html',
+    // partials
+    'client/partials/admin_nav.html',
+    'client/partials/flash_message.html',
+    'client/partials/custom_actions.html',
+    // layout
+    'client/master_layout.html',
+    'client/third-party/collapse.js.html',
+    'client/third-party/bootstrap.html',
+    'client/style.css.html'
+    ],
   'client');
 
   api.add_files(['lib/collections.coffee',
@@ -44,12 +52,19 @@ Package.on_use(function(api) {
                 ['client', 'server']);
 
   api.add_files([
+    // shared
     'client/lib/shared.coffee',
-    'client/custom_template_view.coffee',
-    'client/router.coffee', 'client/admin_login.coffee',
+    // shared partials
+    'client/partials/admin_nav.coffee',
+    'client/partials/flash_message.coffee',
+    'client/partials/custom_actions.coffee',
+    // view logic
+    'client/custom_template_view.coffee', 'client/admin_login.coffee',
     'client/collection_view.coffee', 'client/document_view.coffee',
-    'client/admin_change_password.coffee',
-    'client/admin_nav.coffee', 'client/db_view.coffee'],
+    'client/admin_change_password.coffee', 'client/db_view.coffee',
+    // router
+    'client/router.coffee'
+    ],
   'client');
 
   api.add_files(['server/publications.coffee', 'server/exports.coffee', 'server/methods.coffee'], 'server');

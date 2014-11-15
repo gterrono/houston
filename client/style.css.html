@@ -1,5 +1,8 @@
-<template name="style">
+<template name="style_css">
 <style>
+.houston .navbar > .navbar-inner > .container {
+  margin-top: 0px;
+}
 .houston .navbar > .navbar-inner > .container {
   margin-top: 0px;
 }
@@ -24,6 +27,13 @@
 
 .houston .houston-collection {
   overflow: hidden;
+}
+
+.houston .action-cell {
+  text-align: right;
+}
+.houston .custom-houston-action {
+  margin-right: 5px;
 }
 
 .houston #houston-report-bug {
@@ -151,8 +161,9 @@
 /*
  * Document view
  */
-#doc-saved {
+#flash-message {
   position: fixed;
+  text-align: center;
   z-index: 1000;
   width: 100%;
   bottom: -80px;
@@ -162,7 +173,7 @@
   -moz-transition: bottom .3s ease;
   -webkit-transition: bottom .3s ease;
 }
-#doc-saved.up {
+#flash-message.up {
   bottom: 0;
 }
 #houston-doc-actions {

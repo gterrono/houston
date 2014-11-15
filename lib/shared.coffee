@@ -4,6 +4,9 @@ root.Houston ?= {}
 
 Houston._houstonize = (name) -> "_houston_#{name}"
 
+Houston._custom_method_name = (collection_name, method_name) ->
+  Houston._houstonize("#{collection_name}/#{method_name}")
+
 # change _MAX_DOCS_TO_EXPLORE if you need us to explore more docs
 Houston._MAX_DOCS_TO_EXPLORE = 100
 
