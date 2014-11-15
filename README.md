@@ -1,15 +1,9 @@
 Houston
 ===============
-Houston is a zero-config Meteor Admin, modeled after [Django Admin](https://docs.djangoproject.com/en/dev/ref/contrib/admin/), intended as a simple way for developers to give end-users (or themselves) an easy way to view and manipulate their app's data.
+Houston is a zero-config Meteor Admin, modeled after [Django Admin](https://docs.djangoproject.com/en/dev/ref/contrib/admin/), intended as a simple way for developers to give end-users (or themselves) an easy way to view and manipulate their app's data.  [Watch a video demo from Meteor Devshop](https://www.youtube.com/watch?v=vXeWxbJQr5o) or read below for more.
 
 ##### Latest News
-We just added Custom Actions for collections, which map cleanly to Meteor.methods.  Try them out!
-
-#### [Video presentation](https://www.youtube.com/watch?v=vXeWxbJQr5o)
-
-Houston is available through the [Atmosphere](https://atmospherejs.com/package/houston) package manager.
-
-Play around with the demo [here](http://houston-test.meteor.com/admin). The email is `ad@min.com`, and the password is `admin`.
+We just added [Custom Action buttons for collections](#custom-actions) with a `Meteor.methods`-like syntax.  Try them out!
 
 ### Getting Started
 
@@ -19,13 +13,13 @@ meteor add houston:admin
 
 Once installed, navigate to `/admin` to set up your admin account. You can either create a new user to act as Houston's Admin, or upgrade an existing user into an admin.
 
-#### Auto-discovery
-Houston will auto-discover your collections by exploring the top-level (root) namespace on the server for collections.  If your collections are not on the global namespace, see [Customizing Houston](#customizing-houston)
-
 Features
 ========
 
-#### /admin: Get a list of available collections
+#### Auto-discovery
+Houston will auto-discover your collections by exploring the top-level (root) namespace on the server for collections.  If your collections are not on the global namespace, see [Customizing Houston](#customizing-houston)
+
+#### /admin: See available collections
 ![Home View](https://raw.github.com/gterrono/houston/master/doc/home.png)
 
 #### /admin/collection: View all items in collection
