@@ -31,7 +31,7 @@ Package.on_use(function(api) {
   // load html first, https://github.com/meteor/meteor/issues/282
   api.add_files([
     'client/third-party/collapse.js.html',
-    'client/third-party/bootstrap.html', 'client/style.html',
+    'client/third-party/bootstrap.html', 'client/style.css.html',
     'client/admin_login.html', 'client/db_view.html',
     'client/collection_view.html', 'client/document_view.html',
     'client/admin_nav.html', 'client/master_layout.html', 'client/flash_message.html',
