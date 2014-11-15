@@ -2,6 +2,8 @@ Houston
 ===============
 Houston is a zero-config Meteor Admin, modeled after [Django Admin](https://docs.djangoproject.com/en/dev/ref/contrib/admin/), intended as a simple way for developers to give end-users (or themselves) an easy way to view and manipulate their app's data.
 
+**Latest News** We just added Custom Actions for collections, which map cleanly to meteor Methods.  Try them out!
+
 #### [Video presentation](https://www.youtube.com/watch?v=vXeWxbJQr5o)
 
 Houston is available through the [Atmosphere](https://atmospherejs.com/package/houston) package manager.
@@ -141,7 +143,7 @@ Dependencies
 * **Meteor**: As of Houston 1.2.0, Houston requires Meteor 1.0 or newer.
 
 ###Current State
-The 1.2 release should fully support Meteor 1.0. We intend to support it. Please send in feature requests, bug reports, and contribute.
+The 1.3 release should fully support Meteor 1.0. We intend to support it. Please send in feature requests, bug reports, and contribute.
 
 Wishlist
 -------
