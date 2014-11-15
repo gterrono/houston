@@ -1,7 +1,7 @@
 Template._houston_document_view.helpers
   custom_actions: ->
     collection_info = Houston._collections.collections.findOne {@name}
-    {@document, collection: @name, action} for action in (collection_info?.method_names or [])
+    {@document, collection: @name, action} for action in (collection_info.method_names or [])
   showSaved: -> Houston._session('show_saved')
   fields: ->
     fields = Houston._get_fields([@document], exclude_id: true)
