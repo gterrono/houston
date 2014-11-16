@@ -1,7 +1,9 @@
+_RELEASE_VERSION="1.3.1"
+
 Package.describe({
   name: "houston:admin",
   summary: "A zero-config Meteor Admin",
-  version: "1.3.1",
+  version: _RELEASE_VERSION,
   git: "https://github.com/gterrono/houston.git"
 });
 
