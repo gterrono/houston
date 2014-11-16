@@ -36,10 +36,10 @@ git tag v$NEW_VERSION
 handle_error "couldn't create new version tag"
 git push origin master
 handle_error "couldn't push release to master"
-git push -f --tags
+git push --tags
 handle_error "couldn't push tags to master"
 meteor publish
-handle_error "couldn't push to meteor
+handle_error "couldn't push to meteor"
 
 echo "...Looks like that worked! You just published $NEW_VERSION"
 open https://atmospherejs.com/houston/admin
