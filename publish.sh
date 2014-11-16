@@ -36,7 +36,7 @@ git tag v$NEW_VERSION
 handle_error "couldn't create new version tag"
 git push origin master
 handle_error "couldn't push release to master"
-git push --tags
+git push -f --tags
 handle_error "couldn't push tags to master"
 meteor publish
 handle_error "couldn't push to meteor
