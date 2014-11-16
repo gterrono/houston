@@ -10,7 +10,6 @@ Houston._setup_collection = (collection) ->
   name = collection._name
   return if name of ADDED_COLLECTIONS
 
-  console.log(name)
   Houston._setup_collection_methods(collection)
 
   Houston._publish name, (sort, filter, limit, unknown_arg) ->
