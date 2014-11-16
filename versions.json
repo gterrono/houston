@@ -45,6 +45,10 @@
       "1.0.4"
     ],
     [
+      "dburles:mongo-collection-instances",
+      "0.2.2"
+    ],
+    [
       "ddp",
       "1.0.11"
     ],

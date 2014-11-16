@@ -10,6 +10,7 @@ Houston._setup_collection = (collection) ->
   name = collection._name
   return if name of ADDED_COLLECTIONS
 
+  console.log(name)
   Houston._setup_collection_methods(collection)
 
   Houston._publish name, (sort, filter, limit, unknown_arg) ->
@@ -48,6 +49,10 @@ Houston._setup_collection = (collection) ->
 sync_collections = ->
   Houston._admins.findOne()
 
+  collections = {}
+  for collection in (Mongo.Collection.getAll() ? [])
+    collections[collection.name] = collection.instance
+
   _sync_collections = (meh, collections_db) ->
     collection_names = (col.collectionName for col in collections_db \
       when (col.collectionName.indexOf "system.") isnt 0 and
@@ -55,23 +60,7 @@ sync_collections = ->
 
     collection_names.forEach (name) ->
       unless name of ADDED_COLLECTIONS or name of Houston._HIDDEN_COLLECTIONS
-        new_collection = null
-        try
-          new_collection = new Meteor.Collection(name)
-        catch e
-          for key, value of root
-            if name == value?._name # TODO here - typecheck also?
-              new_collection = value
-
-        if new_collection?  # found it!
-          Houston._setup_collection(new_collection)
-        else
-          console.log """
-Houston: couldn't find access to the #{name} collection.
-If you'd like to access the collection from Houston, either
-(1) make sure it is available as a global (top-level namespace) within the server or
-(2) add the collection manually via Houston.add_collection
-"""
+        Houston._setup_collection(collections[name]) if collections[name]?
 
   bound_sync_collections = Meteor.bindEnvironment _sync_collections, (e) ->
     console.log "Failed while syncing collections for reason: #{e}"
