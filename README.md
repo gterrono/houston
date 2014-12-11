@@ -118,7 +118,7 @@ echo {\"public\": {\"houston_root_route\": \"/your_fancy_route\"}} > settings.js
 ```
 
 ####Run locally
-`mrt --settings=settings.json`
+`meteor --settings=settings.json`
 
 ####Run on meteor.com hosting
 `meteor deploy <site> --settings settings.json`

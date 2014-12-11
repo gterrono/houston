@@ -1,7 +1,9 @@
+_RELEASE_VERSION = "1.3.4"
+
 Package.describe({
   name: "houston:admin",
   summary: "A zero-config Meteor Admin",
-  version: "1.3.0",
+  version: _RELEASE_VERSION,
   git: "https://github.com/gterrono/houston.git"
 });
 
@@ -24,6 +26,7 @@ Package.on_use(function(api) {
   //////////////////////////////////////////////////////////////////
   api.use('iron:router@1.0.1', 'client');
   api.use('tmeasday:paginated-subscription@0.2.4', 'client');
+  api.use('dburles:mongo-collection-instances@0.2.2', ['client', 'server']);
 
   //////////////////////////////////////////////////////////////////
   // internal files
