@@ -1,6 +1,7 @@
 Template._houston_custom_actions.helpers
   actions: ->
-    (_.extend({action}, @) for action in @collection_info.method_names)
+    if @collection_info.method_names
+      (_.extend({action}, @) for action in @collection_info.method_names)
 Template._houston_custom_actions.events
   'click .custom-houston-action': (e) ->
     e.preventDefault()
