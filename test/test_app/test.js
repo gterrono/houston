@@ -37,6 +37,12 @@ if (Meteor.isClient) {
     console.log("You pressed the button");
     }
   });
+
+  Houston.menu({
+    'type': 'template',
+    'use': 'MyTmpl',
+    'title': 'MyTmplMenuText'
+  });
 }
 
 if (Meteor.isServer) {
