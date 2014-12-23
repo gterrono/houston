@@ -53,6 +53,11 @@ houston_route 'change_password',
   houston_path: "/password"
   template: 'change_password'
 
+houston_route 'custom_template',
+  houston_path: "/custom/:template"
+  template: 'custom_template_view'
+  data: -> this.params
+
 houston_route 'collection',
   houston_path: "/:collection_name"
   data: -> Houston._get_collection(@params.collection_name)
@@ -67,11 +72,6 @@ houston_route 'document',
     document = collection.findOne _id: @params._id
     {document, collection, name: @params.collection}
   template: 'document_view'
-
-houston_route 'custom_template',
-  houston_path: "/:template"
-  template: 'custom_template_view'
-  data: -> this.params
 
 # ########
 # filters
