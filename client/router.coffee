@@ -54,7 +54,7 @@ houston_route 'change_password',
   template: 'change_password'
 
 houston_route 'custom_template',
-  houston_path: "/custom/:template"
+  houston_path: "/actions/:template"
   template: 'custom_template_view'
   data: -> this.params
 
