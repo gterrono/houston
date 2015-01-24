@@ -20,7 +20,7 @@ test -z "`git status --porcelain --untracked-files=no`"
 handle_error "Make sure your current branch is clean before publishing"
 
 mv package.js package.js.temp
-handle_error "couldn't create pckage.js.temp"
+handle_error "couldn't create package.js.temp"
 echo "_RELEASE_VERSION = \"$NEW_VERSION\";" > package.js
 handle_error "couldn't write version to package.js"
 tail -n +2 package.js.temp >> package.js

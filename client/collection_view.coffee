@@ -43,7 +43,12 @@ Template._houston_collection_view.helpers
   custom_selector_error: -> Houston._session("custom_selector_error")
   field_filter_disabled: -> if Houston._session("custom_selector") then "disabled" else ""
   headers: -> get_collection_view_fields(@name)
-  nonid_headers: -> get_collection_view_fields(@name)[1..]
+  nonid_headers: ->
+    headers = get_collection_view_fields(@name)
+    if headers[0]?._required # do not remove _id if it is required by schema
+      headers
+    else
+      headers[1..]
   document_id: -> @_id + ""
   num_of_records: -> collection_count(@name) or "no"
   pluralize: -> 's' unless collection_count(@name) == 1

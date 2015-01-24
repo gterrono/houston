@@ -52,14 +52,28 @@ Houston._nested_field_lookup = (object, path) ->
 Houston._convert_to_correct_type = (field, val, collection) ->
   find_obj = {}
   find_obj[field] = $exists: true
-  sample_val = Houston._nested_field_lookup(collection.findOne(find_obj), field)
-  constructor = sample_val.constructor
-  if typeof sample_val == 'object'
-    new constructor(val)
-  else if typeof sample_val == 'boolean'
-    val == 'true'
+  one = collection.findOne(find_obj)
+  fields = _.object(_.map(Houston._collections.collections.findOne({name: collection.name}).fields, (field) -> # TODO it may be too heavy
+    [
+      field.name
+      type: field.type
+    ]
+  ))
+  constructor = window[fields[field].type]
+  if not one and constructor
+    if constructor is Boolean # special case for new Boolean()
+      val == 'true'
+    else
+      new constructor(val)
   else
-    constructor(val)
+    sample_val = Houston._nested_field_lookup(one, field)
+    constructor = sample_val.constructor
+    if typeof sample_val == 'object'
+      new constructor(val)
+    else if typeof sample_val == 'boolean'
+      val == 'true'
+    else
+      constructor(val)
 
 Houston._get_type = (field, collection) ->
   find_obj = {}
