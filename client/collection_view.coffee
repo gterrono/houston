@@ -166,6 +166,12 @@ Template._houston_collection_view.events
     if confirm("Are you sure you want to delete the document with _id #{id}?")
       Houston._call("#{@collection}_delete", id)
 
+  'click .houston-delete-all': (e) ->
+    e.preventDefault()
+    name = $(e.currentTarget).data('name')
+    if confirm("Are you sure you want to delete all document from #{name}?")
+      Houston._call("#{name}_deleteAll")
+
   'click #houston-cancel': ->
     $('#houston-create-document').addClass('hidden')
     $('#houston-create-btn').show()
