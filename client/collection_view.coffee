@@ -169,7 +169,7 @@ Template._houston_collection_view.events
   'click .houston-delete-all': (e) ->
     e.preventDefault()
     name = $(e.currentTarget).data('name')
-    if confirm("Are you sure you want to delete all of the documents from #{name}?")
+    if confirm("Are you sure you want to delete all the #{name}?")
       Houston._call("#{name}_deleteAll")
 
   'click #houston-cancel': ->

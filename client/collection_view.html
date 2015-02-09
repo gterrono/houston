@@ -28,12 +28,17 @@
   <div class="row">
     <div class="col-md-12">
       <div class="page-header">
+        <div id="collection-page-header-actions" class="pull-right">
+          <button data-name="{{name}}" class="btn btn-sm houston-delete-all btn-danger">
+            <i class="fa fa-trash-o"></i>
+            Delete all
+          </button>
+          <button id="houston-create-btn" class="btn btn-sm btn-success">
+            <i class="fa fa-plus"></i>
+            New {{name}}
+          </button>
+        </div>
 
-        <button id="houston-create-btn"
-                class="btn btn-sm btn-success pull-right"><i
-            class="fa fa-plus"></i>New
-          {{name}}
-        </button>
         <h1>{{name}}
           <small>{{num_of_records}} record{{pluralize}}</small>
         </h1>
@@ -71,10 +76,6 @@
   </div>
   <div class="row">
     <div class="col-md-12" style="overflow-x: auto">
-      <div data-name="{{name}}"
-           class="btn btn-xs houston-delete-all btn-danger">
-        <i class="fa fa-trash-o"></i>Delete All
-      </div>
       <h4>
         <small>Double click any cell to edit its value.</small>
       </h4>
