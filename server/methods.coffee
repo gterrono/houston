@@ -39,4 +39,12 @@ Houston._setup_collection_methods = (collection) ->
       id = collection.findOne(new Meteor.Collection.ObjectID(id))
       collection.remove(id)
 
+  methods[Houston._houstonize "#{name}_deleteAll"] = require_admin () ->
+    collection.remove({})
+
+
+
+
+
+
   Meteor.methods(methods)
