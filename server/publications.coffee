@@ -34,7 +34,8 @@ Houston._setup_collection = (collection) ->
     changed: (document) ->
       Houston._collections.collections.update {name},
         $addToSet: fields: $each: Houston._get_fields([document])
-    removed: (document) -> Houston._collections.collections.update {name}, {$inc: {count: -1}}
+    removed: (document) ->
+      Houston._collections.collections.update {name}, {$inc: {count: -1}}
 
   fields = Houston._get_fields_from_collection(collection)
   c = Houston._collections.collections.findOne {name}
