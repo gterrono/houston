@@ -65,13 +65,6 @@ Template._houston_collection_view.helpers
     else
       ''
 
-Template._houston_collection_view.rendered = ->
-  $win = $(window)
-  $win.scroll ->
-    if $win.scrollTop() + 300 > $(document).height() - $win.height() and
-      Houston._paginated_subscription.limit() < collection_count()
-        Houston._paginated_subscription.loadNextPage()
-
 get_collection_view_fields = (name) ->
   _.map(collection_info(name)?.fields, (obj) ->
     obj.collection_name = name
@@ -196,6 +189,13 @@ Template._houston_collection_view.events
 
   'submit form.houston-filter-form': (e) ->
     e.preventDefault()
+
+  'click #houston-load-more': (e) ->
+    e.preventDefault()
+    console.log(@)
+    if Houston._paginated_subscription.limit() < collection_count(@name)
+      Houston._paginated_subscription.loadNextPage()
+
 
 Template._houston_new_document_field.helpers
   field_is_id: -> @name is '_id'
