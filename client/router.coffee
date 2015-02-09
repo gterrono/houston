@@ -6,7 +6,7 @@ Houston._subscribe = (name) -> Meteor.subscribe Houston._houstonize name
 Houston._subscribe_to_collections()
 
 setup_collection = (collection_name, document_id) ->
-  Houston._page_length = 20
+  Houston._page_length = 9999999
   subscription_name = Houston._houstonize collection_name
   filter = if document_id
     # Sometimes you can lookup with _id being a string, sometimes not
