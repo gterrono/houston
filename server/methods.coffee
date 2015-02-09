@@ -42,9 +42,4 @@ Houston._setup_collection_methods = (collection) ->
   methods[Houston._houstonize "#{name}_deleteAll"] = require_admin () ->
     collection.remove({})
 
-
-
-
-
-
   Meteor.methods(methods)
