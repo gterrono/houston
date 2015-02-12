@@ -1,12 +1,12 @@
 window.Houston ?= {}
 
 Houston._ROOT_ROUTE = Meteor.settings?.public?.houston_root_route or "/admin"
+Houston._page_length = Meteor.settings?.public?.documents_per_page or 20
 Houston._subscribe = (name) -> Meteor.subscribe Houston._houstonize name
 
 Houston._subscribe_to_collections()
 
 setup_collection = (collection_name, document_id) ->
-  Houston._page_length = 20
   subscription_name = Houston._houstonize collection_name
   filter = if document_id
     # Sometimes you can lookup with _id being a string, sometimes not
