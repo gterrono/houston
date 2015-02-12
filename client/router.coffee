@@ -17,9 +17,8 @@ setup_collection = (collection_name, document_id) ->
     {_id: document_id}
   else
     {}
-  Houston._paginated_subscription =
-    Meteor.subscribeWithPagination subscription_name, {}, filter,
-      Houston._page_length
+
+  Houston._subscribeWithPagination subscription_name, {}, filter
 
 Houston._houstonize_route = (name) ->
   Houston._houstonize(name)[1..]

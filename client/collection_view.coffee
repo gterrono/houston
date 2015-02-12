@@ -27,11 +27,8 @@ get_filter_query = (collection) ->
 resubscribe = (name) ->
   # Stop the old subscription and resubscribe with the new filter/sort
   subscription_name = "_houston_#{name}"
-  Houston._paginated_subscription.stop()
-  Houston._paginated_subscription =
-    Meteor.subscribeWithPagination subscription_name,
-      get_sort_by(), get_filter_query(Houston._get_collection(name)),
-      Houston._page_length
+  Houston._.subscribeWithPagination subscription_name,
+    get_sort_by(), get_filter_query(Houston._get_collection(name))
 
 collection_info = (name) -> Houston._collections.collections.findOne {name}
 
@@ -45,6 +42,8 @@ Template._houston_collection_view.helpers
   headers: -> get_collection_view_fields(@name)
   nonid_headers: -> get_collection_view_fields(@name)[1..]
   document_id: -> @_id + ""
+  more_to_load: ->
+    Houston._paginated_subscription.limit() < collection_count(@name)
   num_of_records: -> collection_count(@name) or "no"
   pluralize: -> 's' unless collection_count(@name) == 1
   rows: ->
@@ -65,28 +64,25 @@ Template._houston_collection_view.helpers
     else
       ''
 
-Template._houston_collection_view.rendered = ->
-  $win = $(window)
-  $win.scroll ->
-    if $win.scrollTop() + 300 > $(document).height() - $win.height() and
-      Houston._paginated_subscription.limit() < collection_count()
-        Houston._paginated_subscription.loadNextPage()
-
 get_collection_view_fields = (name) ->
   _.map(collection_info(name)?.fields, (obj) ->
     obj.collection_name = name
     obj) or []
 
 Template._houston_collection_view.events
+  "click button#load-more": (e) ->
+    e.preventDefault()
+    Houston._paginated_subscription.loadNextPage()
+
   "click a.houston-sort": (e) ->
-      e.preventDefault()
-      sort_key = this.name
-      if (Houston._session('sort_key') == sort_key)
-        Houston._session('sort_order', Houston._session('sort_order') * - 1)
-      else
-        Houston._session('sort_key', sort_key)
-        Houston._session('sort_order', 1)
-      resubscribe(@collection_name)
+    e.preventDefault()
+    sort_key = this.name
+    if (Houston._session('sort_key') == sort_key)
+      Houston._session('sort_order', Houston._session('sort_order') * - 1)
+    else
+      Houston._session('sort_key', sort_key)
+      Houston._session('sort_order', 1)
+    resubscribe(@collection_name)
 
   'dblclick .houston-collection-field': (e) ->
     $this = $(e.currentTarget)
