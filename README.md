@@ -107,14 +107,18 @@ Houston.add_collection(Houston._admins);
 You can also `Houston.hide_collection(collection)`, though this is not as well-tested.
 
 ### Changing the root path of Houston from `/admin`
-By default, Houston is hosted on `/admin`, but you're welcome to change this using `Meteor.settings` [(see the docs)](http://docs.meteor.com/#meteor_settings).
+By default, Houston is hosted on `/admin`, but you're welcome to change this by setting `public.houston_root_route` in `Meteor.settings` [(see the docs)](http://docs.meteor.com/#meteor_settings).
 
-Don't want to read the settings docs? Here's your TL;DR:
+### Configuring items per page in collection view
+By default, Houston displays 20 items per page (infinite scroll is currently buggy - pull requests most welcome).
 
-####Setup
+If you need to see more items per page and filters don't do the trick, set "public.houston_documents_per_page" in your `Meteor.settings.`
+
+### TL;DR How do use Meteor Settings
+#### Setting up
 Add a settings.json file to your project. Something like:
 ```bash
-echo {\"public\": {\"houston_root_route\": \"/your_fancy_route\"}} > settings.json
+echo {\"public\": {\"houston_root_route\": \"/your_fancy_route\", \"houston_documents_per_page\": 9001}} > settings.json
 ```
 
 ####Run locally
@@ -127,6 +131,8 @@ Running Tests
 -----
 Tests are currently based on a test app and Velocity.
 run with ./run-tests.sh
+
+Test coverage is currently rather meager. Pull requests & contributors welcome. Be the hero you always knew you could be.
 
 Dependencies
 -----

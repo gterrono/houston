@@ -1,7 +1,7 @@
 window.Houston ?= {}
 
 Houston._ROOT_ROUTE = Meteor.settings?.public?.houston_root_route or "/admin"
-Houston._page_length = Meteor.settings?.public?.documents_per_page or 20
+Houston._page_length = Meteor.settings?.public?.houston_documents_per_page or 20
 Houston._subscribe = (name) -> Meteor.subscribe Houston._houstonize name
 
 Houston._subscribe_to_collections()
