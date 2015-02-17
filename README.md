@@ -43,7 +43,7 @@ Collection view includes support for
 
 Declare custom actions for specific collections using a `Meteor.methods`-like syntax.
 
-#####On the server
+##### On the server
 ```javascript
 Houston.methods("Posts", {
   "Publish": function (post) {
@@ -121,10 +121,10 @@ Add a settings.json file to your project. Something like:
 echo {\"public\": {\"houston_root_route\": \"/your_fancy_route\", \"houston_documents_per_page\": 9001}} > settings.json
 ```
 
-####Run locally
+#### Run locally
 `meteor --settings=settings.json`
 
-####Run on meteor.com hosting
+#### Run on meteor.com hosting
 `meteor deploy <site> --settings settings.json`
 
 Running Tests
