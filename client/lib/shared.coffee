@@ -16,6 +16,11 @@ Handlebars.registerHelper 'adminUserExists', Houston._admin_user_exists
 
 Houston._collections ?= {}
 
+Houston._subscribeWithPagination = (subscription_name, sort_by, filter) ->
+  old_handle = Houston._paginated_subscription
+  old_handle?.stop()
+  Houston._paginated_subscription = Meteor.subscribeWithPagination(subscription_name, sort_by, filter, old_handle?.limit() or Houston._page_length)
+
 # regardless of what version of meteor we are using,
 # get the right LocalCollection
 Houston._get_collection = (collection_name) ->

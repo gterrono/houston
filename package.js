@@ -25,7 +25,7 @@ Package.on_use(function(api) {
   // Third-party package dependencies
   //////////////////////////////////////////////////////////////////
   api.use('iron:router@1.0.1', 'client');
-  api.use('tmeasday:paginated-subscription@0.2.4', 'client');
+  api.use('percolate:paginated-subscription@0.2.4', 'client');
   api.use('dburles:mongo-collection-instances@0.2.6', ['client', 'server']);
 
   //////////////////////////////////////////////////////////////////
