@@ -1,27 +1,28 @@
 # Tests to Write
 
 [ ] Admin access
-  [ ] Can see list of databases
+  [ ] List of databases renders
   [ ] Can add new admins
   [ ] See columns
   [ ] Add new item
   [ ] Filter
   [ ] See schema
   [ ] Functional Back, Save, Delete buttons
-  [ ] Make sure pagination works properly
+  [ ] Pagination works properly
 
 [ ] Non-admin
+  [ ] Ability to claim admin status
   [ ] Can see login screen
   [ ] Cannot see admin panel
 
 [ ] Change settings
   [ ] Meteor.settings for changing root
   [ ] Method for making new buttons (Houston.methods)
-    [ ] Make sure buttons appear
-    [ ] Make sure buttons do what we want
+    [ ] Buttons appear
+    [ ] Buttons do what we want
   [ ] Method for adding custom menu items (Houston.menu)
-    [ ] Must be able to add link or template
-    [ ] Make sure the buttons appear in header
+    [ ] Add link or template
+    [ ] Buttons to links/templates appear in header
 
 [ ] Proper error handling
 
@@ -29,8 +30,8 @@
   [ ] Populated databases are being discovered automatically
   [ ] Non-empty collections automatically populate
   [ ] Simple Schema and Collection2 can be used to set schema
-  [ ] Make sure we hide "users" and "houston_admin" by default
-    [ ] Make sure we can add them back in
+  [ ] Hide "users" and "houston_admin" by default
+    [ ] Accounts above can be added back in
 
 ## Priorities
 
