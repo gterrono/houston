@@ -4,26 +4,34 @@
 // // You can use normal require here, cucumber is NOT run in a Meteor context (by design)
 // var url = require('url');
 
+/*
+NOTE: this.server.call runs synchronously.
+If you want it to run async, you must use
+this.server.callAsync
+*/
+
 module.exports = function () {
   this.Given(/^I am an admin$/, function (callback) {
-    this.server.call('test/reset').then(function(){
-      console.log("this was a promise?");
+    // First: reset accounts
+    this.server.call('test/reset');
+
+    // Second: create an account
+    var id = this.server.call('test/createUser', "bob", "password");
+
+    // Third: add user to admin
+    this.server.call('_houston_make_admin', id)
+
+    // Third: login
+    // this.client.call(Meteor.loginWithPassword('bob', 'password'))
+    // this.client.execute(Meteor.loginWithPassword('bob', 'password'))
+    this.client.execute(function() {
+      // Meteor.loginWithPassword('bob', 'password')
+      console.log(this);
     })
-    // // First: reset accounts
-    // this.server.call("test/reset").then(function(res) {
-    //   console.log(res);
-    //   // Second: create an account
-    //   this.server.call("test/createUser").then(function(res){
-    //     console.log(res);
-    //     // Third: login
-    //     this.server.call("test/loginWithPassword").then(function(res){
-    //       console.log("logged in with password");
-    //     })
-    //   })
-    // })
 
+    // Fourth:
+    // Check to make sure the account is an admin
 
-  // Check to make sure the account is an admin
   });
 
   this.Given(/^I am on the route "([^"]*)"$/, function (arg1, callback) {

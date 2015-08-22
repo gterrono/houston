@@ -4,19 +4,19 @@
 
   Meteor.methods({
     'test/reset' : function() {
-        return Meteor.users.remove({})
-
+      return Meteor.users.remove({})
 
     },
-    'test/createUser': function() {
+    'test/createUser': function(username, password) {
       return Accounts.createUser({
-        username: "bob",
-        password: "password"
+        username: username,
+        password: password
       })
-    },
-    'test/loginWithPassword': function() {
-      return Meteor.loginWithPassword('bob', 'password')
     }
   });
 
 })();
+
+//
+// Houston._user_is_admin = (id) ->
+//   return id? and Houston._admins.findOne user_id: id
