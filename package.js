@@ -26,7 +26,7 @@ Package.on_use(function(api) {
   //////////////////////////////////////////////////////////////////
   api.use('iron:router@1.0.1', 'client');
   api.use('tmeasday:paginated-subscription@0.2.4', 'client');
-  api.use('dburles:mongo-collection-instances@0.2.6', ['client', 'server']);
+  api.use('dburles:mongo-collection-instances@0.3.4', ['client', 'server']);
 
   //////////////////////////////////////////////////////////////////
   // internal files
