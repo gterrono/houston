@@ -2,23 +2,20 @@ module.exports = function () {
   this.Given(/^I am an admin$/, function (callback) {
 
     // First: reset accounts
-    // this.server.call('test/reset');
+    this.server.call('test/reset');
 
     // Second: create an account
-    // var id = this.server.call('test/createUser', "bob", "password");
+    var id = this.server.call('test/createUser', "bob", "password");
 
     // Third: give user admin status
-    // this.server.call('_houston_make_admin', id)
+    this.server.call('_houston_make_admin', id)
 
     // Fourth: login
-    // client.execute(function() {
-    //   Meteor.loginWithPassword('bob', 'password')
-    // })
+    client.execute(function() {
+      Meteor.loginWithPassword('bob', 'password')
+    })
 
     // Fifth: check to make sure the account is an admin?
-    callback.pending()
-  })
-
     callback.pending()
   });
 

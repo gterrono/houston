@@ -16,7 +16,3 @@
   });
 
 })();
-
-//
-// Houston._user_is_admin = (id) ->
-//   return id? and Houston._admins.findOne user_id: id
