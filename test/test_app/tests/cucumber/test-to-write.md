@@ -27,11 +27,11 @@
 [ ] Proper error handling
 
 [ ] Automatic database discovery
-  [ ] Populated databases are being discovered automatically
-  [ ] Non-empty collections automatically populate
-  [ ] Simple Schema and Collection2 can be used to set schema
-  [ ] Hide "users" and "houston_admin" by default
-    [ ] Accounts above can be added back in
+  [x] Populated databases are being discovered automatically
+  [x] Non-empty collections automatically populate
+  [x] Simple Schema and Collection2 can be used to set schema
+  [x] Hide "users" and "houston_admin" by default
+    [x] Accounts above can be added back in
 
 ## Priorities
 
