@@ -1,28 +1,28 @@
 # Tests to Write
 
-[ ] Admin access
-  [ ] List of databases renders
-  [ ] Can add new admins
-  [ ] See columns
-  [ ] Add new item
-  [ ] Filter
-  [ ] See schema
-  [ ] Functional Back, Save, Delete buttons
-  [ ] Pagination works properly
+[x] Admin access
+  [x] List of databases renders
+  [x] Can add new admins
+  [x] See columns
+  [x] Add new item
+  [x] Filter
+  [x] See schema
+  [x] Functional Back, Save, Delete buttons
+  [x] Pagination works properly
 
-[ ] Non-admin
-  [ ] Ability to claim admin status
-  [ ] Can see login screen
-  [ ] Cannot see admin panel
+[x] Non-admin
+  [x] Ability to claim admin status
+  [x] Can see login screen
+  [x] Cannot see admin panel
 
-[ ] Change settings
-  [ ] Meteor.settings for changing root
-  [ ] Method for making new buttons (Houston.methods)
-    [ ] Buttons appear
-    [ ] Buttons do what we want
-  [ ] Method for adding custom menu items (Houston.menu)
-    [ ] Add link or template
-    [ ] Buttons to links/templates appear in header
+[x] Change settings
+  [x] Meteor.settings for changing root
+  [x] Method for making new buttons (Houston.methods)
+    [x] Buttons appear
+    [x] Buttons do what we want
+  [x] Method for adding custom menu items (Houston.menu)
+    [x] Add link or template
+    [x] Buttons to links/templates appear in header
 
 [ ] Proper error handling
 
