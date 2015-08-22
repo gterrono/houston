@@ -24,7 +24,7 @@ module.exports = function () {
     // Third: login
     // this.client.call(Meteor.loginWithPassword('bob', 'password'))
     // this.client.execute(Meteor.loginWithPassword('bob', 'password'))
-    this.client.execute(function() {
+    client.execute(function() {
       // Meteor.loginWithPassword('bob', 'password')
       console.log(this);
     })
