@@ -4,12 +4,10 @@
 
   Meteor.methods({
     'test/reset' : function() {
-      console.log("resetting");
       return Meteor.users.remove({})
 
     },
     'test/createUser': function(username, password) {
-      console.log("creating");
       return Accounts.createUser({
         username: username,
         password: password

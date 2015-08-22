@@ -1,43 +1,25 @@
-/*
-NOTE: this.server.call runs synchronously.
-If you want it to run async, you must use
-this.server.callAsync
-
-var _ = require('underscore');
-*/
-//
-// module.exports = function () {
-//   this.Given(/^I am an admin$/, function (callback) {
-//     // // First: reset accounts
-//     // this.server.call('test/reset');
-//     //
-//     // // Second: create an account
-//     // var id = this.server.call('test/createUser', "bob", "password");
-//     //
-//     // // Third: add user to admin
-//     // this.server.call('_houston_make_admin', id)
-//     //
-//     // // Third: login
-//     // // this.client.call(Meteor.loginWithPassword('bob', 'password'))
-//     // // this.client.execute(Meteor.loginWithPassword('bob', 'password'))
-//     // client.execute(function() {
-//     //   // Meteor.loginWithPassword('bob', 'password')
-//     //   console.log(this);
-//     // })
-//
-//     // Fourth:
-//     // Check to make sure the account is an admin
-//
-//     callback.pending();
-//
-//   });
-//
-// };
-
 module.exports = function () {
   this.Given(/^I am an admin$/, function (callback) {
-    // Write code here that turns the phrase above into concrete actions
-    callback.pending();
+
+    // First: reset accounts
+    // this.server.call('test/reset');
+
+    // Second: create an account
+    // var id = this.server.call('test/createUser', "bob", "password");
+
+    // Third: give user admin status
+    // this.server.call('_houston_make_admin', id)
+
+    // Fourth: login
+    // client.execute(function() {
+    //   Meteor.loginWithPassword('bob', 'password')
+    // })
+
+    // Fifth: check to make sure the account is an admin?
+    callback.pending()
+  })
+
+    callback.pending()
   });
 
   this.Given(/^I have more than one collection$/, function (callback) {
