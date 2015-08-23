@@ -47,7 +47,7 @@ Houston._setup_collection = (collection) ->
   ADDED_COLLECTIONS[name] = collection
 
 sync_collections = ->
-  Houston._admins.findOne()
+  Houston._admins.findOne() # TODO Why is this here?
 
   collections = {}
   for collection in (Mongo.Collection.getAll() ? [])
