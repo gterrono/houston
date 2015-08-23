@@ -10,7 +10,7 @@ boilerplate-generator@1.0.3
 callback-hook@1.0.3
 check@1.0.5
 coffeescript@1.0.6
-dburles:mongo-collection-instances@0.2.6
+dburles:mongo-collection-instances@0.3.4
 ddp@1.1.0
 deps@1.0.7
 ejson@1.0.6
@@ -18,7 +18,7 @@ email@1.0.6
 fastclick@1.0.3
 geojson-utils@1.0.3
 grigio:babel@0.1.7
-houston:admin@2.0.3
+houston:admin@2.0.4
 html-tools@1.0.4
 htmljs@1.0.4
 http@1.1.0
@@ -34,6 +34,7 @@ iron:router@1.0.9
 iron:url@1.0.9
 jquery@1.11.3_2
 json@1.0.3
+lai:collection-extensions@0.1.4
 launch-screen@1.0.2
 less@1.0.14
 livedata@1.0.13
