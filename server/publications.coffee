@@ -75,6 +75,7 @@ Meteor.methods
     # limit one admin
     return if Houston._admins.findOne {'user_id': $exists: true}
     Houston._admins.insert {user_id}
+    Houston._admins.insert {exists: true}
     sync_collections() # reloads collections in case of new app
     return true
 
@@ -87,7 +88,11 @@ Houston._publish 'collections', ->
 
 # TODO address inherent security issue
 Houston._publish 'admin_user', ->
-  Houston._admins.find {}
+  unless Houston._user_is_admin @userId
+    return Houston._admins.find {exists: true}
+  return Houston._admins.find {}
 
 Meteor.startup ->
   sync_collections()
+  if Houston._admins.find().count() > 0 and !Houston._admins.findOne({exists: true})
+    Houston._admins.insert {exists: true}

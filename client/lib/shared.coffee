@@ -4,6 +4,7 @@ Houston.becomeAdmin = ->
   Houston._call 'make_admin', Meteor.userId(), ->
     Houston._subscribe_to_collections() # resubscribe so you get them
     Houston._go 'home'
+    location.reload()
 
 Houston._subscribe_to_collections = ->
   Houston._collections_sub.stop() if Houston._collections_sub?
