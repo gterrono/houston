@@ -67,9 +67,11 @@ Template._houston_collection_view.helpers
 
 Template._houston_collection_view.rendered = ->
   $win = $(window)
+  collection_name = @data.name
+  resubscribe(collection_name)
   $win.scroll ->
     if $win.scrollTop() + 300 > $(document).height() - $win.height() and
-      Houston._paginated_subscription.limit() < collection_count()
+      Houston._paginated_subscription.limit() < collection_count(collection_name)
         Houston._paginated_subscription.loadNextPage()
 
 get_collection_view_fields = (name) ->
