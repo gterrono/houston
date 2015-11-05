@@ -19,10 +19,11 @@ Template._houston_document_view.events
   'click #houston-save': (e) ->
     e.preventDefault()
     update_dict = {}
+    collection = Houston._get_collection(@name)
     for field in $('.houston-field')
       field_name = field.name.split(' ')[0]
       unless field_name is '_id'
-        update_dict[field_name] = Houston._convert_to_correct_type(field_name, field.value, @collection)
+        update_dict[field_name] = Houston._convert_to_correct_type(field_name, field.value, collection)
     Houston._call("#{@name}_update", @document._id, $set: update_dict, Houston._show_flash)
 
   'click #houston-delete': (e) ->
