@@ -27,7 +27,7 @@ get_filter_query = (collection) ->
 resubscribe = (name) ->
   # Stop the old subscription and resubscribe with the new filter/sort
   subscription_name = "_houston_#{name}"
-  Houston._paginated_subscription.stop()
+  Houston._paginated_subscription?.stop()
   Houston._paginated_subscription =
     Meteor.subscribeWithPagination subscription_name,
       get_sort_by(), get_filter_query(Houston._get_collection(name)),

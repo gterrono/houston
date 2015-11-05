@@ -37,8 +37,11 @@ houston_route = (route_name, options) =>
     subscriptions = if options.subs then options.subs(this.params) else []
     subscriptions.push Houston._subscribe('admin_user')
     subscriptions
-  options.action = ->
-    BlazeLayout.render options.layoutTemplate, {template: options.template}
+  options.action = (params) ->
+    # keep iron-router style this.params working via .call
+    data = options.data.call({params})
+    BlazeLayout.render options.layoutTemplate,
+      {template: options.template, data}
   FlowRouter.route "#{Houston._ROOT_ROUTE}#{options.houston_path}", options
 
 houston_route 'home',
@@ -62,7 +65,8 @@ houston_route 'custom_template',
 
 houston_route 'collection',
   houston_path: "/:collection_name"
-  data: -> Houston._get_collection(@params.collection_name)
+  data: ->
+    Houston._get_collection(@params.collection_name)
   subs: (params) -> [setup_collection(params.collection_name)]
   template: 'collection_view'
 
@@ -81,13 +85,13 @@ houston_route 'document',
 mustBeAdmin = ->
   if !Meteor.user()
     if Meteor.loggingIn()
-      @render 'houstonLoading'
+      console.log "logging in, TODO(AMK) do a nice job"
     else
       Houston._go 'login'
   else
-    if @ready() and not Houston._user_is_admin Meteor.userId()
+    console.log "should check if ready I guess... TODO(AMK) "
+    if not Houston._user_is_admin Meteor.userId()
       Houston._go 'login'
-    else
 
 # If the host app doesn't have a router, their html may show up
 hide_non_admin_stuff = ->
@@ -108,7 +112,7 @@ FlowRouter.notFound =
   action: (args...) ->
     non_houston_routes = _.filter(
       FlowRouter._routes,
-      (route) -> route.name.indexOf('houston_') != 0)
+      (route) -> route.name? and route.name.indexOf('houston_') != 0)
     if non_houston_routes.length > 0
       originalNotFound.action(args...)
     else
