@@ -2,8 +2,15 @@ if (Meteor.isClient) {
   // counter starts at 0
   Session.setDefault('counter', 0);
 
-  Router.route('/routeme', function () {
-      this.render('hello');
+//  Router.route('/routeme', function () {
+//      this.render('hello');
+//  });
+
+  FlowRouter.route('/routeme/:stuff', {
+    action: function(params, queryParams) {
+      console.log("Yeah! We are on the post:", params.stuff);
+      BlazeLayout.render('mainLayout', {content: 'hello'});
+    }
   });
 
   Template.hello.helpers({
