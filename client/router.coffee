@@ -25,7 +25,7 @@ Houston._houstonize_route = (name) ->
   Houston._houstonize(name)[1..]
 
 Houston._go = (route_name, options) ->
-  Router.go Houston._houstonize_route(route_name), options
+  FlowRouter.go Houston._houstonize_route(route_name), options
 
 
 houston_route = (route_name, options) =>
@@ -37,7 +37,9 @@ houston_route = (route_name, options) =>
     subscriptions = if options.subs then options.subs(this.params) else []
     subscriptions.push Houston._subscribe('admin_user')
     subscriptions
-  Router.route "#{Houston._ROOT_ROUTE}#{options.houston_path}", options
+  options.action = ->
+    BlazeLayout.render options.layoutTemplate, {template: options.template}
+  FlowRouter.route "#{Houston._ROOT_ROUTE}#{options.houston_path}", options
 
 houston_route 'home',
   houston_path: '/'
@@ -86,27 +88,28 @@ mustBeAdmin = ->
     if @ready() and not Houston._user_is_admin Meteor.userId()
       Houston._go 'login'
     else
-      @next()
 
 # If the host app doesn't have a router, their html may show up
 hide_non_admin_stuff = ->
   $('body').css('visibility', 'hidden').children().hide()
   $('body>.houston').show()
-  @next()
 remove_host_css = ->
   $('link[rel="stylesheet"]').remove()
-  @next()
 
 BASE_HOUSTON_ROUTES = (Houston._houstonize_route(name) for name in ['home', 'collection', 'document', 'change_password', 'custom_template'])
 ALL_HOUSTON_ROUTES = BASE_HOUSTON_ROUTES.concat([Houston._houstonize_route('login')])
-Router.onBeforeAction mustBeAdmin, only: BASE_HOUSTON_ROUTES
-Router.onBeforeAction hide_non_admin_stuff, only: ALL_HOUSTON_ROUTES
-Router.onBeforeAction remove_host_css, only: ALL_HOUSTON_ROUTES
+FlowRouter.triggers.enter([mustBeAdmin], only: BASE_HOUSTON_ROUTES)
+FlowRouter.triggers.enter(
+  [hide_non_admin_stuff, remove_host_css],
+  only: ALL_HOUSTON_ROUTES)
 
-onRouteNotFound = Router.onRouteNotFound
-Router.onRouteNotFound = (args...) ->
-  non_houston_routes = _.filter(Router.routes, (route) -> route.name.indexOf('houston_') != 0)
-  if non_houston_routes.length > 0
-    onRouteNotFound.apply Router, args
-  else
-    console.log "Note: Houston is suppressing Iron-Router errors because we don't think you are using it."
+originalNotFound = FlowRouter.notFound
+FlowRouter.notFound =
+  action: (args...) ->
+    non_houston_routes = _.filter(
+      FlowRouter._routes,
+      (route) -> route.name.indexOf('houston_') != 0)
+    if non_houston_routes.length > 0
+      originalNotFound.action(args...)
+    else
+      console.log "Note: Houston is suppressing Iron-Router errors because we don't think you are using it."
