@@ -50,15 +50,15 @@ Template._houston_collection_view.helpers
   rows: ->
     collection = Houston._get_collection(@name)
     documents = collection?.find(get_filter_query(collection), {sort: get_sort_by()}).fetch()
-    _.map documents, (d) ->
+    _.map documents, (d) =>
       d.collection = @name
       d._id = d._id._str or d._id
       return d
   values_in_order: ->
-    fields_in_order = get_collection_view_fields(collection)
+    fields_in_order = get_collection_view_fields(@collection)
     names_in_order = _.clone fields_in_order
     values = (Houston._nested_field_lookup(@, field.name) for field in fields_in_order[1..])  # skip _id
-    ({field_value: field_value.toString(), field_name, collection} for [field_value, {name: field_name}] in _.zip values, names_in_order[1..])
+    ({field_value: field_value.toString(), field_name, @collection} for [field_value, {name: field_name}] in _.zip values, names_in_order[1..])
   filter_value: ->
     if Houston._session('field_selectors') and Houston._session('field_selectors')[@]
       Houston._session('field_selectors')[@]
