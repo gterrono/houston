@@ -1,6 +1,5 @@
 accounts-base@1.2.2
 accounts-password@1.1.4
-arillo:flow-router-helpers@0.4.5
 autopublish@1.0.4
 autoupdate@1.2.4
 babel-compiler@5.8.24_1
@@ -83,4 +82,3 @@ underscore@1.0.4
 url@1.0.5
 webapp@1.2.3
 webapp-hashing@1.0.5
-zimme:active-route@2.3.2

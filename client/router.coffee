@@ -39,7 +39,7 @@ houston_route = (route_name, options) =>
     subscriptions
   options.action = (params) ->
     # keep iron-router style this.params working via .call
-    data = options.data.call({params})
+    data = options.data?.call({params})
     BlazeLayout.render options.layoutTemplate,
       {template: options.template, data}
   FlowRouter.route "#{Houston._ROOT_ROUTE}#{options.houston_path}", options
@@ -47,7 +47,6 @@ houston_route = (route_name, options) =>
 houston_route 'home',
   houston_path: '/'
   template: 'db_view'
-  data: -> collections: Houston._collections.collections
   waitOn: -> Houston._collections
 
 houston_route 'login',
@@ -105,6 +104,9 @@ FlowRouter.triggers.enter([mustBeAdmin], only: BASE_HOUSTON_ROUTES)
 FlowRouter.triggers.enter(
   [hide_non_admin_stuff, remove_host_css],
   only: ALL_HOUSTON_ROUTES)
+
+Template.registerHelper 'pathFor', (route, args) ->
+  FlowRouter.path(route, args.hash)
 
 originalNotFound = FlowRouter.notFound
 FlowRouter.notFound =

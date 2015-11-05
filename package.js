@@ -27,7 +27,6 @@ Package.on_use(function(api) {
 
   api.use('kadira:flow-router@2.8.0', 'client');
   api.use('kadira:blaze-layout@2.2.0', 'client');
-  api.use('arillo:flow-router-helpers@0.4.5', 'client'); // pathFor
 
   api.use('tmeasday:paginated-subscription@0.2.4', 'client');
   api.use('dburles:mongo-collection-instances@0.3.4', ['client', 'server']);

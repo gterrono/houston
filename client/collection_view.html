@@ -92,7 +92,7 @@
         <tbody>
         {{#each rows }}
         <tr id="ID_{{sort_order}}" data-id="{{_id}}">
-          <td><a href="{{pathFor 'houston_document'}}"><i
+          <td><a href="{{pathFor 'houston_document' collection=collection  _id=_id}}"><i
               class="fa fa-file"></i>{{_id}}</a></td>
           {{#each values_in_order}}
           <td data-field='{{ field_name }}' class='houston-collection-field'>
