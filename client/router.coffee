@@ -65,8 +65,7 @@ houston_route 'custom_template',
 
 houston_route 'collection',
   houston_path: "/:collection_name"
-  data: ->
-    Houston._get_collection(@params.collection_name)
+  data: -> {name: @params.collection_name}
   subs: (params) -> [setup_collection(params.collection_name)]
   template: 'collection_view'
 
