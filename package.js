@@ -20,6 +20,7 @@ Package.on_use(function(api) {
   api.use('templating@1.0.0', 'client');  // ?optional
   api.use('check@1.0.0', ['client', 'server']);
   api.use('spacebars@1.0.0', 'client');
+  api.use('underscore@1.0.4', ['client', 'server']);
 
   //////////////////////////////////////////////////////////////////
   // Third-party package dependencies
