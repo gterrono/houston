@@ -56,7 +56,8 @@ sync_collections = ->
   _sync_collections = (meh, collections_db) ->
     collection_names = (col.collectionName for col in collections_db \
       when (col.collectionName.indexOf "system.") isnt 0 and
-           (col.collectionName.indexOf "houston_") isnt 0)
+           (col.collectionName.indexOf "houston_") isnt 0 and
+           (col.collectionName.indexOf "cfs") isnt 0)
 
     collection_names.forEach (name) ->
       unless name of ADDED_COLLECTIONS or name of Houston._HIDDEN_COLLECTIONS
