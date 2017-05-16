@@ -142,7 +142,7 @@ Dependencies
 * **CSS**: Houston uses Bootstrap, but makes an effort to avoid having its CSS interfere with yours.
 * **Meteor**: As of Houston 1.2.0, Houston requires Meteor 1.0 or newer.
 
-###Current State
+### Current State
 The 1.3 release should fully support Meteor 1.0. We intend to support it. Please send in feature requests, bug reports, and contribute.
 
 Wishlist
