@@ -3,7 +3,7 @@ Houston
 Houston is a zero-config Meteor Admin, modeled after [Django Admin](https://docs.djangoproject.com/en/dev/ref/contrib/admin/), intended as a simple way for developers to give end-users (or themselves) an easy way to view and manipulate their app's data.  [Watch a video demo from Meteor Devshop](https://www.youtube.com/watch?v=vXeWxbJQr5o) or read below for more.
 
 ##### Latest News
-We just added [Custom Action buttons for collections](#custom-actions) with a `Meteor.methods`-like syntax.  Try them out!
+Houston is no longer being maintained. Interested in the story behind Houston? Check out [Confessions of a Deadbeat Open Source Maintainer](http://alexeymk.com/2017/05/06/confessions-of-a-deadbeat-open-source-maintainer.html).
 
 ### Getting Started
 
